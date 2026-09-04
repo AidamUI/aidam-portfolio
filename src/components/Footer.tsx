@@ -71,15 +71,17 @@ export function Footer() {
               ) : null}
             </li>
           ))}
-          <li>
-            <a
-              href={CV.href}
-              download={CV.filename}
-              className="text-ink underline"
-            >
-              {CV.label}
-            </a>
-          </li>
+          {CV.available ? (
+            <li>
+              <a
+                href={CV.href}
+                download={CV.filename}
+                className="text-ink underline"
+              >
+                {CV.label}
+              </a>
+            </li>
+          ) : null}
         </ul>
 
         <p className="text-ink-2 text-[15px]">

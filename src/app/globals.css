@@ -3,9 +3,19 @@
 /* ============================================================================
    TOKENS — design-system.md § Tokens, values verbatim.
 
-   Graphite is the DEFAULT mode, not a dark-mode toggle. The day platform is
-   the alternate, reached via the switch in the header or by an OS-level light
-   preference. An explicit choice always beats the OS.
+   Graphite is the DEFAULT mode, not a dark-mode toggle, and the day platform
+   sits behind the switch — it is never reached by an OS preference alone.
+
+   That is deliberate, and it is the one place design-system.md contradicts
+   itself: "Graphite is the primary mode ... not a 'dark mode' toggle" against
+   "for anyone who prefers it or has the OS set to light". Honouring the OS
+   loses more than it gains, because `prefers-color-scheme: light` also matches
+   readers who have expressed NO preference — the `no-preference` keyword was
+   dropped from Media Queries Level 5 and matches in no shipping browser. Every
+   headless Chromium, every Lighthouse run and every screenshot capture reports
+   `light`, so honouring it would mean the site's own identity palette is not
+   what an audit or a link preview ever sees. Graphite is the default for
+   everyone; the switch is how you leave it.
    ========================================================================== */
 
 :root {
@@ -55,24 +65,7 @@
   }
 }
 
-/* Day platform — applied when the OS asks for light and the reader has not
-   explicitly pinned graphite. */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="graphite"]) {
-    --platform: var(--platform-lt);
-    --platform-2: var(--platform-2-lt);
-    --rule: var(--rule-lt);
-    --ink: var(--ink-lt);
-    --ink-2: var(--ink-2-lt);
-    --line-work: var(--line-work-lt);
-    --line-life: var(--line-life-lt);
-    --marker: var(--marker-lt);
-    --focus: var(--line-work-lt);
-    color-scheme: light;
-  }
-}
-
-/* Explicit choice. Last in the cascade so it wins in both directions. */
+/* The day platform, reached only by an explicit choice. */
 :root[data-theme="day"] {
   --platform: var(--platform-lt);
   --platform-2: var(--platform-2-lt);
@@ -272,11 +265,11 @@
 /* ============================================================================
    THEME-AWARE LABELS
 
-   The switch labels itself without JavaScript by resolving the active theme in
-   CSS, exactly as the tokens do. `display: none` also drops the inactive label
-   out of the accessibility tree, so the button's accessible name is always the
-   action it will actually perform — no aria-label to drift out of sync, and no
-   hydration mismatch from guessing the theme on the server.
+   The switch labels itself in CSS, resolving the active theme exactly as the
+   tokens do. `display: none` also drops the inactive label out of the
+   accessibility tree, so the button's accessible name is always the action it
+   will actually perform — no aria-label to drift out of sync, and no hydration
+   mismatch from guessing the theme on the server.
    ========================================================================== */
 
 .when-graphite {
@@ -285,15 +278,6 @@
 
 .when-day {
   display: none;
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="graphite"]) .when-graphite {
-    display: none;
-  }
-  :root:not([data-theme="graphite"]) .when-day {
-    display: inline;
-  }
 }
 
 :root[data-theme="day"] .when-graphite {

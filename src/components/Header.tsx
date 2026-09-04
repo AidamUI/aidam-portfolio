@@ -123,20 +123,21 @@ export function Header() {
         </div>
       </div>
 
-      <div
+      <nav
         id={menuId}
         ref={panelRef}
         hidden={!open}
+        aria-label={A11Y.primaryNav}
         className="border-line-life bg-platform border-t-[3px] lg:hidden"
       >
         {(["kerja", "pribadi"] as const).map((lineId) => (
           <section key={lineId} aria-labelledby={`${menuId}-${lineId}`}>
-            <h2
+            <p
               id={`${menuId}-${lineId}`}
               className="code-type border-rule px-lg py-sm text-ink-2 border-b"
             >
               {LINES[lineId].name}
-            </h2>
+            </p>
             <ul>
               {STATIONS.filter((s) => s.line === lineId).map((station) => (
                 <li key={station.code} className="border-rule border-b">
@@ -171,7 +172,7 @@ export function Header() {
             </ul>
           </section>
         ))}
-      </div>
+      </nav>
     </header>
   );
 }

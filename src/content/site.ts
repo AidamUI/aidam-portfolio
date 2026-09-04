@@ -54,8 +54,23 @@ export const SOCIALS: SocialLink[] = [
   { label: "Instagram", href: "https://instagram.com/aidamkai" },
 ];
 
-/** The CV is linked as-is, no redaction pass. */
+/**
+ * WITHHELD while GEMASTIK XIX judging is open.
+ *
+ * The instruction was to link the CV as-is with no redaction pass, but the PDF
+ * carries live links to github.com/Terra-gemastik/TERRA-FE and TERRA-BE and to
+ * AidamUI/mantau-prototype-mobile, TERRA's stack breakdown ("YOLO-integrated",
+ * "modular FastAPI backend (9 modules, 38 REST endpoints)", the React
+ * Native/Expo client), Mantau's business model, and a phone number that
+ * prd.md §5.7 and §6 keep off the site. Serving it defeats the confidentiality
+ * rule at the one place it matters most, so the link is off and the file is out
+ * of `public/` until the competition concludes.
+ *
+ * To restore: set `available: true` and drop the PDF back at the path below.
+ * The footer branches on this flag, so that is the whole change.
+ */
 export const CV = {
+  available: false,
   label: "Download CV",
   href: "/cv/muhammad-kaila-aidam-riyan-cv.pdf",
   filename: "muhammad-kaila-aidam-riyan-cv.pdf",

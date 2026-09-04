@@ -9,9 +9,13 @@ import { applyTheme, resolveTheme } from "@/lib/theme";
  *
  * The label is resolved in CSS (see `.when-graphite` / `.when-day` in
  * globals.css) rather than in React state, which means: correct on the server,
- * correct before hydration, correct with JavaScript disabled, and no flash of
- * the wrong label. The handler resolves the live theme at click time using the
- * same precedence the stylesheet uses.
+ * correct before hydration, and no flash of the wrong label. The handler
+ * resolves the live theme at click time using the same precedence the
+ * stylesheet uses, so the first click can never be a no-op.
+ *
+ * With JavaScript off the button cannot do anything, so a <noscript> rule in
+ * the layout removes it entirely rather than leaving a focusable control that
+ * announces an action it will never perform.
  */
 export function ThemeToggle() {
   function toggle() {
@@ -21,6 +25,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
+      data-theme-toggle
       onClick={toggle}
       className="gap-sm border-ink-2 px-md py-xs text-ink hover:border-line-work focus-visible:border-line-work flex shrink-0 items-center border-2 transition-colors"
     >

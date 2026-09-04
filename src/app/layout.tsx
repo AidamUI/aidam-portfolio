@@ -5,7 +5,7 @@ import { PageShell } from "@/components/PageShell";
 import { SkipLink } from "@/components/SkipLink";
 import { SITE } from "@/content/site";
 import { archivo, plexMono } from "@/lib/fonts";
-import { BOOT_SCRIPT } from "@/lib/theme";
+import { BOOT_SCRIPT, THEME_CHROME } from "@/lib/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,11 +29,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  // Both grounds, so the browser chrome matches whichever platform is showing.
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#1E2733" },
-    { media: "(prefers-color-scheme: light)", color: "#EDF0F3" },
-  ],
+  /**
+   * Graphite, unconditionally — it is the default ground for every reader.
+   * Media-scoped theme-color variants are deliberately not used: the browser
+   * picks between those on the OS preference alone and never sees data-theme,
+   * so choosing the day platform would leave a graphite bar over a light page.
+   * `paintChrome` rewrites this tag instead, from the boot script on load and
+   * from the switch on toggle.
+   */
+  themeColor: THEME_CHROME.graphite,
 };
 
 export default function RootLayout({
@@ -49,6 +53,9 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
+        <noscript>
+          <style>{`[data-theme-toggle]{display:none}`}</style>
+        </noscript>
       </head>
       <body className="flex min-h-dvh flex-col">
         <SkipLink />
