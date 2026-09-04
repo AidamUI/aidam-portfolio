@@ -27,3 +27,14 @@ export function monthYear(iso: string): string {
     timeZone: "Asia/Jakarta",
   }).format(new Date(Number(year), Number(month) - 1, 15));
 }
+
+/** Formats an ISO `YYYY-MM-DD` as "4 September 2026". */
+export function formatDate(iso: string): string {
+  const [year, month, day] = iso.split("-");
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Jakarta",
+  }).format(new Date(Number(year), Number(month) - 1, Number(day)));
+}

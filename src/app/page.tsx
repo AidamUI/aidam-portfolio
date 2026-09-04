@@ -1,68 +1,94 @@
 import Link from "next/link";
-import { StationBadge } from "@/components/StationBadge";
+import { CareerRoute } from "@/components/CareerRoute";
+import { NowServing } from "@/components/NowServing";
+import { ProjectBand } from "@/components/ProjectBand";
 import { StationSign } from "@/components/StationSign";
-import { SITE } from "@/content/site";
-import { SHELL } from "@/content/shell";
-import { LINES, STATIONS } from "@/content/stations";
+import { PROFILE } from "@/content/profile";
+import { PROJECTS } from "@/content/projects";
+import { EMAIL, SOCIALS } from "@/content/site";
 
 export default function HomePage() {
+  const featuredProjects = PROJECTS.filter((p) => p.featured);
+
   return (
     <>
+      {/* Hero */}
       <section className="px-lg pt-2xl pb-xl">
-        <h1 className="hero-type measure text-ink">{SITE.name}</h1>
-        <p className="measure mt-lg text-ink">{SHELL.heroLine}</p>
+        <h1 className="hero-type measure text-ink">{PROFILE.name}</h1>
+        <p className="measure mt-lg text-ink text-[17px] leading-relaxed">
+          {PROFILE.hero}
+        </p>
         <p className="measure mt-md text-ink-2 font-mono text-[13px]">
-          {SHELL.subLine}
+          {PROFILE.heroSub}
         </p>
       </section>
 
-      {/* Removed in M2, when the real home page lands. */}
-      <StationSign
-        code="M0"
-        name={SHELL.buildNoticeTitle}
-        line="pribadi"
-        blurb={SHELL.buildNotice}
-      />
+      {/* Career timeline */}
+      <CareerRoute />
 
+      {/* Now serving */}
+      <NowServing />
+
+      {/* Featured projects */}
       <StationSign
-        code="//"
-        name={SHELL.mapTitle}
+        code="P1"
+        name="Featured projects"
         line="kerja"
-        blurb={SHELL.mapBlurb}
+        blurb="Three things worth looking at"
       />
-
-      <div className="px-lg py-xl">
-        {(["kerja", "pribadi"] as const).map((lineId) => (
-          <section key={lineId} className="mb-xl last:mb-0">
-            <h2 className="code-type mb-md text-ink-2">{LINES[lineId].name}</h2>
-            <ul
-              className={`pl-lg border-l-[3px] ${
-                lineId === "kerja" ? "border-line-work" : "border-line-life"
-              }`}
-            >
-              {STATIONS.filter((s) => s.line === lineId).map((station) => (
-                <li key={station.code} className="mb-lg last:mb-0">
-                  <Link href={station.href} className="gap-md flex items-start">
-                    <StationBadge
-                      code={station.code}
-                      line={station.line}
-                      className="mt-[3px]"
-                    />
-                    <span>
-                      <span className="sign-type text-ink block text-[19px]">
-                        {station.name}
-                      </span>
-                      <span className="measure text-ink-2 block text-[15px]">
-                        {station.blurb}
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
+      <div className="pb-xl">
+        {featuredProjects.map((project) => (
+          <ProjectBand key={project.slug} project={project} featured />
         ))}
       </div>
+
+      {/* Contact strip */}
+      <section className="bg-platform-2 border-line-life border-t-[3px] px-lg py-xl">
+        <h2 className="sign-type mb-lg text-ink text-[19px]">Elsewhere</h2>
+        <ul className="gap-sm flex flex-col">
+          <li>
+            <a href={EMAIL.href} className="text-ink text-[17px] underline">
+              {/* Split so the rendered HTML holds no contiguous address. */}
+              <span>{EMAIL.user}</span>
+              <span>@</span>
+              <span>{EMAIL.domain}</span>
+            </a>
+          </li>
+          {SOCIALS.map((social) => (
+            <li key={social.href}>
+              <a
+                href={social.href}
+                rel="me noopener noreferrer"
+                className="text-ink text-[17px] underline"
+              >
+                {social.label}
+              </a>
+              {social.note ? (
+                <span className="ml-sm text-ink-2 text-[15px]">
+                  {social.note}
+                </span>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-lg text-ink-2 text-[15px]">
+          Or explore the{" "}
+          <Link href="/work" className="underline">
+            work
+          </Link>
+          ,{" "}
+          <Link href="/academic" className="underline">
+            academic
+          </Link>
+          , and{" "}
+          <Link href="/projects" className="underline">
+            projects
+          </Link>{" "}
+          pages.
+        </p>
+      </section>
     </>
   );
 }
+
+// Made with Bob
