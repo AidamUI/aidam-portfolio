@@ -1,0 +1,320 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   TOKENS — design-system.md § Tokens, values verbatim.
+
+   Graphite is the DEFAULT mode, not a dark-mode toggle. The day platform is
+   the alternate, reached via the switch in the header or by an OS-level light
+   preference. An explicit choice always beats the OS.
+   ========================================================================== */
+
+:root {
+  /* ground — graphite, blue-tinted, deliberately not black or near-black */
+  --platform: #1e2733;
+  --platform-2: #26313f; /* panels, elevated bands, station signs */
+  --rule: #3a4656; /* hairlines against graphite */
+
+  /* ink */
+  --ink: #f3f5f7; /* primary text — soft white, not pure #FFF */
+  --ink-2: #a9b4c0; /* secondary text — lifted well clear of AA on graphite */
+
+  /* routes — flat signage fills, never gradients */
+  --line-work: #4c8dff; /* Jalur Kerja — the old blue-500, brightened for graphite */
+  --line-life: #ff8a5c; /* Jalur Pribadi */
+  --marker: #ffd166; /* "you are here" and live status ONLY, ink text on top */
+
+  /* alternate: day platform, toggle-only. Held here so the full token set from
+     design-system.md is present as written; the day blocks below map these
+     onto the primary names rather than introducing a second vocabulary. */
+  --platform-lt: #edf0f3;
+  --platform-2-lt: #e3e8ed;
+  --rule-lt: #c9cfd3;
+  --ink-lt: #14181b;
+  --ink-2-lt: #55606b;
+  --line-work-lt: #16489c;
+  --line-life-lt: #d9451f;
+  --marker-lt: #b9860e;
+
+  /* derived — not in the doc's list, but every one is a consequence of a rule
+     in it (ink-on-yellow, visible focus, capped measure, the 72px rail). */
+  --on-marker: #14181b; /* the "ink text on top" the marker token mandates */
+  --focus: var(--marker);
+  --measure: 68ch; /* body measure cap */
+  --rail: 40px; /* mobile: route line sits 20px from the left edge */
+  --rail-line: 20px;
+  --route-w: 4px;
+
+  /* spacing scale: 4 / 8 / 12 / 20 / 32 / 52 / 84 */
+  color-scheme: dark;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --rail: 72px; /* desktop: the line sits in a 72px rail */
+    --rail-line: 36px;
+  }
+}
+
+/* Day platform — applied when the OS asks for light and the reader has not
+   explicitly pinned graphite. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="graphite"]) {
+    --platform: var(--platform-lt);
+    --platform-2: var(--platform-2-lt);
+    --rule: var(--rule-lt);
+    --ink: var(--ink-lt);
+    --ink-2: var(--ink-2-lt);
+    --line-work: var(--line-work-lt);
+    --line-life: var(--line-life-lt);
+    --marker: var(--marker-lt);
+    --on-marker: #ffffff; /* #B9860E is a dark gold; white on it clears AA, ink does not */
+    --focus: var(--line-work-lt);
+    color-scheme: light;
+  }
+}
+
+/* Explicit choice. Last in the cascade so it wins in both directions. */
+:root[data-theme="day"] {
+  --platform: var(--platform-lt);
+  --platform-2: var(--platform-2-lt);
+  --rule: var(--rule-lt);
+  --ink: var(--ink-lt);
+  --ink-2: var(--ink-2-lt);
+  --line-work: var(--line-work-lt);
+  --line-life: var(--line-life-lt);
+  --marker: var(--marker-lt);
+  --on-marker: #ffffff;
+  --focus: var(--line-work-lt);
+  color-scheme: light;
+}
+
+/* ============================================================================
+   THEME — token names exposed to Tailwind. `inline` keeps the utilities
+   pointing at the live custom properties, so a theme switch repaints without
+   a class swap anywhere in the tree.
+   ========================================================================== */
+
+@theme inline {
+  --color-platform: var(--platform);
+  --color-platform-2: var(--platform-2);
+  --color-rule: var(--rule);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-line-work: var(--line-work);
+  --color-line-life: var(--line-life);
+  --color-marker: var(--marker);
+  --color-on-marker: var(--on-marker);
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
+
+  /* design-system.md spacing scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 20px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 52px;
+  --spacing-3xl: 84px;
+
+  /* Radius means something: 0 on signs, panels and bands; 999px on station
+     markers and route badges only. Nothing else is rounded, so there is no
+     mid-scale radius token to reach for by accident. */
+  --radius-none: 0px;
+  --radius-marker: 999px;
+}
+
+/* ============================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--platform);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.55;
+    font-variation-settings: "wdth" 100;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* No shadows anywhere — depth comes from flat fills and rule weight. */
+  * {
+    box-shadow: none;
+  }
+
+  ::selection {
+    background: var(--line-work);
+    color: var(--platform);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* Left-aligned throughout. Never centred body text. */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  li {
+    text-align: left;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: 3px;
+  }
+}
+
+/* ============================================================================
+   SIGNAGE PRIMITIVES
+   ========================================================================== */
+
+@utility sign-type {
+  /* Section signs: wdth 110, weight 600, 22px */
+  font-variation-settings: "wdth" 110;
+  font-weight: 600;
+}
+
+@utility code-type {
+  /* Station codes: wdth 115, weight 700, 13px, inside a filled chip */
+  font-variation-settings: "wdth" 115;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+@utility hero-type {
+  font-variation-settings: "wdth" 115;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.4rem, 8.5vw, 5rem);
+}
+
+@utility measure {
+  max-width: var(--measure);
+}
+
+/* The rail the route line runs in. Applied to the page shell so every route
+   inherits the same left offset without repeating the number. */
+@utility rail-pad {
+  padding-left: var(--rail);
+}
+
+/* ============================================================================
+   MOTION — one moment, once per session: the route line draws top to bottom
+   in 600ms, stations appearing as it passes each one. Everything else moves
+   only in response to a click, focus, or submit.
+   ========================================================================== */
+
+@keyframes route-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes station-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.route-draw {
+  transform-origin: top center;
+  animation: route-draw 600ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.station-in {
+  animation: station-in 220ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Render the line complete and static. */
+  .route-draw,
+  .station-in {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   THEME-AWARE LABELS
+
+   The switch labels itself without JavaScript by resolving the active theme in
+   CSS, exactly as the tokens do. `display: none` also drops the inactive label
+   out of the accessibility tree, so the button's accessible name is always the
+   action it will actually perform — no aria-label to drift out of sync, and no
+   hydration mismatch from guessing the theme on the server.
+   ========================================================================== */
+
+.when-graphite {
+  display: inline;
+}
+
+.when-day {
+  display: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="graphite"]) .when-graphite {
+    display: none;
+  }
+  :root:not([data-theme="graphite"]) .when-day {
+    display: inline;
+  }
+}
+
+:root[data-theme="day"] .when-graphite {
+  display: none;
+}
+
+:root[data-theme="day"] .when-day {
+  display: inline;
+}
+
+/* ============================================================================
+   ROUTE LINE
+
+   The spine only draws on the first page load of a tab. The pre-paint boot
+   script stamps [data-route-drawn] on every load after that, so the animation
+   is gated in CSS rather than in React.
+   ========================================================================== */
+
+:root[data-route-drawn] .route-draw,
+:root[data-route-drawn] .station-in {
+  animation: none;
+}

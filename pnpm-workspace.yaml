@@ -1,0 +1,8 @@
+# Not a workspace — pnpm 11 keeps its settings here rather than in package.json,
+# and this is the only one the project needs.
+#
+# unrs-resolver ships a native binary that eslint-config-next's import resolver
+# loads; without its install script eslint cannot resolve the @/* alias. It is
+# the sole dependency allowed to run an install script.
+allowBuilds:
+  unrs-resolver: true
