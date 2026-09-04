@@ -108,7 +108,7 @@ settle outright. Each is also commented at the point in the code where it bites.
     contradicts itself here — "Graphite is the primary mode … not a 'dark mode'
     toggle" against "for anyone who prefers it or has the OS set to light".
     Honouring the OS loses: `prefers-color-scheme: light` also matches readers
-    who have expressed *no* preference, because `no-preference` was dropped from
+    who have expressed _no_ preference, because `no-preference` was dropped from
     Media Queries Level 5 and matches in no shipping browser. Every headless
     Chromium, Lighthouse run and link-preview capture reports `light`, so the
     site's identity palette would be the one thing an audit never sees.
