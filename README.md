@@ -42,8 +42,9 @@ Jakarta transit wayfinding. Two colour-coded lines — **Jalur Kerja** (work: W1
 A1, P1) and **Jalur Pribadi** (personal: O1, G1) — meeting at the home page.
 Sections are stations with codes. A route line runs down the left of every page.
 
-Graphite (`#1E2733`) is the **default** mode, not a dark mode. The day platform
-is the alternate, reachable from the header switch or by an OS light preference.
+Graphite (`#1E2733`) is the **default** mode for every reader, not a dark mode.
+The day platform sits behind the switch and is never reached by an OS
+preference alone — see decision 10 below.
 
 Radius means something: `0` on signs, panels and bands; `999px` on station
 markers and route badges only. No shadows anywhere. One motion moment per
@@ -103,3 +104,23 @@ settle outright. Each is also commented at the point in the code where it bites.
    at M7 against real Lighthouse numbers.
 9. **Guestbook and gallery dependencies are not installed yet.** They arrive at
    M5 and M6 rather than sitting unused in the tree from M0.
+10. **The OS colour preference is deliberately ignored.** design-system.md
+    contradicts itself here — "Graphite is the primary mode … not a 'dark mode'
+    toggle" against "for anyone who prefers it or has the OS set to light".
+    Honouring the OS loses: `prefers-color-scheme: light` also matches readers
+    who have expressed *no* preference, because `no-preference` was dropped from
+    Media Queries Level 5 and matches in no shipping browser. Every headless
+    Chromium, Lighthouse run and link-preview capture reports `light`, so the
+    site's identity palette would be the one thing an audit never sees.
+    Graphite is the default for everyone; the switch is how you leave it.
+11. **`theme-color` is one tag, rewritten in JavaScript.** Media-scoped
+    `theme-color` variants are chosen by the browser on the OS preference alone
+    and never see `data-theme`, so picking the day platform on a dark OS left a
+    graphite address bar over a light page for the whole session.
+12. **The theme switch is removed by `<noscript>`, not disabled.** Without
+    JavaScript it cannot work, and a focusable control that announces an action
+    it will never perform is worse than no control.
+13. **CV link withheld while GEMASTIK judging is open.** The PDF carries live
+    TERRA and Mantau repo URLs, TERRA's stack breakdown, and a phone number the
+    PRD keeps off the site. `CV.available` in `src/content/site.ts` restores it
+    in one line.
