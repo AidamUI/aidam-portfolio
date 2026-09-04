@@ -82,27 +82,30 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 border-b-[3px] border-line-work bg-platform">
-      <div className="flex items-center justify-between gap-md px-lg py-md">
+    <header className="border-line-work bg-platform sticky top-0 z-40 border-b-[3px]">
+      <div className="gap-md px-lg py-md flex items-center justify-between">
         <Link
           href={INTERCHANGE.href}
-          className="code-type shrink-0 text-[18px] tracking-[0.08em] text-ink"
+          className="code-type text-ink shrink-0 text-[18px] tracking-[0.08em]"
           aria-current={isCurrent("/") ? "page" : undefined}
         >
           {SITE.wordmark}
         </Link>
 
         <nav aria-label={A11Y.primaryNav} className="hidden lg:block">
-          <ul className="flex items-center gap-lg">
+          <ul className="gap-lg flex items-center">
             {STATIONS.map((station) => (
               <li key={station.code}>
-                <StationLink station={station} current={isCurrent(station.href)} />
+                <StationLink
+                  station={station}
+                  current={isCurrent(station.href)}
+                />
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="flex items-center gap-sm">
+        <div className="gap-sm flex items-center">
           <ThemeToggle />
           <button
             ref={triggerRef}
@@ -110,7 +113,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls={menuId}
             onClick={() => setOpen((v) => !v)}
-            className="flex shrink-0 items-center gap-sm border-2 border-rule px-md py-xs text-ink lg:hidden"
+            className="gap-sm border-ink-2 px-md py-xs text-ink flex shrink-0 items-center border-2 lg:hidden"
           >
             <MenuGlyph open={open} />
             <span className="sr-only">
@@ -124,23 +127,23 @@ export function Header() {
         id={menuId}
         ref={panelRef}
         hidden={!open}
-        className="border-t-[3px] border-line-life bg-platform lg:hidden"
+        className="border-line-life bg-platform border-t-[3px] lg:hidden"
       >
         {(["kerja", "pribadi"] as const).map((lineId) => (
           <section key={lineId} aria-labelledby={`${menuId}-${lineId}`}>
             <h2
               id={`${menuId}-${lineId}`}
-              className="code-type border-b border-rule px-lg py-sm text-ink-2"
+              className="code-type border-rule px-lg py-sm text-ink-2 border-b"
             >
               {LINES[lineId].name}
             </h2>
             <ul>
               {STATIONS.filter((s) => s.line === lineId).map((station) => (
-                <li key={station.code} className="border-b border-rule">
+                <li key={station.code} className="border-rule border-b">
                   <Link
                     href={station.href}
                     aria-current={isCurrent(station.href) ? "page" : undefined}
-                    className="flex items-start gap-md px-lg py-md"
+                    className="gap-md px-lg py-md flex items-start"
                   >
                     <StationBadge
                       code={station.code}
@@ -149,10 +152,16 @@ export function Header() {
                       className="mt-[3px]"
                     />
                     <span>
-                      <span className="sign-type block text-[19px] text-ink">
+                      <span
+                        className={`sign-type text-ink block text-[19px] ${
+                          isCurrent(station.href)
+                            ? "underline decoration-2 underline-offset-4"
+                            : ""
+                        }`}
+                      >
                         {station.name}
                       </span>
-                      <span className="block text-[15px] text-ink-2">
+                      <span className="text-ink-2 block text-[15px]">
                         {station.blurb}
                       </span>
                     </span>
@@ -178,10 +187,16 @@ function StationLink({
     <Link
       href={station.href}
       aria-current={current ? "page" : undefined}
-      className="flex items-center gap-sm text-ink"
+      className="gap-sm text-ink flex items-center"
     >
       <StationBadge code={station.code} line={station.line} active={current} />
-      <span className="sign-type text-[15px]">{station.name}</span>
+      <span
+        className={`sign-type text-[15px] ${
+          current ? "underline decoration-2 underline-offset-4" : ""
+        }`}
+      >
+        {station.name}
+      </span>
       {current ? <span className="sr-only">{A11Y.currentStation}</span> : null}
     </Link>
   );

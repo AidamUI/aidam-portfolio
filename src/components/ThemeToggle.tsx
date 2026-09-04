@@ -22,7 +22,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="flex shrink-0 items-center gap-sm border-2 border-rule px-md py-xs text-ink transition-colors hover:border-line-work focus-visible:border-line-work"
+      className="gap-sm border-ink-2 px-md py-xs text-ink hover:border-line-work focus-visible:border-line-work flex shrink-0 items-center border-2 transition-colors"
     >
       <HalfDisc />
       <span className="code-type sr-only sm:not-sr-only">

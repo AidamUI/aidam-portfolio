@@ -14,16 +14,16 @@ import { StationBadge } from "./StationBadge";
  */
 export function Footer() {
   return (
-    <footer className="border-t-[3px] border-line-life bg-platform-2">
+    <footer className="border-line-life bg-platform-2 border-t-[3px]">
       <div className="px-lg py-2xl">
         <h2 className="code-type mb-lg text-ink-2">{FOOTER.mapLabel}</h2>
 
-        <div className="mb-2xl flex flex-col gap-lg">
+        <div className="mb-2xl gap-lg flex flex-col">
           {(["kerja", "pribadi"] as const).map((lineId) => (
             <div key={lineId}>
               <p className="code-type mb-sm text-ink-2">{LINES[lineId].name}</p>
               <ul
-                className={`flex flex-wrap items-center gap-md border-l-[3px] pl-md ${
+                className={`gap-md pl-md flex flex-wrap items-center border-l-[3px] ${
                   lineId === "kerja" ? "border-line-work" : "border-line-life"
                 }`}
               >
@@ -31,7 +31,7 @@ export function Footer() {
                   <li key={station.code}>
                     <Link
                       href={station.href}
-                      className="flex items-center gap-sm text-ink"
+                      className="gap-sm text-ink flex items-center"
                     >
                       <StationBadge code={station.code} line={station.line} />
                       <span className="sign-type text-[15px]">
@@ -46,7 +46,7 @@ export function Footer() {
         </div>
 
         <h2 className="code-type mb-lg text-ink-2">Elsewhere</h2>
-        <ul className="mb-2xl flex flex-col gap-sm">
+        <ul className="mb-2xl gap-sm flex flex-col">
           <li>
             <a href={EMAIL.href} className="text-ink underline">
               {/* Split so the rendered HTML holds no contiguous address. */}
@@ -65,20 +65,24 @@ export function Footer() {
                 {social.label}
               </a>
               {social.note ? (
-                <span className="ml-sm text-[15px] text-ink-2">
+                <span className="ml-sm text-ink-2 text-[15px]">
                   {social.note}
                 </span>
               ) : null}
             </li>
           ))}
           <li>
-            <a href={CV.href} download={CV.filename} className="text-ink underline">
+            <a
+              href={CV.href}
+              download={CV.filename}
+              className="text-ink underline"
+            >
               {CV.label}
             </a>
           </li>
         </ul>
 
-        <p className="text-[15px] text-ink-2">
+        <p className="text-ink-2 text-[15px]">
           {FOOTER.builtWith}{" "}
           <a
             href={FOOTER.sourceHref}
@@ -89,8 +93,9 @@ export function Footer() {
           </a>
           .
         </p>
-        <p className="font-mono text-[13px] text-ink-2">
-          {FOOTER.updatedPrefix} <time dateTime={buildDate.iso}>{buildDate.label}</time>.
+        <p className="text-ink-2 font-mono text-[13px]">
+          {FOOTER.updatedPrefix}{" "}
+          <time dateTime={buildDate.iso}>{buildDate.label}</time>.
         </p>
         <p className="sr-only">{SITE.name}</p>
       </div>

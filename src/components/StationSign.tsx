@@ -33,18 +33,20 @@ export function StationSign({
       {/* Station marker, sitting on the spine out in the rail. */}
       <span
         aria-hidden="true"
-        className={`station-in absolute top-lg hidden h-[14px] w-[14px] -translate-x-1/2 rounded-marker md:block ${dot}`}
+        className={`station-in top-lg rounded-marker absolute hidden h-[14px] w-[14px] -translate-x-1/2 md:block ${dot}`}
         style={{ left: "calc(var(--rail-line) - var(--rail))" }}
       />
-      <div className="flex flex-wrap items-baseline gap-md px-lg py-md">
+      <div className="gap-md px-lg py-md flex flex-wrap items-baseline">
         <StationBadge code={code} line={line} />
-        <Heading className="sign-type text-[22px] leading-tight text-ink">
+        <Heading className="sign-type text-ink text-[22px] leading-tight">
           {name}
         </Heading>
         {blurb ? (
-          <p className="measure text-[15px] text-ink-2">{blurb}</p>
+          <p className="measure text-ink-2 text-[15px]">{blurb}</p>
         ) : null}
-        {meta ? <div className="ml-auto font-mono text-[13px] text-ink-2">{meta}</div> : null}
+        {meta ? (
+          <div className="text-ink-2 ml-auto font-mono text-[13px]">{meta}</div>
+        ) : null}
       </div>
     </div>
   );

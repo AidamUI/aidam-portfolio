@@ -67,7 +67,6 @@
     --line-work: var(--line-work-lt);
     --line-life: var(--line-life-lt);
     --marker: var(--marker-lt);
-    --on-marker: #ffffff; /* #B9860E is a dark gold; white on it clears AA, ink does not */
     --focus: var(--line-work-lt);
     color-scheme: light;
   }
@@ -83,7 +82,6 @@
   --line-work: var(--line-work-lt);
   --line-life: var(--line-life-lt);
   --marker: var(--marker-lt);
-  --on-marker: #ffffff;
   --focus: var(--line-work-lt);
   color-scheme: light;
 }

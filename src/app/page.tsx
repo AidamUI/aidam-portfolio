@@ -11,7 +11,7 @@ export default function HomePage() {
       <section className="px-lg pt-2xl pb-xl">
         <h1 className="hero-type measure text-ink">{SITE.name}</h1>
         <p className="measure mt-lg text-ink">{SHELL.heroLine}</p>
-        <p className="measure mt-md font-mono text-[13px] text-ink-2">
+        <p className="measure mt-md text-ink-2 font-mono text-[13px]">
           {SHELL.subLine}
         </p>
       </section>
@@ -24,30 +24,35 @@ export default function HomePage() {
         blurb={SHELL.buildNotice}
       />
 
-      <StationSign code="//" name={SHELL.mapTitle} line="kerja" blurb={SHELL.mapBlurb} />
+      <StationSign
+        code="//"
+        name={SHELL.mapTitle}
+        line="kerja"
+        blurb={SHELL.mapBlurb}
+      />
 
       <div className="px-lg py-xl">
         {(["kerja", "pribadi"] as const).map((lineId) => (
           <section key={lineId} className="mb-xl last:mb-0">
             <h2 className="code-type mb-md text-ink-2">{LINES[lineId].name}</h2>
             <ul
-              className={`border-l-[3px] pl-lg ${
+              className={`pl-lg border-l-[3px] ${
                 lineId === "kerja" ? "border-line-work" : "border-line-life"
               }`}
             >
               {STATIONS.filter((s) => s.line === lineId).map((station) => (
                 <li key={station.code} className="mb-lg last:mb-0">
-                  <Link href={station.href} className="flex items-start gap-md">
+                  <Link href={station.href} className="gap-md flex items-start">
                     <StationBadge
                       code={station.code}
                       line={station.line}
                       className="mt-[3px]"
                     />
                     <span>
-                      <span className="sign-type block text-[19px] text-ink">
+                      <span className="sign-type text-ink block text-[19px]">
                         {station.name}
                       </span>
-                      <span className="measure block text-[15px] text-ink-2">
+                      <span className="measure text-ink-2 block text-[15px]">
                         {station.blurb}
                       </span>
                     </span>
