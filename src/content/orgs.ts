@@ -124,16 +124,23 @@ export const ORG_ROLES: Role[] = [
 ];
 
 /**
- * The six published TechTonic posts. content.md §6 notes that Instagram blocks
- * scraping, so these stay as bare dated links until Aidam sends a one-line
- * topic for each — at which point `label` becomes the topic instead of the
- * post number.
+ * The six published TechTonic posts, in content.md §6's listing order.
+ *
+ * The numbering is positional — it reflects where each post sits in that list,
+ * not a publication sequence, because no document states one. An earlier draft
+ * sorted them by Instagram shortcode on the assumption that the codes are
+ * chronological; that invented an ordering the source does not support, so the
+ * doc's order stands.
+ *
+ * content.md §6 notes Instagram blocks scraping, so these stay as bare links
+ * until Aidam sends a one-line topic per post — at which point `label` becomes
+ * the topic ("TechTonic on inflation and AI hiring") and the numbering goes.
  */
 export const TECHTONIC: Artifact[] = [
-  { label: "TechTonic 1", href: "https://instagram.com/p/DJGyLujPHBd" },
-  { label: "TechTonic 2", href: "https://instagram.com/p/DKEvi8lPhn2" },
-  { label: "TechTonic 3", href: "https://instagram.com/p/DLClsqPPw5P" },
-  { label: "TechTonic 4", href: "https://instagram.com/p/DM2k0N5PUvf" },
-  { label: "TechTonic 5", href: "https://instagram.com/p/DNh-97IPPLb" },
-  { label: "TechTonic 6", href: "https://instagram.com/p/DO0xsbqj6xW" },
+  { label: "TechTonic #1", href: "https://instagram.com/p/DO0xsbqj6xW" },
+  { label: "TechTonic #2", href: "https://instagram.com/p/DNh-97IPPLb" },
+  { label: "TechTonic #3", href: "https://instagram.com/p/DM2k0N5PUvf" },
+  { label: "TechTonic #4", href: "https://instagram.com/p/DLClsqPPw5P" },
+  { label: "TechTonic #5", href: "https://instagram.com/p/DJGyLujPHBd" },
+  { label: "TechTonic #6", href: "https://instagram.com/p/DKEvi8lPhn2" },
 ];
