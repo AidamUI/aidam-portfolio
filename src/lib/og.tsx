@@ -1,76 +1,71 @@
 import { ImageResponse } from "next/og";
 
 /**
- * Share cards, drawn with the site's own signage system rather than a
- * screenshot (tech-plan.md §5): the graphite ground, a route line down the
- * left, a station code in its line colour, and the name in heavy Archivo.
+ * Share cards: clean and typographic, matching the redesigned site — a white
+ * card, a single accent bar, the title in heavy Lato, one quiet line beneath.
  *
- * The palette is repeated as literals here on purpose. Satori resolves no CSS
- * custom properties and never loads globals.css, so `var(--platform)` would
- * silently render as nothing. These are the graphite values from
- * design-system.md; if the tokens ever change, they change here too.
+ * Colours are repeated as literals here on purpose. Satori resolves no CSS
+ * custom properties and never loads globals.css, so `var(--accent)` would
+ * silently render as nothing. These are the light-mode token values from
+ * globals.css; if the tokens ever change, they change here too.
  */
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
-const PLATFORM = "#1E2733";
-const PLATFORM_2 = "#26313F";
-const INK = "#F3F5F7";
-const INK_2 = "#A9B4C0";
-const LINE_WORK = "#4C8DFF";
-const LINE_LIFE = "#FF8A5C";
+const BG = "#FFFFFF";
+const TEXT = "#16181D";
+const TEXT_MUTED = "#5B6270";
+const ACCENT = "#2F5CE0";
 
 /**
- * Satori needs real font data — it cannot use a system font stack, and it does
- * not read woff2, which is the only format next/font keeps. So the TTF is
- * fetched from Google's static host and held for the lifetime of the lambda.
- * Vercel caches the generated image, so this runs once per cold start at most.
+ * Satori needs real font data — it cannot use a system font stack, and it
+ * does not read woff2, which is the only format next/font keeps. So the TTF
+ * is fetched from Google's static host and held for the lifetime of the
+ * lambda. Vercel caches the generated image, so this runs once per cold
+ * start at most.
  *
- * A failure here must not take the card down: `loadArchivo` returns null and
- * the caller falls back to Satori's default face rather than throwing a 500 at
+ * A failure here must not take the card down: `loadLato` returns null and the
+ * caller falls back to Satori's default face rather than throwing a 500 at
  * whatever just tried to unfurl the link.
  */
-let cached: ArrayBuffer | null = null;
+const cache = new Map<string, ArrayBuffer>();
 
-export async function loadArchivo(): Promise<ArrayBuffer | null> {
-  if (cached) return cached;
+async function loadLato(weight: 400 | 900): Promise<ArrayBuffer | null> {
+  const key = String(weight);
+  if (cache.has(key)) return cache.get(key)!;
   try {
     const css = await fetch(
-      "https://fonts.googleapis.com/css2?family=Archivo:wght@700&display=swap",
+      `https://fonts.googleapis.com/css2?family=Lato:wght@${weight}&display=swap`,
       { headers: { "User-Agent": "Mozilla/5.0" } },
     ).then((response) => response.text());
 
-    const url = css.match(/src:\s*url\((https:[^)]+\.(?:ttf|otf))\)/)?.[1];
+    const url = css.match(/src:\s*url\((https:[^)]+\.ttf)\)/)?.[1];
     if (!url) return null;
 
-    cached = await fetch(url).then((response) => response.arrayBuffer());
-    return cached;
+    const data = await fetch(url).then((response) => response.arrayBuffer());
+    cache.set(key, data);
+    return data;
   } catch {
     return null;
   }
 }
 
 export type CardOptions = {
-  /** Station code, e.g. W1 or P1.1. */
-  code: string;
   /** The big line. */
   title: string;
   /** One quiet line under it. */
   subtitle?: string;
-  line?: "kerja" | "pribadi";
-  /** Small mono line at the foot, e.g. the site name. */
+  /** Small line at the foot, e.g. the site name or a project's status. */
   footer?: string;
 };
 
 export async function renderCard({
-  code,
   title,
   subtitle,
-  line = "kerja",
   footer,
 }: CardOptions): Promise<ImageResponse> {
-  const font = await loadArchivo();
-  const accent = line === "kerja" ? LINE_WORK : LINE_LIFE;
+  const [regular, black] = await Promise.all([loadLato(400), loadLato(900)]);
+  const hasFont = Boolean(regular && black);
 
   return new ImageResponse(
     <div
@@ -78,15 +73,13 @@ export async function renderCard({
         width: "100%",
         height: "100%",
         display: "flex",
-        backgroundColor: PLATFORM,
-        color: INK,
-        fontFamily: font ? "Archivo" : "sans-serif",
+        flexDirection: "column",
+        backgroundColor: BG,
+        color: TEXT,
+        fontFamily: hasFont ? "Lato" : "sans-serif",
       }}
     >
-      {/* The route line, in the rail, exactly as every page has it. */}
-      <div style={{ width: 72, display: "flex", justifyContent: "center" }}>
-        <div style={{ width: 8, height: "100%", backgroundColor: accent }} />
-      </div>
+      <div style={{ display: "flex", height: 10, backgroundColor: ACCENT }} />
 
       <div
         style={{
@@ -94,37 +87,16 @@ export async function renderCard({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "64px 72px 56px 40px",
+          padding: "72px 80px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: `4px solid ${accent}`,
-              borderRadius: 999,
-              padding: "6px 22px",
-              fontSize: 30,
-              fontWeight: 700,
-              letterSpacing: 1,
-            }}
-          >
-            {code}
-          </div>
-          <div style={{ fontSize: 28, color: INK_2 }}>
-            {line === "kerja" ? "Jalur Kerja" : "Jalur Pribadi"}
-          </div>
-        </div>
-
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
-              fontSize: title.length > 28 ? 76 : 104,
-              fontWeight: 700,
-              lineHeight: 1.02,
-              letterSpacing: -2,
+              fontSize: title.length > 24 ? 72 : 92,
+              fontWeight: 900,
+              lineHeight: 1.05,
+              letterSpacing: -1.5,
             }}
           >
             {title}
@@ -133,9 +105,10 @@ export async function renderCard({
             <div
               style={{
                 marginTop: 24,
-                fontSize: 34,
-                color: INK_2,
-                lineHeight: 1.3,
+                fontSize: 32,
+                fontWeight: 400,
+                color: TEXT_MUTED,
+                lineHeight: 1.4,
               }}
             >
               {subtitle}
@@ -143,25 +116,18 @@ export async function renderCard({
           ) : null}
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            borderTop: `4px solid ${PLATFORM_2}`,
-            paddingTop: 24,
-            fontSize: 26,
-            color: INK_2,
-          }}
-        >
+        <div style={{ display: "flex", fontSize: 24, color: TEXT_MUTED }}>
           {footer ?? ""}
         </div>
       </div>
     </div>,
     {
       ...OG_SIZE,
-      fonts: font
-        ? [{ name: "Archivo", data: font, weight: 700, style: "normal" }]
+      fonts: hasFont
+        ? [
+            { name: "Lato", data: regular!, weight: 400, style: "normal" },
+            { name: "Lato", data: black!, weight: 900, style: "normal" },
+          ]
         : undefined,
     },
   );

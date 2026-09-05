@@ -4,14 +4,14 @@ import { THEME_COPY } from "@/content/site";
 import { applyTheme, resolveTheme } from "@/lib/theme";
 
 /**
- * Graphite is the site's default look, not a dark mode. This switches to the
- * day platform and back.
+ * Light is the site's default, not an OS-driven toggle. This switches to dark
+ * and back.
  *
- * The label is resolved in CSS (see `.when-graphite` / `.when-day` in
- * globals.css) rather than in React state, which means: correct on the server,
- * correct before hydration, and no flash of the wrong label. The handler
- * resolves the live theme at click time using the same precedence the
- * stylesheet uses, so the first click can never be a no-op.
+ * The label is resolved in CSS (`.when-light` / `.when-dark` in globals.css)
+ * rather than in React state: correct on the server, correct before
+ * hydration, no flash of the wrong label. The handler resolves the live theme
+ * at click time using the same precedence the stylesheet uses, so the first
+ * click can never be a no-op.
  *
  * With JavaScript off the button cannot do anything, so a <noscript> rule in
  * the layout removes it entirely rather than leaving a focusable control that
@@ -19,7 +19,7 @@ import { applyTheme, resolveTheme } from "@/lib/theme";
  */
 export function ThemeToggle() {
   function toggle() {
-    applyTheme(resolveTheme() === "day" ? "graphite" : "day");
+    applyTheme(resolveTheme() === "dark" ? "light" : "dark");
   }
 
   return (
@@ -27,38 +27,60 @@ export function ThemeToggle() {
       type="button"
       data-theme-toggle
       onClick={toggle}
-      className="gap-sm border-ink-2 px-md py-xs text-ink hover:border-line-work focus-visible:border-line-work flex shrink-0 items-center border-2 transition-colors"
+      className="text-text hover:bg-bg-subtle inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors"
     >
-      <HalfDisc />
-      <span className="code-type sr-only sm:not-sr-only">
+      <SunIcon className="when-light" />
+      <MoonIcon className="when-dark" />
+      <span className="sr-only">
         {/* Exactly one of these is displayed, and therefore exactly one is in
             the accessibility tree, so the button announces what it will do. */}
-        <span className="when-graphite">{THEME_COPY.toDay}</span>
-        <span className="when-day">{THEME_COPY.toGraphite}</span>
+        <span className="when-light">{THEME_COPY.toDark}</span>
+        <span className="when-dark">{THEME_COPY.toLight}</span>
       </span>
     </button>
   );
 }
 
-function HalfDisc() {
+function SunIcon({ className = "" }: { className?: string }) {
   return (
     <svg
-      width="14"
-      height="14"
-      viewBox="0 0 16 16"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
       aria-hidden="true"
       focusable="false"
-      className="shrink-0"
+      className={className}
     >
-      <circle
-        cx="8"
-        cy="8"
-        r="6.5"
-        fill="none"
+      <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.8" />
+      <path
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"
       />
-      <path d="M8 1.5 A6.5 6.5 0 0 1 8 14.5 Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function MoonIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      className={className}
+    >
+      <path
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"
+      />
     </svg>
   );
 }

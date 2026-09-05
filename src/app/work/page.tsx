@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RoleEntry } from "@/components/RoleEntry";
-import { StationSign } from "@/components/StationSign";
+import { Section } from "@/components/Section";
+import { ORG_ROLES, TECHTONIC, TECHTONIC_COPY } from "@/content/orgs";
+import {
+  PROFESSIONAL_ROLES,
+  TEACHING_LOAD,
+  TEACHING_ROLES,
+} from "@/content/roles";
 import {
   CERTIFICATIONS,
   LANGUAGES,
@@ -9,12 +15,6 @@ import {
   SKILL_TIERS,
   skillsInTier,
 } from "@/content/skills";
-import { ORG_ROLES, TECHTONIC, TECHTONIC_COPY } from "@/content/orgs";
-import {
-  PROFESSIONAL_ROLES,
-  TEACHING_LOAD,
-  TEACHING_ROLES,
-} from "@/content/roles";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -23,159 +23,146 @@ export const metadata: Metadata = {
   description: `Professional and organisational experience — ${SITE.goesBy}`,
 };
 
+/**
+ * Every role, every skill tier, every certification — nothing truncated,
+ * nothing behind a "show more". Single column, generous spacing between
+ * each block per the redesign brief.
+ */
 export default function WorkPage() {
   return (
     <>
-      <StationSign
-        code="W1"
-        name="Work"
-        line="kerja"
-        blurb="IBM, teaching, and the organisations"
-        as="h1"
-      />
+      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">Work</h1>
+        <p className="text-text-muted mt-3 max-w-prose">
+          IBM, teaching, and the organisations.
+        </p>
+      </div>
 
-      {/* Professional roles */}
-      <section className="px-lg py-xl">
-        <h2 className="code-type mb-lg text-ink-2 text-[15px]">Professional</h2>
-        {PROFESSIONAL_ROLES.map((role, i) => (
-          <RoleEntry key={i} role={role} />
-        ))}
-      </section>
+      <Section heading="Professional">
+        <div className="flex flex-col gap-10">
+          {PROFESSIONAL_ROLES.map((role) => (
+            <RoleEntry key={role.title} role={role} />
+          ))}
+        </div>
+      </Section>
 
-      {/*
-        Teaching roles. Plain ground, not bg-platform-2 — RoleEntry fills
-        with platform-2 itself, and the two stacked would blend into each
-        other, losing the band that gives this section its shape.
-      */}
-      <section className="px-lg py-xl">
-        <h2 className="code-type mb-lg text-ink-2 text-[15px]">Teaching</h2>
-        {TEACHING_ROLES.map((role, i) => (
-          <RoleEntry key={i} role={role} />
-        ))}
-        <p className="measure text-ink-2 mt-xl text-[15px] leading-relaxed">
+      <Section heading="Teaching" subtle>
+        <div className="flex flex-col gap-10">
+          {TEACHING_ROLES.map((role) => (
+            <RoleEntry key={role.title} role={role} />
+          ))}
+        </div>
+        <p className="text-text-muted mt-10 max-w-prose text-sm">
           {TEACHING_LOAD}
         </p>
-      </section>
+      </Section>
 
-      {/* Organisational roles */}
-      <section className="px-lg py-xl">
-        <h2 className="code-type mb-lg text-ink-2 text-[15px]">
-          Organisational
-        </h2>
-        {ORG_ROLES.map((role, i) => (
-          <RoleEntry key={i} role={role} />
-        ))}
-      </section>
+      <Section heading="Organisational">
+        <div className="flex flex-col gap-10">
+          {ORG_ROLES.map((role) => (
+            <RoleEntry key={role.title} role={role} />
+          ))}
+        </div>
+      </Section>
 
-      {/* TechTonic series */}
-      <section className="bg-platform-2 px-lg py-xl">
-        <h3 className="sign-type mb-md text-ink text-[19px]">
-          {TECHTONIC_COPY.heading}
-        </h3>
-        <p className="measure text-ink-2 mb-lg text-[15px] leading-relaxed">
-          {TECHTONIC_COPY.blurb}
-        </p>
-        <ul className="gap-sm flex flex-wrap">
-          {TECHTONIC.map((post, i) => (
-            <li key={i}>
+      <Section
+        heading={TECHTONIC_COPY.heading}
+        blurb={TECHTONIC_COPY.blurb}
+        subtle
+      >
+        <ul className="flex flex-wrap gap-3">
+          {TECHTONIC.map((post) => (
+            <li key={post.href}>
               <a
                 href={post.href}
                 rel="noopener noreferrer"
-                className="text-ink font-mono text-[13px] underline"
+                className="border-border-strong text-text-muted hover:border-accent hover:text-accent inline-block rounded-full border px-3 py-1 text-sm transition-colors"
               >
                 {post.label}
               </a>
             </li>
           ))}
         </ul>
-      </section>
+      </Section>
 
-      {/* Skills */}
-      <StationSign
-        code="W1.1"
-        name="Skills"
-        line="kerja"
-        blurb="Tiered strictly by evidence"
-      />
+      <Section
+        heading="Skills"
+        blurb="Tiered strictly by evidence — every claim links to what proves it."
+      >
+        <div className="flex flex-col gap-12">
+          {SKILL_TIERS.map((tierDef) => {
+            const skills = skillsInTier(tierDef.tier);
+            if (skills.length === 0) return null;
 
-      {SKILL_TIERS.map((tierDef) => {
-        const skills = skillsInTier(tierDef.tier);
-        if (skills.length === 0) return null;
+            return (
+              <div key={tierDef.tier}>
+                <h3 className="text-lg font-bold">{tierDef.heading}</h3>
+                <p className="text-text-muted mt-1 mb-6 max-w-prose text-sm">
+                  {tierDef.blurb}
+                </p>
 
-        return (
-          <section key={tierDef.tier} className="px-lg py-xl">
-            <h3 className="sign-type mb-sm text-ink text-[19px]">
-              {tierDef.heading}
-            </h3>
-            <p className="measure text-ink-2 mb-lg text-[15px]">
-              {tierDef.blurb}
-            </p>
+                <ul className="flex flex-col gap-4">
+                  {skills.map((skill) => (
+                    <li key={skill.name}>
+                      {skill.tier === "used" ? (
+                        <div>
+                          <span className="font-medium">{skill.name}</span>
+                          <ul className="mt-2 flex flex-wrap gap-3">
+                            {skill.evidence.map((artifact) => (
+                              <li key={artifact.href}>
+                                <Link
+                                  href={artifact.href}
+                                  className="text-accent text-sm underline"
+                                >
+                                  {artifact.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : (
+                        <span>{skill.name}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
 
-            <ul className="gap-md flex flex-wrap">
-              {skills.map((skill, i) => (
-                <li key={i}>
-                  {skill.tier === "used" ? (
-                    <div>
-                      <span className="text-ink text-[17px]">{skill.name}</span>
-                      <ul className="mt-xs gap-sm flex flex-wrap">
-                        {skill.evidence.map((artifact, j) => (
-                          <li key={j}>
-                            <Link
-                              href={artifact.href}
-                              className="text-ink-2 font-mono text-[13px] underline"
-                            >
-                              {artifact.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    <span className="text-ink text-[17px]">{skill.name}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })}
-
-      {/* Practice */}
-      <section className="bg-platform-2 px-lg py-xl">
-        <h3 className="sign-type mb-lg text-ink text-[19px]">Practice</h3>
-        <ul className="gap-md flex flex-wrap">
-          {PRACTICE.map((item, i) => (
-            <li key={i} className="text-ink text-[17px]">
+      <Section heading="Practice" subtle>
+        <ul className="flex flex-wrap gap-3">
+          {PRACTICE.map((item) => (
+            <li
+              key={item}
+              className="border-border rounded-full border px-4 py-1.5"
+            >
               {item}
             </li>
           ))}
         </ul>
-      </section>
+      </Section>
 
-      {/* Languages */}
-      <section className="px-lg py-xl">
-        <h3 className="sign-type mb-lg text-ink text-[19px]">Languages</h3>
-        <ul className="gap-md flex flex-col">
-          {LANGUAGES.map((lang, i) => (
-            <li key={i}>
-              <span className="text-ink text-[17px]">{lang.name}</span>
-              <span className="text-ink-2 ml-sm text-[15px]">{lang.level}</span>
+      <Section heading="Languages">
+        <ul className="flex flex-col gap-3">
+          {LANGUAGES.map((lang) => (
+            <li key={lang.name}>
+              <span className="font-medium">{lang.name}</span>
+              <span className="text-text-muted ml-2 text-sm">{lang.level}</span>
             </li>
           ))}
         </ul>
-      </section>
+      </Section>
 
-      {/* Certifications */}
-      <section className="bg-platform-2 px-lg py-xl">
-        <h3 className="sign-type mb-lg text-ink text-[19px]">Certifications</h3>
-        <ul className="gap-sm flex flex-col">
-          {CERTIFICATIONS.map((cert, i) => (
-            <li key={i} className="text-ink text-[15px]">
-              {cert}
-            </li>
+      <Section heading="Certifications" subtle>
+        <ul className="flex flex-col gap-3">
+          {CERTIFICATIONS.map((cert) => (
+            <li key={cert}>{cert}</li>
           ))}
         </ul>
-      </section>
+      </Section>
     </>
   );
 }

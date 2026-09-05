@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PhotoGrid } from "@/components/PhotoGrid";
-import { StationSign } from "@/components/StationSign";
 import {
   ALBUMS,
   GALLERY_COPY,
@@ -13,7 +12,7 @@ import {
 /**
  * Next 15 passes `params` as a Promise. Typing it as a plain object compiles
  * locally but fails the production build against the generated PageProps
- * constraint, which is how this route broke.
+ * constraint, which is how this route broke once before.
  */
 type Props = {
   params: Promise<{ album: string }>;
@@ -40,15 +39,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  *
  * Ships correct with zero real photos — that is the v1 acceptance criterion,
  * not a temporary state (prd.md §5.5). The "nothing here yet" message always
- * renders when there are none. What sits below it now is a placeholder
- * preview grid — clearly labelled, never counted as real content — so the
- * page has the weight of an actual gallery rather than one line of grey text.
- * `albumDisplayItems` is the single place that decides which grid shows.
- *
- * The grid itself, `PhotoGrid`, is real rather than a mockup, so the first
- * real photo dropped into `gallery.ts` renders with no code change: CSS
- * multi-column masonry, intrinsic dimensions so nothing shifts, caption under
- * the photo rather than over it.
+ * renders when there are none. What sits below it is a placeholder preview
+ * grid — clearly labelled, never counted as real content — so the page has
+ * the weight of an actual gallery. `albumDisplayItems` is the single place
+ * that decides which grid shows.
  */
 export default async function AlbumPage({ params }: Props) {
   const { album: slug } = await params;
@@ -59,44 +53,40 @@ export default async function AlbumPage({ params }: Props) {
 
   return (
     <>
-      <StationSign
-        code={album.code}
-        name={album.name}
-        line="pribadi"
-        blurb={album.blurb}
-        as="h1"
-      />
+      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+          {album.name}
+        </h1>
+        <p className="text-text-muted mt-3 max-w-prose">{album.blurb}</p>
+      </div>
 
-      <div className="px-lg py-xl">
+      <div className="mx-auto max-w-3xl px-6 pb-24 sm:px-8">
         {isPlaceholder ? (
-          <div className="border-line-life mb-xl pl-md border-l-[4px]">
-            <p className="text-ink text-[17px]">{GALLERY_COPY.emptyAlbum}</p>
-            <p className="measure text-ink-2 mt-xs text-[15px]">
+          <div className="border-accent mb-6 border-l-4 pl-6">
+            <p>{GALLERY_COPY.emptyAlbum}</p>
+            <p className="text-text-muted mt-1 max-w-prose text-sm">
               {GALLERY_COPY.emptyAlbumDetail}
             </p>
           </div>
         ) : null}
 
         {isPlaceholder ? (
-          <p className="code-type text-ink-2 mb-md">
+          <p className="text-text-muted mb-4 text-sm font-semibold">
             {GALLERY_COPY.previewLabel}
           </p>
         ) : null}
 
-        <div className={isPlaceholder ? "mb-xl opacity-60" : "mb-xl"}>
+        <div className={isPlaceholder ? "mb-10 opacity-60" : "mb-10"}>
           <PhotoGrid items={items} />
         </div>
 
         {isPlaceholder ? (
-          <p className="measure text-ink-2 mb-xl text-[13px]">
+          <p className="text-text-muted mb-10 max-w-prose text-xs">
             {GALLERY_COPY.previewDetail}
           </p>
         ) : null}
 
-        <Link
-          href="/documentation"
-          className="text-ink-2 text-[15px] underline"
-        >
+        <Link href="/documentation" className="text-accent underline">
           {GALLERY_COPY.allAlbums}
         </Link>
       </div>

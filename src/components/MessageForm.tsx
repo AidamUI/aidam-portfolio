@@ -18,7 +18,7 @@ export function MessageForm({ disabled = false }: { disabled?: boolean }) {
   const token = issueFormToken();
 
   return (
-    <form action={submitMessage} className="mt-lg">
+    <form action={submitMessage} className="mt-8">
       <input type="hidden" name="token" value={token} />
 
       {/*
@@ -41,7 +41,7 @@ export function MessageForm({ disabled = false }: { disabled?: boolean }) {
         />
       </div>
 
-      <label htmlFor="body" className="code-type text-ink-2 block">
+      <label htmlFor="body" className="block text-sm font-semibold">
         {GUESTBOOK.fieldLabel}
       </label>
 
@@ -57,14 +57,14 @@ export function MessageForm({ disabled = false }: { disabled?: boolean }) {
           required
           disabled={disabled}
           placeholder={GUESTBOOK.placeholder}
-          className="border-ink-2 bg-platform text-ink mt-sm px-md py-sm w-full border-2 text-[17px] disabled:opacity-50"
+          className="border-border-strong bg-bg mt-3 w-full rounded-lg border px-4 py-3 disabled:opacity-50"
         />
       </CharacterCounter>
 
       <button
         type="submit"
         disabled={disabled}
-        className="code-type border-ink-2 text-ink mt-md px-lg py-sm hover:border-line-work border-2 transition-colors disabled:opacity-50"
+        className="bg-accent text-on-accent mt-4 rounded-full px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {GUESTBOOK.submit}
       </button>

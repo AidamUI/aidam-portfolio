@@ -1,18 +1,17 @@
 import type { ThemeName } from "@/content/types";
 
 export const THEME_STORAGE_KEY = "aidam:theme";
-export const ROUTE_DRAWN_KEY = "aidam:route-drawn";
 
-export const THEMES: readonly ThemeName[] = ["graphite", "day"] as const;
+export const THEMES: readonly ThemeName[] = ["light", "dark"] as const;
 
-/** The two grounds, for the browser-chrome colour. Mirrors --platform. */
+/** The two grounds, for the browser-chrome colour. Mirrors --bg. */
 export const THEME_CHROME: Record<ThemeName, string> = {
-  graphite: "#1E2733",
-  day: "#EDF0F3",
+  light: "#FFFFFF",
+  dark: "#14161A",
 };
 
 export function isThemeName(value: unknown): value is ThemeName {
-  return value === "graphite" || value === "day";
+  return value === "light" || value === "dark";
 }
 
 /**
@@ -21,9 +20,9 @@ export function isThemeName(value: unknown): value is ThemeName {
  *
  * A media-scoped <meta name="theme-color"> cannot do this job: the browser
  * chooses between those purely on the OS preference and never sees data-theme,
- * so a reader who picks the day platform on a dark OS gets a graphite bar over
- * a light page for the rest of the session. So the tag ships with the graphite
- * default and gets rewritten whenever the theme resolves to something else.
+ * so a reader who picks dark on a light OS gets the wrong bar colour for the
+ * rest of the session. So the tag ships with the light default and gets
+ * rewritten whenever the theme resolves to something else.
  */
 export function paintChrome(theme: ThemeName): void {
   document
@@ -32,36 +31,30 @@ export function paintChrome(theme: ThemeName): void {
 }
 
 /**
- * Runs before first paint, inline in <head>. Three jobs, all of which have to
+ * Runs before first paint, inline in <head>. Two jobs, both of which have to
  * happen before the browser paints:
  *
- * 1. Applies a stored theme choice, so the day platform never flashes graphite
- *    on load. No stored choice means no attribute, which leaves the stylesheet
- *    on graphite — the site's default look for everyone, not a dark mode.
+ * 1. Applies a stored theme choice, so dark mode never flashes light on load.
+ *    No stored choice means no attribute, which leaves the stylesheet on
+ *    light — the site's default look for everyone, not an OS-driven toggle.
  * 2. Repaints the browser chrome to match. The theme-color meta is emitted
  *    ahead of this script in <head>, so it is already queryable here.
- * 3. Marks the route-line animation as seen for this tab, so the spine draws
- *    once per session rather than on every navigation. Doing it here rather
- *    than in React keeps it out of the hydration path: the server renders one
- *    markup and the attribute decides whether the CSS animation applies.
  *
  * Wrapped in try/catch because storage throws outright in some privacy modes.
  */
 export const BOOT_SCRIPT = `(function(){try{
 var d=document.documentElement;
 var t=localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});
-if(t==="graphite"||t==="day"){
+if(t==="light"||t==="dark"){
 d.setAttribute("data-theme",t);
 var m=document.querySelector('meta[name="theme-color"]');
-if(m){m.setAttribute("content",t==="day"?${JSON.stringify(THEME_CHROME.day)}:${JSON.stringify(THEME_CHROME.graphite)});}
+if(m){m.setAttribute("content",t==="dark"?${JSON.stringify(THEME_CHROME.dark)}:${JSON.stringify(THEME_CHROME.light)});}
 }
-if(sessionStorage.getItem(${JSON.stringify(ROUTE_DRAWN_KEY)})){d.setAttribute("data-route-drawn","");}
-else{sessionStorage.setItem(${JSON.stringify(ROUTE_DRAWN_KEY)},"1");}
 }catch(e){}})();`;
 
 /**
  * The theme in effect right now, resolved exactly as the stylesheet resolves
- * it: an explicit choice, or graphite. The OS preference deliberately does not
+ * it: an explicit choice, or light. The OS preference deliberately does not
  * enter into it — see the note at the top of globals.css. Keeping this in step
  * with the CSS is what stops the first click on the switch being a no-op.
  *
@@ -69,7 +62,7 @@ else{sessionStorage.setItem(${JSON.stringify(ROUTE_DRAWN_KEY)},"1");}
  */
 export function resolveTheme(): ThemeName {
   const attr = document.documentElement.getAttribute("data-theme");
-  return isThemeName(attr) ? attr : "graphite";
+  return isThemeName(attr) ? attr : "light";
 }
 
 export function applyTheme(theme: ThemeName): void {

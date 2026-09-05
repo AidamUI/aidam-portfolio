@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { PageShell } from "@/components/PageShell";
 import { SkipLink } from "@/components/SkipLink";
 import { SITE } from "@/content/site";
-import { archivo, plexMono } from "@/lib/fonts";
+import { lato } from "@/lib/fonts";
 import { BOOT_SCRIPT, THEME_CHROME } from "@/lib/theme";
 import "./globals.css";
 
@@ -29,14 +28,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   /**
-   * Graphite, unconditionally — it is the default ground for every reader.
+   * White, unconditionally — it is the default ground for every reader.
    * Media-scoped theme-color variants are deliberately not used: the browser
    * picks between those on the OS preference alone and never sees data-theme,
-   * so choosing the day platform would leave a graphite bar over a light page.
-   * `paintChrome` rewrites this tag instead, from the boot script on load and
-   * from the switch on toggle.
+   * so choosing dark mode on a light OS would leave the wrong bar colour for
+   * the session. `paintChrome` rewrites this tag instead, from the boot
+   * script on load and from the switch on toggle.
    */
-  themeColor: THEME_CHROME.graphite,
+  themeColor: THEME_CHROME.light,
 };
 
 export default function RootLayout({
@@ -45,21 +44,19 @@ export default function RootLayout({
   return (
     // suppressHydrationWarning: the boot script sets data-theme on <html>
     // before React hydrates, which is the whole point of running it there.
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${archivo.variable} ${plexMono.variable}`}
-    >
+    <html lang="en" suppressHydrationWarning className={lato.variable}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
         <noscript>
           <style>{`[data-theme-toggle]{display:none}`}</style>
         </noscript>
       </head>
-      <body className="flex min-h-dvh flex-col">
+      <body className="bg-bg text-text flex min-h-dvh flex-col">
         <SkipLink />
         <Header />
-        <PageShell>{children}</PageShell>
+        <main id="main" tabIndex={-1} className="flex-1">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

@@ -48,7 +48,7 @@ export type SocialLink = {
   note?: string;
 };
 
-export type ThemeName = "graphite" | "day";
+export type ThemeName = "light" | "dark";
 
 /* ── Shared ─────────────────────────────────────────────────────────────── */
 

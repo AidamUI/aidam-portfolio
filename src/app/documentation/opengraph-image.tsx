@@ -3,16 +3,14 @@ import { OG_CONTENT_TYPE, OG_SIZE, renderCard } from "@/lib/og";
 
 const station = STATIONS.find((s) => s.code === "O1")!;
 
-export const alt = `${station.code} ${station.name} — ${station.blurb}`;
+export const alt = `${station.name} — ${station.blurb}`;
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default function Image() {
   return renderCard({
-    code: station.code,
     title: station.name,
     subtitle: station.blurb,
-    line: "pribadi",
     footer: "Muhammad Kaila Aidam Riyan",
   });
 }

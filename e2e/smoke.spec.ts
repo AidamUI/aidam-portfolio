@@ -64,7 +64,7 @@ test.describe("every route", () => {
   }
 });
 
-test.describe("the wayfinding shell", () => {
+test.describe("the site shell", () => {
   test("skip link is the first stop and moves focus to main", async ({
     page,
   }) => {
@@ -78,15 +78,15 @@ test.describe("the wayfinding shell", () => {
     await expect(page.locator("#main")).toBeFocused();
   });
 
-  test("the current station is marked, not just coloured", async ({ page }) => {
+  test("the current page is marked, not just coloured", async ({ page }) => {
     await page.goto("/work");
 
-    // aria-current is what a screen reader gets; the marker fill and the
+    // aria-current is what a screen reader gets; bold weight and the
     // underline are what everyone else gets. Colour is never the only signal.
     const current = page.locator('nav [aria-current="page"]');
     await expect(current.first()).toHaveAttribute("aria-current", "page");
 
-    // Below lg the bar collapses, so the marked station lives in the menu.
+    // Below sm the bar collapses into a menu, so the marked link lives there.
     // Open it if that is the layout in play, then require it to be visible.
     const menuButton = page.getByRole("button", { name: /open menu/i });
     if (await menuButton.isVisible()) {
@@ -99,27 +99,25 @@ test.describe("the wayfinding shell", () => {
     await expect(marked.locator("span.underline")).toHaveCount(1);
   });
 
-  test("the theme switch flips graphite and the day platform", async ({
-    page,
-  }) => {
+  test("the theme switch flips light and dark", async ({ page }) => {
     await page.goto("/");
     const root = page.locator("html");
 
-    // Graphite is the default for everyone; no OS preference changes that.
-    await expect(root).not.toHaveAttribute("data-theme", "day");
+    // Light is the default for everyone; no OS preference changes that.
+    await expect(root).not.toHaveAttribute("data-theme", "dark");
 
-    await page.getByRole("button", { name: /switch to day platform/i }).click();
-    await expect(root).toHaveAttribute("data-theme", "day");
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
+    await expect(root).toHaveAttribute("data-theme", "dark");
 
-    await page.getByRole("button", { name: /switch to graphite/i }).click();
-    await expect(root).toHaveAttribute("data-theme", "graphite");
+    await page.getByRole("button", { name: /switch to light mode/i }).click();
+    await expect(root).toHaveAttribute("data-theme", "light");
   });
 
   test("the choice survives a reload", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("button", { name: /switch to day platform/i }).click();
+    await page.getByRole("button", { name: /switch to dark mode/i }).click();
     await page.reload();
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "day");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   });
 });
 

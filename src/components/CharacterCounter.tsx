@@ -41,8 +41,8 @@ export function CharacterCounter({
       <p
         id={id}
         aria-live={close ? "polite" : "off"}
-        className={`mt-xs font-mono text-[13px] ${
-          close ? "text-marker" : "text-ink-2"
+        className={`mt-2 font-mono text-xs ${
+          close ? "text-accent" : "text-text-muted"
         }`}
       >
         {used} {suffix}

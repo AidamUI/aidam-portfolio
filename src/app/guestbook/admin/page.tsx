@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { StationSign } from "@/components/StationSign";
+import { Section } from "@/components/Section";
 import { GUESTBOOK_ADMIN } from "@/content/guestbook";
 import { isDatabaseConfigured } from "@/db";
 import { isAuthorised } from "@/lib/admin-auth";
+import { dayMonthYear } from "@/lib/format";
 import {
   deleteMessage,
   getAllMessages,
   setMessageStatus,
 } from "@/lib/messages";
-import { dayMonthYear } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: GUESTBOOK_ADMIN.heading,
@@ -18,6 +18,17 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
+
+function PageHeading({ blurb }: { blurb?: string }) {
+  return (
+    <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+      <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+        {GUESTBOOK_ADMIN.heading}
+      </h1>
+      {blurb ? <p className="text-text-muted mt-3">{blurb}</p> : null}
+    </div>
+  );
+}
 
 /**
  * The approval queue.
@@ -38,32 +49,12 @@ export default async function AdminPage() {
   );
 
   if (!authorised) {
-    return (
-      <>
-        <StationSign
-          code="G1"
-          name={GUESTBOOK_ADMIN.heading}
-          line="pribadi"
-          as="h1"
-        />
-        <p className="px-lg py-xl text-ink">Not authorised.</p>
-      </>
-    );
+    return <PageHeading blurb="Not authorised." />;
   }
 
   if (!isDatabaseConfigured) {
     return (
-      <>
-        <StationSign
-          code="G1"
-          name={GUESTBOOK_ADMIN.heading}
-          line="pribadi"
-          as="h1"
-        />
-        <p className="px-lg py-xl text-ink">
-          No database configured, so there is no queue to show.
-        </p>
-      </>
+      <PageHeading blurb="No database configured, so there is no queue to show." />
     );
   }
 
@@ -91,35 +82,29 @@ export default async function AdminPage() {
 
   return (
     <>
-      <StationSign
-        code="G1"
-        name={GUESTBOOK_ADMIN.heading}
-        line="pribadi"
-        blurb={`${pending.length} pending`}
-        as="h1"
-      />
+      <PageHeading blurb={`${pending.length} pending`} />
 
-      <section className="px-lg py-xl">
+      <div className="mx-auto max-w-3xl px-6 pb-24 sm:px-8">
         {pending.length === 0 ? (
-          <p className="text-ink-2 text-[15px]">{GUESTBOOK_ADMIN.emptyQueue}</p>
+          <p className="text-text-muted">{GUESTBOOK_ADMIN.emptyQueue}</p>
         ) : (
-          <ul className="flex flex-col">
+          <ul className="flex flex-col gap-8">
             {pending.map((message) => (
-              <li key={message.id} className="border-rule py-lg border-t">
-                <p className="measure text-ink text-[17px] whitespace-pre-line">
+              <li key={message.id} className="border-border border-t pt-8">
+                <p className="max-w-prose whitespace-pre-line">
                   {message.body}
                 </p>
-                <p className="text-ink-2 mt-sm font-mono text-[13px]">
+                <p className="text-text-muted mt-3 font-mono text-xs">
                   <time dateTime={message.createdAt.toISOString()}>
                     {dayMonthYear(message.createdAt)}
                   </time>
                 </p>
-                <div className="gap-sm mt-md flex flex-wrap">
+                <div className="mt-4 flex flex-wrap gap-3">
                   <form action={approve}>
                     <input type="hidden" name="id" value={message.id} />
                     <button
                       type="submit"
-                      className="code-type border-line-work text-ink px-md py-xs border-2"
+                      className="border-accent text-accent rounded-full border px-4 py-1.5 text-sm font-semibold"
                     >
                       {GUESTBOOK_ADMIN.approve}
                     </button>
@@ -128,7 +113,7 @@ export default async function AdminPage() {
                     <input type="hidden" name="id" value={message.id} />
                     <button
                       type="submit"
-                      className="code-type border-ink-2 text-ink px-md py-xs border-2"
+                      className="border-border-strong text-text-muted rounded-full border px-4 py-1.5 text-sm font-semibold"
                     >
                       {GUESTBOOK_ADMIN.reject}
                     </button>
@@ -137,7 +122,7 @@ export default async function AdminPage() {
                     <input type="hidden" name="id" value={message.id} />
                     <button
                       type="submit"
-                      className="code-type border-line-life text-ink px-md py-xs border-2"
+                      className="rounded-full border border-red-500 px-4 py-1.5 text-sm font-semibold text-red-500"
                     >
                       {GUESTBOOK_ADMIN.remove}
                     </button>
@@ -147,31 +132,30 @@ export default async function AdminPage() {
             ))}
           </ul>
         )}
-      </section>
+      </div>
 
-      <section className="bg-platform-2 px-lg py-xl">
-        <h2 className="sign-type text-ink mb-lg text-[19px]">Decided</h2>
+      <Section heading="Decided" subtle>
         {decided.length === 0 ? (
-          <p className="text-ink-2 text-[15px]">Nothing decided yet.</p>
+          <p className="text-text-muted">Nothing decided yet.</p>
         ) : (
-          <ul className="flex flex-col">
+          <ul className="flex flex-col gap-6">
             {decided.map((message) => (
-              <li key={message.id} className="border-rule py-md border-t">
-                <p className="code-type text-ink-2">
+              <li key={message.id} className="border-border border-t pt-6">
+                <p className="text-text-muted text-sm font-semibold">
                   {
                     GUESTBOOK_ADMIN.statusLabels[
                       message.status as keyof typeof GUESTBOOK_ADMIN.statusLabels
                     ]
                   }
                 </p>
-                <p className="measure text-ink text-[15px] whitespace-pre-line">
+                <p className="mt-1 max-w-prose whitespace-pre-line">
                   {message.body}
                 </p>
-                <form action={remove} className="mt-sm">
+                <form action={remove} className="mt-3">
                   <input type="hidden" name="id" value={message.id} />
                   <button
                     type="submit"
-                    className="code-type border-line-life text-ink px-md py-xs border-2"
+                    className="rounded-full border border-red-500 px-4 py-1.5 text-sm font-semibold text-red-500"
                   >
                     {GUESTBOOK_ADMIN.remove}
                   </button>
@@ -180,7 +164,7 @@ export default async function AdminPage() {
             ))}
           </ul>
         )}
-      </section>
+      </Section>
     </>
   );
 }

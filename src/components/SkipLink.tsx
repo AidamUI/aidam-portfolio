@@ -1,11 +1,11 @@
 import { A11Y } from "@/content/site";
 
-/** First focusable thing on the page. Invisible until focused, then a sign. */
+/** First focusable thing on the page. Invisible until focused. */
 export function SkipLink() {
   return (
     <a
       href="#main"
-      className="code-type focus:left-md focus:top-md focus:bg-marker focus:px-md focus:py-sm focus:text-on-marker sr-only focus:not-sr-only focus:absolute focus:z-50"
+      className="bg-accent text-on-accent sr-only rounded-md px-4 py-2 text-sm font-semibold focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"
     >
       {A11Y.skipToContent}
     </a>

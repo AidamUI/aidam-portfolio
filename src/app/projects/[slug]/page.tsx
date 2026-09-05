@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Section } from "@/components/Section";
 import { StackTag } from "@/components/StackTag";
-import { StationBadge } from "@/components/StationBadge";
-import { StationSign } from "@/components/StationSign";
 import { PLACEHOLDER_BLUR } from "@/content/placeholder-blur";
 import {
   PROJECTS,
@@ -37,16 +36,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /**
  * One case study.
  *
- * The template branches on `confidential`, not on whether the fields happen to
- * be empty. On a confidential project the type makes `build`, `outcome`,
+ * The template branches on `confidential`, not on whether the fields happen
+ * to be empty. On a confidential project the type makes `build`, `outcome`,
  * `stack`, `links` and `images` impossible, so this cannot leak them even if
  * someone adds them to the data by mistake — that is a build error, not a
  * runtime one. What a withheld project gets instead is an explicit panel
  * saying so, rather than a page that just looks unfinished.
  *
- * Sections are separated by station signs rather than whitespace, which is how
- * design-system.md builds a boundary, and gives a long page real structure to
- * scan.
+ * Everything the confidentiality rule governs lives inside the single
+ * <article> below, so a test scoped to `article img` / `article a[href^=http]`
+ * genuinely covers the whole case study, not just part of it.
  */
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
@@ -60,156 +59,115 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
-      <StationSign
-        code={project.code}
-        name={project.name}
-        line="kerja"
-        blurb={project.tagline}
-        as="h1"
-      />
+      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+          {project.name}
+        </h1>
+        <p className="text-text-muted mt-3 max-w-prose">{project.tagline}</p>
+      </div>
 
       <article>
-        <section className="px-lg py-xl">
-          <dl className="gap-lg flex flex-wrap">
+        <Section subtle>
+          <dl className="flex flex-wrap gap-8">
             <div>
-              <dt className="code-type text-ink-2">Status</dt>
-              <dd className="text-ink mt-xs text-[17px]">
-                {STATUS_LABEL[project.status]}
-              </dd>
+              <dt className="text-text-muted text-sm font-semibold">Status</dt>
+              <dd className="mt-1">{STATUS_LABEL[project.status]}</dd>
             </div>
             <div>
-              <dt className="code-type text-ink-2">Year</dt>
-              <dd className="text-ink mt-xs font-mono text-[17px]">
-                {project.year}
-              </dd>
+              <dt className="text-text-muted text-sm font-semibold">Year</dt>
+              <dd className="mt-1 font-mono">{project.year}</dd>
             </div>
             <div className="min-w-full sm:min-w-0">
-              <dt className="code-type text-ink-2">
+              <dt className="text-text-muted text-sm font-semibold">
                 {PROJECTS_COPY.roleLabel}
               </dt>
-              <dd className="measure text-ink mt-xs text-[17px]">
-                {project.role}
-              </dd>
+              <dd className="mt-1 max-w-prose">{project.role}</dd>
             </div>
           </dl>
-        </section>
+        </Section>
 
-        <StationSign code="1" name="Problem" line="kerja" />
-        <section className="px-lg py-xl">
-          <p className="measure text-ink text-[17px] leading-relaxed">
-            {project.problem}
-          </p>
-        </section>
+        <Section heading="Problem">
+          <p className="max-w-prose">{project.problem}</p>
+        </Section>
 
-        <StationSign code="2" name="What it does" line="kerja" />
-        <section className="px-lg py-xl">
-          <p className="measure text-ink text-[17px] leading-relaxed">
-            {project.what}
-          </p>
-        </section>
+        <Section heading="What it does" subtle>
+          <p className="max-w-prose">{project.what}</p>
+        </Section>
 
         {withheld ? (
-          <>
-            <StationSign
-              code="3"
-              name={PROJECTS_COPY.withheldLabel}
-              line="pribadi"
-            />
-            <section className="px-lg py-xl">
-              <p className="measure border-marker text-ink pl-md border-l-[4px] text-[17px] leading-relaxed">
-                {project.withheldNote}
-              </p>
-            </section>
-          </>
+          <Section heading={PROJECTS_COPY.withheldLabel}>
+            <p className="border-accent max-w-prose border-l-4 pl-6">
+              {project.withheldNote}
+            </p>
+          </Section>
         ) : (
           <>
             {project.build ? (
-              <>
-                <StationSign code="3" name="Build" line="kerja" />
-                <section className="px-lg py-xl">
-                  <p className="measure text-ink text-[17px] leading-relaxed">
-                    {project.build}
-                  </p>
-                </section>
-              </>
+              <Section heading="Build">
+                <p className="max-w-prose">{project.build}</p>
+              </Section>
             ) : null}
 
             {project.stack && project.stack.length > 0 ? (
-              <section className="bg-platform-2 px-lg py-xl">
-                <h2 className="code-type text-ink-2 mb-md">
-                  {PROJECTS_COPY.stackLabel}
-                </h2>
-                <ul className="gap-sm flex flex-wrap">
+              <Section heading={PROJECTS_COPY.stackLabel} subtle>
+                <ul className="flex flex-wrap gap-3">
                   {project.stack.map((tech) => (
                     <li key={tech}>
                       <StackTag name={tech} />
                     </li>
                   ))}
                 </ul>
-              </section>
+              </Section>
             ) : null}
 
             {project.images && project.images.length > 0 ? (
-              <>
-                <StationSign
-                  code="4"
-                  name={PROJECTS_COPY.imagesLabel}
-                  line="kerja"
-                />
-                <section className="px-lg py-xl">
-                  <div className="gap-xl flex flex-col">
-                    {project.images.map((image) => (
-                      <figure key={image.src}>
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          width={image.width}
-                          height={image.height}
-                          placeholder="blur"
-                          blurDataURL={PLACEHOLDER_BLUR}
-                          sizes="(min-width: 768px) 720px, 100vw"
-                          className="h-auto w-full"
-                        />
-                        {image.caption ? (
-                          <figcaption className="measure text-ink-2 mt-sm text-[14px]">
-                            {image.caption}
-                          </figcaption>
-                        ) : null}
-                      </figure>
-                    ))}
-                  </div>
-                </section>
-              </>
+              <Section heading={PROJECTS_COPY.imagesLabel}>
+                <div className="flex flex-col gap-10">
+                  {project.images.map((image) => (
+                    <figure key={image.src}>
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        placeholder="blur"
+                        blurDataURL={PLACEHOLDER_BLUR}
+                        sizes="(min-width: 768px) 720px, 100vw"
+                        className="h-auto w-full rounded-lg"
+                      />
+                      {image.caption ? (
+                        <figcaption className="text-text-muted mt-2 text-sm">
+                          {image.caption}
+                        </figcaption>
+                      ) : null}
+                    </figure>
+                  ))}
+                </div>
+              </Section>
             ) : null}
 
             {project.outcome ? (
-              <>
-                <StationSign code="5" name="Outcome" line="kerja" />
-                <section className="px-lg py-xl">
-                  <p className="measure text-ink text-[17px] leading-relaxed">
-                    {project.outcome}
-                  </p>
-                </section>
-              </>
+              <Section heading="Outcome" subtle>
+                <p className="max-w-prose">{project.outcome}</p>
+              </Section>
             ) : null}
 
             {project.links && project.links.length > 0 ? (
-              <section className="bg-platform-2 px-lg py-xl">
-                <h2 className="code-type text-ink-2 mb-md">Links</h2>
-                <ul className="gap-sm flex flex-col">
+              <Section heading="Links">
+                <ul className="flex flex-col gap-3">
                   {project.links.map((link) => (
                     <li key={link.href}>
                       <a
                         href={link.href}
                         rel="noopener noreferrer"
-                        className="text-ink text-[17px] underline"
+                        className="text-accent underline"
                       >
                         {link.label}
                       </a>
                     </li>
                   ))}
                 </ul>
-              </section>
+              </Section>
             ) : null}
           </>
         )}
@@ -218,45 +176,44 @@ export default async function ProjectPage({ params }: Props) {
       {/* Onward navigation, so a case study is not a dead end. */}
       <nav
         aria-label={PROJECTS_COPY.moreProjects}
-        className="border-rule px-lg py-xl border-t"
+        className="border-border border-t"
       >
-        <ul className="gap-lg flex flex-col sm:flex-row sm:justify-between">
-          {previous ? (
-            <li>
-              <Link href={`/projects/${previous.slug}`} className="block">
-                <span className="code-type text-ink-2 block">
-                  {PROJECTS_COPY.prevProject}
-                </span>
-                <span className="gap-sm mt-xs flex items-center">
-                  <StationBadge code={previous.code} line="kerja" />
-                  <span className="sign-type text-ink text-[17px] underline">
+        <div className="mx-auto max-w-3xl px-6 py-16 sm:px-8 sm:py-24">
+          <ul className="flex flex-col gap-8 sm:flex-row sm:justify-between">
+            {previous ? (
+              <li>
+                <Link
+                  href={`/projects/${previous.slug}`}
+                  className="group block"
+                >
+                  <span className="text-text-muted block text-sm">
+                    {PROJECTS_COPY.prevProject}
+                  </span>
+                  <span className="group-hover:text-accent mt-1 block font-semibold underline transition-colors">
                     {previous.name}
                   </span>
-                </span>
-              </Link>
-            </li>
-          ) : null}
-          {next ? (
-            <li className="sm:text-right">
-              <Link href={`/projects/${next.slug}`} className="block">
-                <span className="code-type text-ink-2 block">
-                  {PROJECTS_COPY.nextProject}
-                </span>
-                <span className="gap-sm mt-xs flex items-center sm:justify-end">
-                  <StationBadge code={next.code} line="kerja" />
-                  <span className="sign-type text-ink text-[17px] underline">
+                </Link>
+              </li>
+            ) : null}
+            {next ? (
+              <li className="sm:text-right">
+                <Link href={`/projects/${next.slug}`} className="group block">
+                  <span className="text-text-muted block text-sm">
+                    {PROJECTS_COPY.nextProject}
+                  </span>
+                  <span className="group-hover:text-accent mt-1 block font-semibold underline transition-colors">
                     {next.name}
                   </span>
-                </span>
-              </Link>
-            </li>
-          ) : null}
-        </ul>
-        <p className="mt-xl">
-          <Link href="/projects" className="text-ink-2 text-[15px] underline">
-            {PROJECTS_COPY.moreProjects}
-          </Link>
-        </p>
+                </Link>
+              </li>
+            ) : null}
+          </ul>
+          <p className="mt-10">
+            <Link href="/projects" className="text-accent underline">
+              {PROJECTS_COPY.moreProjects}
+            </Link>
+          </p>
+        </div>
       </nav>
     </>
   );

@@ -1,14 +1,7 @@
 /**
- * Role entry: a signage band, not a bare paragraph. Source: design-system.md
- * § Components, RoleEntry — "no card, no border, no hover lift" governs the
- * *interaction* (nothing lifts, nothing shadows), not the visual weight. The
- * left-border-plus-fill treatment is the same one `ProjectRow` uses, so /work
- * and /academic read as one system with /projects rather than three different
- * levels of visual density for the same kind of content: real, dated things
- * Aidam did.
- *
- * Roles with stages (AIESEC's four, BEM's two) render as one entry with a
- * progression timeline rather than as separate rows.
+ * One role: organisation, title, dates, prose, and — where a role has stages
+ * or artifacts — a nested timeline and a row of links. Generous spacing
+ * throughout; the full summary always renders, never truncated.
  */
 
 import Link from "next/link";
@@ -23,36 +16,36 @@ export function RoleEntry({ role }: RoleEntryProps) {
   const period = formatPeriod(role.start, role.end);
 
   return (
-    <article className="border-line-work bg-platform-2 px-lg py-lg mb-md border-l-[3px] last:mb-0">
-      <header className="mb-md">
-        <h3 className="sign-type text-ink text-[19px]">{role.org}</h3>
-        <p className="text-ink-2 text-[17px]">{role.title}</p>
-        <div className="mt-xs gap-md flex flex-wrap items-baseline">
-          <time className="text-ink-2 font-mono text-[13px]">{period}</time>
+    <article className="border-border border-b pb-10 last:border-b-0 last:pb-0">
+      <header className="mb-4">
+        <h3 className="text-lg font-bold">{role.org}</h3>
+        <p className="text-text-muted mt-1">{role.title}</p>
+        <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <time className="text-text-muted font-mono text-sm">{period}</time>
           {role.place ? (
-            <span className="text-ink-2 text-[15px]">{role.place}</span>
+            <span className="text-text-muted text-sm">{role.place}</span>
           ) : null}
           {role.scale ? (
-            <span className="code-type text-ink-2">{role.scale}</span>
+            <span className="text-accent text-sm font-medium">
+              {role.scale}
+            </span>
           ) : null}
         </div>
       </header>
 
-      <div className="measure text-ink text-[17px] leading-relaxed">
-        <p>{role.summary}</p>
-      </div>
+      <p className="max-w-prose">{role.summary}</p>
 
       {role.stages && role.stages.length > 0 ? (
-        <div className="mt-lg border-line-work pl-lg border-l-[3px]">
+        <div className="border-border mt-6 flex flex-col gap-6 border-l pl-6">
           {role.stages.map((stage) => {
             const stagePeriod = formatPeriod(stage.start, stage.end);
             return (
-              <div key={stage.title} className="mb-lg last:mb-0">
-                <p className="sign-type text-ink text-[17px]">{stage.title}</p>
-                <time className="text-ink-2 block font-mono text-[13px]">
+              <div key={stage.title}>
+                <p className="font-semibold">{stage.title}</p>
+                <time className="text-text-muted block font-mono text-sm">
                   {stagePeriod}
                 </time>
-                <p className="measure text-ink-2 mt-xs text-[15px] leading-relaxed">
+                <p className="text-text-muted mt-1 max-w-prose">
                   {stage.summary}
                 </p>
               </div>
@@ -62,12 +55,12 @@ export function RoleEntry({ role }: RoleEntryProps) {
       ) : null}
 
       {role.artifacts && role.artifacts.length > 0 ? (
-        <ul className="mt-md gap-sm flex flex-wrap">
+        <ul className="mt-6 flex flex-wrap gap-3">
           {role.artifacts.map((artifact) => (
             <li key={artifact.href}>
               <Link
                 href={artifact.href}
-                className="border-rule text-ink-2 hover:border-line-work hover:text-ink px-sm inline-block border py-[2px] font-mono text-[13px] transition-colors"
+                className="border-border-strong text-text-muted hover:border-accent hover:text-accent inline-block rounded-full border px-3 py-1 text-sm transition-colors"
               >
                 {artifact.label}
               </Link>

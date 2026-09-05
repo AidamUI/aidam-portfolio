@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { RoleEntry } from "@/components/RoleEntry";
-import { StationSign } from "@/components/StationSign";
+import { Section } from "@/components/Section";
 import {
   ACADEMIC,
   ACADEMIC_COPY,
@@ -27,64 +27,47 @@ export const metadata: Metadata = {
 /**
  * A server component on purpose.
  *
- * This page was briefly a client component so a useState could drive the
- * "show all courses" toggle, which silently broke two things: a client
- * component cannot export `metadata`, so the route lost its title and
- * description entirely, and the whole course record shipped in the JS bundle
- * on a page that is otherwise pure text.
- *
- * A native <details> does the same job with no JavaScript at all — keyboard
- * operable, announced correctly, and open by default for anyone who arrives
- * with a printer or a screen reader in browse mode. prd.md §5.4 asks only that
- * the course list not crowd the first screen, which this satisfies.
+ * A native <details> drives the "show all courses" toggle with no JavaScript
+ * at all — keyboard operable, announced correctly, open by default for a
+ * printer or a screen reader in browse mode. Every course renders in full;
+ * this is the one legitimate use of an expandable section per the redesign
+ * brief, since the full course record is genuinely long (84+ credits across
+ * six terms) and would otherwise crowd the page above the rest of the record.
  */
 export default function AcademicPage() {
   return (
     <>
-      <StationSign
-        code={station.code}
-        name={station.name}
-        line={station.line}
-        blurb={station.blurb}
-        as="h1"
-      />
+      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+          {station.name}
+        </h1>
+        <p className="text-text-muted mt-3 max-w-prose">{station.blurb}</p>
+      </div>
 
-      <section className="px-lg py-xl">
-        <h2 className="sign-type mb-md text-ink text-[22px]">
-          {ACADEMIC.institution}
-        </h2>
-        <p className="text-ink text-[17px]">{ACADEMIC.faculty}</p>
-        <p className="text-ink-2 text-[17px]">{ACADEMIC.programme}</p>
+      <Section heading={ACADEMIC.institution}>
+        <p className="max-w-prose">{ACADEMIC.faculty}</p>
+        <p className="text-text-muted max-w-prose">{ACADEMIC.programme}</p>
 
-        {/*
-          Same tile treatment as the home page's "at a glance" panel — a big
-          figure over a quiet label — so the two pages read as one system.
-          Still a real <dl>: the tiles are a layout choice, not a change to
-          what the numbers mean.
-        */}
-        <dl className="gap-lg mt-lg grid sm:grid-cols-2">
+        <dl className="mt-10 flex flex-col gap-6">
           <div>
-            <dt className="code-type text-ink-2">
+            <dt className="text-text-muted text-sm font-semibold">
               {ACADEMIC_COPY.labelPeriod}
             </dt>
-            <dd className="sign-type text-line-work mt-xs text-[28px] leading-none">
+            <dd className="mt-1 text-lg font-medium">
               {ACADEMIC.start.slice(0, 4)}–{ACADEMIC.expectedEndLabel.slice(-4)}
             </dd>
           </div>
           <div>
-            <dt className="code-type text-ink-2">{ACADEMIC_COPY.labelCgpa}</dt>
-            <dd className="sign-type text-line-work mt-xs text-[28px] leading-none">
-              {ACADEMIC.cgpa}
-            </dd>
+            <dt className="text-text-muted text-sm font-semibold">
+              {ACADEMIC_COPY.labelCgpa}
+            </dt>
+            <dd className="mt-1 text-lg font-medium">{ACADEMIC.cgpa}</dd>
           </div>
           <div>
-            <dt className="code-type text-ink-2">
+            <dt className="text-text-muted text-sm font-semibold">
               {ACADEMIC_COPY.labelCredits}
             </dt>
-            <dd className="sign-type text-line-work mt-xs text-[28px] leading-none">
-              {CREDITS_COMPLETED}
-            </dd>
-            <dd className="text-ink-2 mt-xs text-[14px]">
+            <dd className="mt-1 text-lg font-medium">
               {ACADEMIC_COPY.creditsValue(
                 CREDITS_COMPLETED,
                 CREDITS_IN_PROGRESS,
@@ -92,10 +75,10 @@ export default function AcademicPage() {
             </dd>
           </div>
           <div>
-            <dt className="code-type text-ink-2">
+            <dt className="text-text-muted text-sm font-semibold">
               {ACADEMIC_COPY.labelCurrentTerm}
             </dt>
-            <dd className="text-ink mt-xs text-[17px]">
+            <dd className="mt-1 text-lg font-medium">
               {ACADEMIC_COPY.currentTermValue(
                 ACADEMIC.currentTermLabel,
                 ACADEMIC.currentTermCredits,
@@ -103,67 +86,54 @@ export default function AcademicPage() {
             </dd>
           </div>
         </dl>
-      </section>
+      </Section>
 
-      <section className="bg-platform-2 px-lg py-xl">
-        <h2 className="sign-type mb-lg text-ink text-[19px]">
-          {ACADEMIC_COPY.honoursHeading}
-        </h2>
-        {HONOURS.map((honour) => (
-          <article
-            key={honour.name}
-            className="border-line-work bg-platform px-lg py-lg mb-md border-l-[3px] last:mb-0"
-          >
-            <h3 className="sign-type text-ink text-[17px] leading-snug">
-              {honour.name}
-            </h3>
-            <p className="text-ink-2 mt-xs font-mono text-[13px]">
-              {honour.period}
-            </p>
-            {honour.note ? (
-              <p className="measure text-ink-2 mt-xs text-[15px]">
-                {honour.note}
+      <Section heading={ACADEMIC_COPY.honoursHeading} subtle>
+        <div className="flex flex-col gap-8">
+          {HONOURS.map((honour) => (
+            <article key={honour.name}>
+              <h3 className="text-lg font-bold">{honour.name}</h3>
+              <p className="text-text-muted mt-1 font-mono text-sm">
+                {honour.period}
               </p>
-            ) : null}
-          </article>
-        ))}
-      </section>
+              {honour.note ? (
+                <p className="text-text-muted mt-1 max-w-prose">
+                  {honour.note}
+                </p>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </Section>
 
-      <section className="px-lg py-xl">
-        <h2 className="sign-type mb-sm text-ink text-[19px]">
-          {ACADEMIC_COPY.coursesHeading}
-        </h2>
-        <p className="text-ink-2 mb-lg text-[15px]">
-          {ACADEMIC_COPY.coursesSummary(COURSE_COUNT, CREDITS_TOTAL)}{" "}
-          {ACADEMIC_COPY.coursesNote}
-        </p>
-
-        <details className="group">
-          <summary className="code-type border-ink-2 px-md py-sm text-ink inline-block cursor-pointer border-2">
+      <Section
+        heading={ACADEMIC_COPY.coursesHeading}
+        blurb={`${ACADEMIC_COPY.coursesSummary(COURSE_COUNT, CREDITS_TOTAL)} ${ACADEMIC_COPY.coursesNote}`}
+      >
+        <details>
+          <summary className="border-border-strong inline-block cursor-pointer rounded-full border px-4 py-2 text-sm font-semibold">
             {ACADEMIC_COPY.coursesToggle}
           </summary>
 
-          <div className="mt-xl gap-xl flex flex-col">
+          <div className="mt-10 flex flex-col gap-10">
             {TERMS.map((term) => (
               <article key={term.label}>
-                <h3 className="sign-type mb-sm text-ink text-[17px]">
+                <h3 className="text-lg font-bold">
                   {term.label}
                   {term.note ? (
-                    <span className="text-ink-2 ml-sm font-sans text-[15px] font-normal">
+                    <span className="text-text-muted ml-2 text-sm font-normal">
                       {term.note}
                     </span>
                   ) : null}
                 </h3>
-                <ul className="gap-sm flex flex-col">
+                <ul className="mt-3 flex flex-col gap-2">
                   {term.courses.map((course) => (
                     <li
                       key={course.name}
-                      className="gap-md flex justify-between"
+                      className="flex justify-between gap-4"
                     >
-                      <span className="text-ink text-[15px]">
-                        {course.name}
-                      </span>
-                      <span className="text-ink-2 shrink-0 font-mono text-[13px]">
+                      <span>{course.name}</span>
+                      <span className="text-text-muted shrink-0 font-mono text-sm">
                         {course.credits} {ACADEMIC_COPY.creditSuffix}
                       </span>
                     </li>
@@ -173,34 +143,26 @@ export default function AcademicPage() {
             ))}
           </div>
         </details>
-      </section>
+      </Section>
 
-      {/*
-        Plain ground, not bg-platform-2 — RoleEntry fills with platform-2
-        itself, and the two stacked would blend into each other.
-      */}
-      <section className="px-lg py-xl">
-        <h2 className="sign-type mb-lg text-ink text-[19px]">
-          {ACADEMIC_COPY.teachingHeading}
-        </h2>
-        {TEACHING_ROLES.map((role) => (
-          <RoleEntry key={role.title} role={role} />
-        ))}
-        <p className="measure text-ink-2 mt-xl text-[15px] leading-relaxed">
+      <Section heading={ACADEMIC_COPY.teachingHeading} subtle>
+        <div className="flex flex-col gap-10">
+          {TEACHING_ROLES.map((role) => (
+            <RoleEntry key={role.title} role={role} />
+          ))}
+        </div>
+        <p className="text-text-muted mt-10 max-w-prose text-sm">
           {TEACHING_LOAD}
         </p>
-      </section>
+      </Section>
 
-      <section className="px-lg py-xl">
-        <h2 className="sign-type mb-md text-ink text-[19px]">
-          {ACADEMIC_COPY.priorSchoolHeading}
-        </h2>
-        <p className="text-ink text-[17px]">{PRIOR_SCHOOL.name}</p>
-        <p className="text-ink-2 text-[15px]">{PRIOR_SCHOOL.track}</p>
-        <p className="text-ink-2 font-mono text-[13px]">
+      <Section heading={ACADEMIC_COPY.priorSchoolHeading}>
+        <p className="text-lg font-medium">{PRIOR_SCHOOL.name}</p>
+        <p className="text-text-muted">{PRIOR_SCHOOL.track}</p>
+        <p className="text-text-muted font-mono text-sm">
           {PRIOR_SCHOOL.period}
         </p>
-      </section>
+      </Section>
     </>
   );
 }

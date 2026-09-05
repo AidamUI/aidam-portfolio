@@ -7,8 +7,8 @@ export const contentType = OG_CONTENT_TYPE;
 
 /**
  * A card per project. These are the most linkable URLs on the site — a case
- * study is what gets pasted into an application — so they get their own code
- * and their own one-liner rather than inheriting the site card.
+ * study is what gets pasted into an application — so they get their own
+ * one-liner rather than inheriting the site card.
  *
  * Nothing withheld leaks here: the card renders `tagline` only, which is the
  * same public one-liner the index shows, never `build`, `stack` or `links`.
@@ -27,10 +27,8 @@ export default async function Image({
   if (!project) notFound();
 
   return renderCard({
-    code: project.code,
     title: project.name,
     subtitle: project.tagline,
-    line: "kerja",
     footer: `${project.status}   ${project.year}`,
   });
 }

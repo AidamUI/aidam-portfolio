@@ -14,21 +14,17 @@ import { dayMonthYear } from "@/lib/format";
  */
 export function MessageWall({ messages }: { messages: PublicMessage[] }) {
   if (messages.length === 0) {
-    return (
-      <p className="measure text-ink-2 text-[15px]">{GUESTBOOK.emptyWall}</p>
-    );
+    return <p className="text-text-muted">{GUESTBOOK.emptyWall}</p>;
   }
 
   return (
     <>
-      <p className="text-ink-2 mb-lg text-[15px]">{GUESTBOOK.wallNote}</p>
-      <ul className="flex flex-col">
+      <p className="text-text-muted mb-8 text-sm">{GUESTBOOK.wallNote}</p>
+      <ul className="flex flex-col gap-8">
         {messages.map((message) => (
-          <li key={message.id} className="border-rule py-lg border-t">
-            <p className="measure text-ink text-[17px] whitespace-pre-line">
-              {message.body}
-            </p>
-            <p className="text-ink-2 mt-sm font-mono text-[13px]">
+          <li key={message.id} className="border-border border-t pt-8">
+            <p className="max-w-prose whitespace-pre-line">{message.body}</p>
+            <p className="text-text-muted mt-3 font-mono text-xs">
               <time dateTime={message.createdAt.toISOString()}>
                 {dayMonthYear(message.createdAt)}
               </time>

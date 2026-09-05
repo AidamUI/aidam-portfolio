@@ -1,12 +1,8 @@
 /**
- * The "currently" block: what's happening this month. Source: now.ts.
+ * The "currently" block: what's happening this month. Source: content/now.ts.
  *
- * This is the block that keeps the site feeling alive, so it carries its own
- * date rather than the build date — a rebuild for an unrelated reason must not
- * make stale news look fresh.
- *
- * The marker fill (--marker, yellow) is the only use of that token on the page,
- * per design-system.md: "you are here" and live status ONLY.
+ * Carries its own date rather than the build date — a rebuild for an
+ * unrelated reason must not make stale news look fresh.
  */
 
 import { NOW } from "@/content/now";
@@ -16,28 +12,26 @@ export function NowServing() {
   const updated = formatDate(NOW.updated);
 
   return (
-    <section className="px-lg py-xl">
-      <div className="bg-platform-2 border-marker p-lg relative border-l-[4px]">
-        {/* Marker dot */}
-        <div
-          className="bg-marker absolute top-[24px] -left-[10px] h-[16px] w-[16px] rounded-full"
-          aria-hidden="true"
-        />
-
-        <div className="mb-md gap-md flex items-baseline justify-between">
-          <h2 className="sign-type text-ink text-[19px]">{NOW.heading}</h2>
+    <section className="mx-auto max-w-3xl px-6 sm:px-8">
+      <div className="border-border bg-bg-subtle rounded-xl border p-8 sm:p-10">
+        <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="text-xl font-bold">{NOW.heading}</h2>
           <time
             dateTime={NOW.updated}
-            className="text-ink-2 shrink-0 font-mono text-[13px]"
+            className="text-text-muted font-mono text-xs"
           >
             {updated}
           </time>
         </div>
 
-        <ul className="gap-md flex flex-col">
-          {NOW.items.map((item, i) => (
-            <li key={i} className="text-ink text-[17px] leading-relaxed">
-              {item}
+        <ul className="flex flex-col gap-4">
+          {NOW.items.map((item) => (
+            <li key={item} className="flex gap-3">
+              <span
+                className="bg-accent mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
+                aria-hidden="true"
+              />
+              <p>{item}</p>
             </li>
           ))}
         </ul>

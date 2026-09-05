@@ -2,23 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { A11Y, SITE } from "@/content/site";
-import { INTERCHANGE, LINES, STATIONS } from "@/content/stations";
-import type { Station } from "@/content/types";
-import { StationBadge } from "./StationBadge";
+import { STATIONS } from "@/content/stations";
 import { ThemeToggle } from "./ThemeToggle";
 
 /**
- * The signage bar: wordmark left, station codes right, the current one filled.
- *
- * Deviation from the desktop wireframe, taken deliberately: the wireframe shows
- * bare codes (`W1 A1 P1 O1 G1`), but design-system.md's own accessibility rule
- * says "every route has a code and a label next to it, so the map works for
- * colourblind readers and in greyscale". A stranger cannot navigate five
- * two-character codes. The rule wins over the sketch, so the code chip carries
- * its name from `lg` up; below that the bar collapses to a menu that shows the
- * code, the name and the blurb, grouped under its line.
+ * The header: wordmark left, a flat nav on the right, theme toggle, and a
+ * mobile menu below `sm`. Clean and minimal by design — no station codes, no
+ * badges, no route colouring. The active page is marked two ways so colour is
+ * never the only signal: `aria-current="page"` for assistive tech, and a
+ * visible underline plus heavier weight for sighted readers.
  */
 export function Header() {
   const pathname = usePathname();
@@ -27,11 +21,8 @@ export function Header() {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const isCurrent = useCallback(
-    (href: string) =>
-      href === "/" ? pathname === "/" : pathname.startsWith(href),
-    [pathname],
-  );
+  const isCurrent = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   // Close on navigation. The layout persists across route changes, so without
   // this the panel would stay open over the page the reader just asked for.
@@ -82,30 +73,51 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="border-line-work bg-platform sticky top-0 z-40 border-b-[3px]">
-      <div className="gap-md px-lg py-md flex items-center justify-between">
+    <header className="border-border bg-bg/95 sticky top-0 z-40 border-b backdrop-blur-sm">
+      <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-4 sm:px-8">
         <Link
-          href={INTERCHANGE.href}
-          className="code-type text-ink shrink-0 text-[18px] tracking-[0.08em]"
+          href="/"
+          className="text-lg font-bold tracking-tight"
           aria-current={isCurrent("/") ? "page" : undefined}
         >
           {SITE.wordmark}
         </Link>
 
-        <nav aria-label={A11Y.primaryNav} className="hidden lg:block">
-          <ul className="gap-lg flex items-center">
-            {STATIONS.map((station) => (
-              <li key={station.code}>
-                <StationLink
-                  station={station}
-                  current={isCurrent(station.href)}
-                />
-              </li>
-            ))}
+        <nav aria-label={A11Y.primaryNav} className="hidden sm:block">
+          <ul className="flex items-center gap-6">
+            {STATIONS.map((station) => {
+              const current = isCurrent(station.href);
+              return (
+                <li key={station.href}>
+                  <Link
+                    href={station.href}
+                    aria-current={current ? "page" : undefined}
+                    className={`text-sm transition-colors ${
+                      current
+                        ? "text-text font-semibold"
+                        : "text-text-muted hover:text-text"
+                    }`}
+                  >
+                    <span
+                      className={
+                        current
+                          ? "underline decoration-2 underline-offset-4"
+                          : ""
+                      }
+                    >
+                      {station.name}
+                    </span>
+                    {current ? (
+                      <span className="sr-only"> ({A11Y.currentPage})</span>
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
-        <div className="gap-sm flex items-center">
+        <div className="flex items-center gap-2">
           <ThemeToggle />
           <button
             ref={triggerRef}
@@ -113,7 +125,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls={menuId}
             onClick={() => setOpen((v) => !v)}
-            className="gap-sm border-ink-2 px-md py-xs text-ink flex shrink-0 items-center border-2 lg:hidden"
+            className="hover:bg-bg-subtle inline-flex h-9 w-9 items-center justify-center rounded-full sm:hidden"
           >
             <MenuGlyph open={open} />
             <span className="sr-only">
@@ -123,91 +135,51 @@ export function Header() {
         </div>
       </div>
 
-      <nav
+      <div
         id={menuId}
         ref={panelRef}
         hidden={!open}
-        aria-label={A11Y.primaryNav}
-        className="border-line-life bg-platform border-t-[3px] lg:hidden"
+        className="border-border bg-bg border-t sm:hidden"
       >
-        {(["kerja", "pribadi"] as const).map((lineId) => (
-          <section key={lineId} aria-labelledby={`${menuId}-${lineId}`}>
-            <p
-              id={`${menuId}-${lineId}`}
-              className="code-type border-rule px-lg py-sm text-ink-2 border-b"
-            >
-              {LINES[lineId].name}
-            </p>
-            <ul>
-              {STATIONS.filter((s) => s.line === lineId).map((station) => (
-                <li key={station.code} className="border-rule border-b">
+        <nav aria-label={A11Y.primaryNav}>
+          <ul>
+            {STATIONS.map((station) => {
+              const current = isCurrent(station.href);
+              return (
+                <li key={station.href} className="border-border border-b">
                   <Link
                     href={station.href}
-                    aria-current={isCurrent(station.href) ? "page" : undefined}
-                    className="gap-md px-lg py-md flex items-start"
+                    aria-current={current ? "page" : undefined}
+                    className="block px-6 py-4 sm:px-8"
                   >
-                    <StationBadge
-                      code={station.code}
-                      line={station.line}
-                      active={isCurrent(station.href)}
-                      className="mt-[3px]"
-                    />
-                    <span>
-                      <span
-                        className={`sign-type text-ink block text-[19px] ${
-                          isCurrent(station.href)
-                            ? "underline decoration-2 underline-offset-4"
-                            : ""
-                        }`}
-                      >
-                        {station.name}
-                      </span>
-                      <span className="text-ink-2 block text-[15px]">
-                        {station.blurb}
-                      </span>
+                    <span
+                      className={`block text-base ${
+                        current
+                          ? "text-text font-semibold underline decoration-2 underline-offset-4"
+                          : "text-text"
+                      }`}
+                    >
+                      {station.name}
+                    </span>
+                    <span className="text-text-muted mt-1 block text-sm">
+                      {station.blurb}
                     </span>
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </nav>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     </header>
-  );
-}
-
-function StationLink({
-  station,
-  current,
-}: {
-  station: Station;
-  current: boolean;
-}) {
-  return (
-    <Link
-      href={station.href}
-      aria-current={current ? "page" : undefined}
-      className="gap-sm text-ink flex items-center"
-    >
-      <StationBadge code={station.code} line={station.line} active={current} />
-      <span
-        className={`sign-type text-[15px] ${
-          current ? "underline decoration-2 underline-offset-4" : ""
-        }`}
-      >
-        {station.name}
-      </span>
-      {current ? <span className="sr-only">{A11Y.currentStation}</span> : null}
-    </Link>
   );
 }
 
 function MenuGlyph({ open }: { open: boolean }) {
   return (
     <svg
-      width="16"
-      height="16"
+      width="18"
+      height="18"
       viewBox="0 0 16 16"
       aria-hidden="true"
       focusable="false"
@@ -216,13 +188,15 @@ function MenuGlyph({ open }: { open: boolean }) {
         <path
           d="M3 3 L13 13 M13 3 L3 13"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.6"
+          strokeLinecap="round"
         />
       ) : (
         <path
           d="M2 4 H14 M2 8 H14 M2 12 H14"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.6"
+          strokeLinecap="round"
         />
       )}
     </svg>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { MessageForm } from "@/components/MessageForm";
 import { MessageWall } from "@/components/MessageWall";
-import { StationSign } from "@/components/StationSign";
+import { Section } from "@/components/Section";
 import { GUESTBOOK } from "@/content/guestbook";
 import { stationForPath } from "@/content/stations";
 import { isDatabaseConfigured } from "@/db";
@@ -64,22 +64,20 @@ export default async function GuestbookPage({ searchParams }: Props) {
 
   return (
     <>
-      <StationSign
-        code={station.code}
-        name={GUESTBOOK.heading}
-        line={station.line}
-        blurb={station.blurb}
-        as="h1"
-      />
+      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+          {GUESTBOOK.heading}
+        </h1>
+      </div>
 
-      <section className="px-lg py-xl">
-        <p className="measure text-ink text-[17px]">{GUESTBOOK.intro}</p>
+      <div className="mx-auto max-w-3xl px-6 pb-24 sm:px-8">
+        <p className="max-w-prose">{GUESTBOOK.intro}</p>
 
         {confirmation ? (
           <p
             role="status"
-            className={`measure mt-lg pl-md border-l-[4px] text-[15px] ${
-              isGood ? "border-marker text-ink" : "border-line-life text-ink"
+            className={`mt-8 max-w-prose border-l-4 pl-6 ${
+              isGood ? "border-accent" : "border-red-500"
             }`}
           >
             {confirmation}
@@ -90,20 +88,17 @@ export default async function GuestbookPage({ searchParams }: Props) {
           <MessageForm />
         ) : (
           <>
-            <p className="measure text-ink-2 mt-lg text-[15px]">
+            <p className="text-text-muted mt-8 max-w-prose">
               {GUESTBOOK.unavailable}
             </p>
             <MessageForm disabled />
           </>
         )}
-      </section>
+      </div>
 
-      <section className="bg-platform-2 px-lg py-xl">
-        <h2 className="sign-type text-ink mb-lg text-[19px]">
-          {GUESTBOOK.wallHeading}
-        </h2>
+      <Section heading={GUESTBOOK.wallHeading} subtle>
         <MessageWall messages={messages} />
-      </section>
+      </Section>
     </>
   );
 }

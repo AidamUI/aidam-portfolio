@@ -4,8 +4,8 @@ import { CareerRoute } from "@/components/CareerRoute";
 import { NowServing } from "@/components/NowServing";
 import { PersonSchema } from "@/components/PersonSchema";
 import { ProjectRow } from "@/components/ProjectRow";
+import { Section } from "@/components/Section";
 import { StackTag } from "@/components/StackTag";
-import { StationSign } from "@/components/StationSign";
 import { HOME } from "@/content/home";
 import { PROFILE } from "@/content/profile";
 import { PROJECTS, PROJECTS_COPY } from "@/content/projects";
@@ -19,16 +19,17 @@ export const metadata: Metadata = {
 };
 
 /**
- * The interchange, where both lines meet.
+ * The home page. prd.md §5.1 asks the hero to carry the positioning in one
+ * screen, then a dated "currently" block, then featured projects, then a
+ * contact strip. This adds the connective tissue between those: who he is in
+ * his own words, the facts a recruiter is scanning for, and what he builds
+ * with — each linking to the page that backs it up.
  *
- * prd.md §5.1 asks the hero to carry the positioning in one screen, then for a
- * dated "currently" block, then featured projects, then a contact strip. This
- * adds the connective tissue between those: who he is in his own words, the
- * four facts a recruiter is actually scanning for, and what he builds with —
- * each linking to the page that backs it up rather than asserting it here.
+ * Every figure on this page is one he can expand on for five minutes
+ * (prd.md §6). No invented metrics.
  *
- * Every figure on this page is one he can expand on for five minutes, which is
- * the standard prd.md §6 sets. No invented metrics.
+ * Single column throughout, generous spacing between every block — the
+ * redesign favours a long, calm page over cramming everything above the fold.
  */
 export default function HomePage() {
   const featured = PROJECTS.filter((project) => project.featured);
@@ -38,124 +39,92 @@ export default function HomePage() {
     <>
       <PersonSchema />
 
-      <section className="px-lg pt-2xl pb-xl">
-        <h1 className="hero-type text-ink">
-          {/* One span per line, so the wrap count never depends on the font. */}
-          {PROFILE.nameLines.map((line) => (
-            <span key={line} className="block">
-              {line}
-            </span>
-          ))}
+      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+          {PROFILE.name}
         </h1>
-        <p className="measure text-ink mt-lg text-[17px] leading-relaxed">
-          {PROFILE.hero}
-        </p>
-        <p className="measure text-ink-2 mt-md font-mono text-[13px]">
+        <p className="mt-6 max-w-prose text-lg">{PROFILE.hero}</p>
+        <p className="text-text-muted mt-4 font-mono text-sm">
           {PROFILE.heroSub}
         </p>
-      </section>
+      </div>
 
       <CareerRoute />
-
       <NowServing />
 
-      {/* The four facts a recruiter scans for, each linked to its evidence. */}
-      <StationSign
-        code={HOME.glance.code}
-        name={HOME.glance.heading}
-        line="kerja"
-        blurb={HOME.glance.blurb}
-      />
-      <section className="px-lg py-xl">
-        <ul className="gap-lg grid sm:grid-cols-2">
+      <Section heading={HOME.glance.heading} blurb={HOME.glance.blurb}>
+        <ul className="flex flex-col gap-8">
           {PROFILE.glance.map((item) => (
             <li key={item.label}>
               <Link href={item.href} className="group block">
-                <span className="sign-type text-line-work block text-[32px] leading-none">
+                <span className="text-accent block text-3xl leading-none font-black">
                   {item.figure}
                 </span>
-                <span className="measure text-ink-2 mt-sm group-hover:text-ink block text-[15px] leading-relaxed transition-colors">
+                <span className="text-text-muted group-hover:text-text mt-2 block max-w-prose transition-colors">
                   {item.label}
                 </span>
               </Link>
             </li>
           ))}
         </ul>
-        <p className="measure text-ink-2 mt-xl text-[15px] leading-relaxed">
+        <p className="text-text-muted mt-10 max-w-prose text-sm">
           {TEACHING_LOAD}
         </p>
-      </section>
+      </Section>
 
-      <StationSign
-        code={HOME.about.code}
-        name={HOME.about.heading}
-        line="kerja"
-        blurb={HOME.about.blurb}
-      />
-      <section className="px-lg py-xl">
-        {PROFILE.about.slice(0, 2).map((paragraph) => (
-          <p
-            key={paragraph.slice(0, 24)}
-            className="measure text-ink mb-md text-[17px] leading-relaxed last:mb-0"
-          >
-            {paragraph}
-          </p>
-        ))}
-        <p className="mt-lg">
-          <Link href="/work" className="text-ink text-[15px] underline">
+      <Section heading={HOME.about.heading} blurb={HOME.about.blurb} subtle>
+        <div className="flex flex-col gap-6">
+          {PROFILE.about.slice(0, 2).map((paragraph) => (
+            <p key={paragraph.slice(0, 24)} className="max-w-prose">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        <p className="mt-8">
+          <Link href="/work" className="text-accent font-medium underline">
             {HOME.about.more}
           </Link>
         </p>
-      </section>
+      </Section>
 
-      <StationSign
-        code={HOME.featured.code}
-        name={HOME.featured.heading}
-        line="kerja"
-        blurb={HOME.featured.blurb}
-      />
-      <section className="px-lg py-xl">
-        {featured.map((project) => (
-          <ProjectRow key={project.slug} project={project} as="h3" />
-        ))}
-        <p className="mt-lg">
-          <Link href="/projects" className="text-ink text-[15px] underline">
+      <Section heading={HOME.featured.heading} blurb={HOME.featured.blurb}>
+        <div className="flex flex-col gap-6">
+          {featured.map((project) => (
+            <ProjectRow key={project.slug} project={project} as="h3" />
+          ))}
+        </div>
+        <p className="mt-8">
+          <Link href="/projects" className="text-accent font-medium underline">
             {PROJECTS_COPY.moreProjects}
           </Link>
         </p>
-      </section>
+      </Section>
 
-      <StationSign
-        code={HOME.skills.code}
-        name={HOME.skills.heading}
-        line="kerja"
-        blurb={HOME.skills.blurb}
-      />
-      <section className="px-lg py-xl">
-        <ul className="gap-sm flex flex-wrap">
+      <Section heading={HOME.skills.heading} blurb={HOME.skills.blurb} subtle>
+        <ul className="flex flex-wrap gap-3">
           {core.map((skill) => (
             <li key={skill.name}>
               <StackTag name={skill.name} />
             </li>
           ))}
         </ul>
-        <p className="measure text-ink-2 mt-lg text-[15px] leading-relaxed">
+        <p className="text-text-muted mt-8 max-w-prose text-sm">
           {HOME.skills.note}
         </p>
-        <p className="mt-md">
-          <Link href="/work" className="text-ink text-[15px] underline">
+        <p className="mt-4">
+          <Link href="/work" className="text-accent font-medium underline">
             {HOME.skills.more}
           </Link>
         </p>
-      </section>
+      </Section>
 
-      <section className="bg-platform-2 border-line-life px-lg py-xl border-t-[3px]">
-        <h2 className="sign-type text-ink mb-lg text-[19px]">
-          {HOME.contact.heading}
-        </h2>
-        <ul className="gap-sm flex flex-col">
+      <Section heading={HOME.contact.heading}>
+        <ul className="flex flex-col gap-4">
           <li>
-            <a href={EMAIL.href} className="text-ink text-[17px] underline">
+            <a
+              href={EMAIL.href}
+              className="hover:text-accent text-lg transition-colors"
+            >
               {/* Split so the rendered HTML holds no contiguous address. */}
               <span>{EMAIL.user}</span>
               <span>@</span>
@@ -167,19 +136,19 @@ export default function HomePage() {
               <a
                 href={social.href}
                 rel="me noopener noreferrer"
-                className="text-ink text-[17px] underline"
+                className="hover:text-accent text-lg transition-colors"
               >
                 {social.label}
               </a>
               {social.note ? (
-                <span className="text-ink-2 ml-sm text-[15px]">
+                <span className="text-text-muted ml-2 text-sm">
                   {social.note}
                 </span>
               ) : null}
             </li>
           ))}
         </ul>
-      </section>
+      </Section>
     </>
   );
 }

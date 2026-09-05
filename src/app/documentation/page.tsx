@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { StationBadge } from "@/components/StationBadge";
-import { StationSign } from "@/components/StationSign";
 import {
   ALBUMS,
   GALLERY_COPY,
@@ -17,50 +15,43 @@ export const metadata: Metadata = {
 };
 
 /**
- * The album index.
- *
- * Each row carries a thumbnail now rather than text alone — one tile from
- * that album's placeholder preview when there are no real photos yet, per
+ * The album index. Each row carries a thumbnail — one tile from that album's
+ * placeholder preview when there are no real photos yet, per
  * `placeholderPreview` in src/content/gallery.ts. The thumbnail disappears on
  * its own the moment a real photo exists for that album.
- *
- * No `PageShell` here: the root layout already wraps every route in one. Doing
- * it again produced two route lines and a second `<main id="main">`, which is
- * invalid HTML and gives the skip link two targets to choose between.
  */
 export default function DocumentationPage() {
   const hasAnyPhotos = ALBUMS.some((album) => albumCount(album.slug) > 0);
 
   return (
     <>
-      <StationSign
-        code="O1"
-        name={GALLERY_COPY.heading}
-        line="pribadi"
-        blurb={GALLERY_COPY.blurb}
-        as="h1"
-      />
+      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
+        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+          {GALLERY_COPY.heading}
+        </h1>
+        <p className="text-text-muted mt-3 max-w-prose">{GALLERY_COPY.blurb}</p>
+      </div>
 
-      <div className="px-lg py-xl">
+      <div className="mx-auto max-w-3xl px-6 pb-24 sm:px-8">
         {!hasAnyPhotos ? (
-          <p className="measure border-line-life text-ink-2 mb-xl pl-md border-l-[4px] text-[15px]">
+          <p className="border-accent text-text-muted mb-10 max-w-prose border-l-4 pl-6">
             {GALLERY_COPY.emptyIndex}
           </p>
         ) : null}
 
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-2">
           {ALBUMS.map((album) => {
             const count = albumCount(album.slug);
             const thumb =
               count === 0 ? placeholderPreview(album.slug, 1)[0] : null;
 
             return (
-              <li key={album.slug} className="border-rule border-b">
+              <li key={album.slug}>
                 <Link
                   href={`/documentation/${album.slug}`}
-                  className="gap-md py-md flex items-start"
+                  className="hover:bg-bg-subtle group flex items-start gap-4 rounded-xl p-4 transition-colors"
                 >
-                  <div className="bg-platform-2 h-[64px] w-[64px] shrink-0 overflow-hidden">
+                  <div className="bg-bg-subtle h-16 w-16 shrink-0 overflow-hidden rounded-lg">
                     {thumb ? (
                       <Image
                         src={thumb.src}
@@ -73,23 +64,16 @@ export default function DocumentationPage() {
                     ) : null}
                   </div>
 
-                  <span className="gap-sm mt-[3px] flex flex-1 items-start">
-                    <StationBadge
-                      code={album.code}
-                      line="pribadi"
-                      className="mt-[3px]"
-                    />
-                    <span className="flex-1">
-                      <span className="sign-type text-ink block text-[19px]">
-                        {album.name}
-                      </span>
-                      <span className="measure text-ink-2 block text-[15px]">
-                        {album.blurb}
-                      </span>
+                  <span className="flex-1">
+                    <span className="group-hover:text-accent block text-lg font-bold transition-colors">
+                      {album.name}
+                    </span>
+                    <span className="text-text-muted block max-w-prose text-sm">
+                      {album.blurb}
                     </span>
                   </span>
 
-                  <span className="text-ink-2 shrink-0 font-mono text-[13px]">
+                  <span className="text-text-muted mt-1 shrink-0 font-mono text-sm">
                     {count === 0
                       ? GALLERY_COPY.countNone
                       : count === 1

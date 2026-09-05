@@ -1,26 +1,20 @@
 import Link from "next/link";
-import { StationSign } from "@/components/StationSign";
-import { INTERCHANGE } from "@/content/stations";
 
-/**
- * Not a joke about delays or missed trains — design-system.md rules out fake
- * transit furniture. Just an honest sign and a way back to the interchange.
- */
 export default function NotFound() {
   return (
-    <>
-      <StationSign code="—" name="No such station" line="pribadi" as="h1" />
-      <div className="px-lg py-xl">
-        <p className="measure text-ink">
-          That address is not on either line. Nothing was moved; the link was
-          probably never real.
-        </p>
-        <p className="mt-lg">
-          <Link href={INTERCHANGE.href} className="text-ink underline">
-            Back to the interchange
-          </Link>
-        </p>
-      </div>
-    </>
+    <div className="mx-auto max-w-3xl px-6 py-24 sm:px-8">
+      <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+        Page not found
+      </h1>
+      <p className="text-text-muted mt-4 max-w-prose">
+        That page doesn&apos;t exist. Nothing was moved; the link was probably
+        never right.
+      </p>
+      <p className="mt-8">
+        <Link href="/" className="text-accent underline">
+          Back to the home page
+        </Link>
+      </p>
+    </div>
   );
 }

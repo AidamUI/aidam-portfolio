@@ -11,8 +11,8 @@ import type { SocialLink } from "./types";
 export const SITE = {
   name: "Muhammad Kaila Aidam Riyan",
   goesBy: "Aidam",
-  /** The header wordmark, set in signage caps. */
-  wordmark: "AIDAM",
+  /** The header wordmark. */
+  wordmark: "Aidam",
   location: "Jakarta, Indonesia",
   /** content.md §4, short bio — used for share cards and the default description. */
   description:
@@ -84,22 +84,19 @@ export const FOOTER = {
   sourceHref: "https://github.com/AidamUI/aidam-portfolio",
   /** Prefix for the build date; the date itself is stamped at build time. */
   updatedPrefix: "Last updated",
-  /** Sits under the miniature route diagram in the footer. */
-  mapLabel: "Route map",
+  navHeading: "Pages",
+  elsewhereHeading: "Elsewhere",
 } as const;
 
 export const A11Y = {
   skipToContent: "Skip to content",
-  primaryNav: "Station codes",
+  primaryNav: "Primary",
   openMenu: "Open menu",
   closeMenu: "Close menu",
-  /** The route line is decorative; the station codes carry the meaning. */
-  currentStation: "current station",
+  currentPage: "current page",
 } as const;
 
 export const THEME_COPY = {
-  toGraphite: "Switch to graphite",
-  toDay: "Switch to day platform",
-  graphiteLabel: "Graphite",
-  dayLabel: "Day",
+  toDark: "Switch to dark mode",
+  toLight: "Switch to light mode",
 } as const;
