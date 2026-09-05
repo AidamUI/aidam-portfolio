@@ -188,7 +188,9 @@ test.describe("the confidentiality rule", () => {
       await page.goto(`/projects/${slug}`);
 
       // What a withheld project DOES say.
-      await expect(page.getByRole("heading", { name: "Problem" })).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Problem" }),
+      ).toBeVisible();
       await expect(
         page.getByRole("heading", { name: "What it does" }),
       ).toBeVisible();
@@ -203,7 +205,13 @@ test.describe("the confidentiality rule", () => {
       await expect(page.locator("article img")).toHaveCount(0);
       await expect(page.locator('article a[href^="http"]')).toHaveCount(0);
 
-      for (const heading of ["Build", "Built with", "Screens", "Outcome", "Links"]) {
+      for (const heading of [
+        "Build",
+        "Built with",
+        "Screens",
+        "Outcome",
+        "Links",
+      ]) {
         await expect(
           page.getByRole("heading", { name: heading, exact: true }),
         ).toHaveCount(0);
@@ -220,7 +228,13 @@ test.describe("the confidentiality rule", () => {
 
   test("an open project still gets the full template", async ({ page }) => {
     await page.goto("/projects/skillpath");
-    for (const heading of ["Build", "Built with", "Screens", "Outcome", "Links"]) {
+    for (const heading of [
+      "Build",
+      "Built with",
+      "Screens",
+      "Outcome",
+      "Links",
+    ]) {
       await expect(
         page.getByRole("heading", { name: heading, exact: true }),
       ).toBeVisible();

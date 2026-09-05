@@ -16,7 +16,8 @@
     "test:db": "node --experimental-strip-types --no-warnings --import ./scripts/register-alias.mjs tests/guestbook.test.ts",
     "test:e2e": "playwright test",
     "test": "pnpm test:db && pnpm test:e2e",
-    "placeholders": "node scripts/make-placeholders.mjs"
+    "placeholders": "node scripts/make-placeholders.mjs",
+    "placeholders:gallery": "node scripts/make-gallery-placeholders.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

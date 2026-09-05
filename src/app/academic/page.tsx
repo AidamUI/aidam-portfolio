@@ -56,26 +56,35 @@ export default function AcademicPage() {
         <p className="text-ink text-[17px]">{ACADEMIC.faculty}</p>
         <p className="text-ink-2 text-[17px]">{ACADEMIC.programme}</p>
 
-        <dl className="mt-lg gap-md flex flex-col">
+        {/*
+          Same tile treatment as the home page's "at a glance" panel — a big
+          figure over a quiet label — so the two pages read as one system.
+          Still a real <dl>: the tiles are a layout choice, not a change to
+          what the numbers mean.
+        */}
+        <dl className="gap-lg mt-lg grid sm:grid-cols-2">
           <div>
-            <dt className="code-type text-ink-2 text-[13px]">
+            <dt className="code-type text-ink-2">
               {ACADEMIC_COPY.labelPeriod}
             </dt>
-            <dd className="text-ink font-mono text-[15px]">
-              {ACADEMIC.start.slice(0, 4)} – {ACADEMIC.expectedEndLabel}
+            <dd className="sign-type text-line-work mt-xs text-[28px] leading-none">
+              {ACADEMIC.start.slice(0, 4)}–{ACADEMIC.expectedEndLabel.slice(-4)}
             </dd>
           </div>
           <div>
-            <dt className="code-type text-ink-2 text-[13px]">
-              {ACADEMIC_COPY.labelCgpa}
-            </dt>
-            <dd className="text-ink font-mono text-[17px]">{ACADEMIC.cgpa}</dd>
+            <dt className="code-type text-ink-2">{ACADEMIC_COPY.labelCgpa}</dt>
+            <dd className="sign-type text-line-work mt-xs text-[28px] leading-none">
+              {ACADEMIC.cgpa}
+            </dd>
           </div>
           <div>
-            <dt className="code-type text-ink-2 text-[13px]">
+            <dt className="code-type text-ink-2">
               {ACADEMIC_COPY.labelCredits}
             </dt>
-            <dd className="text-ink font-mono text-[15px]">
+            <dd className="sign-type text-line-work mt-xs text-[28px] leading-none">
+              {CREDITS_COMPLETED}
+            </dd>
+            <dd className="text-ink-2 mt-xs text-[14px]">
               {ACADEMIC_COPY.creditsValue(
                 CREDITS_COMPLETED,
                 CREDITS_IN_PROGRESS,
@@ -83,10 +92,10 @@ export default function AcademicPage() {
             </dd>
           </div>
           <div>
-            <dt className="code-type text-ink-2 text-[13px]">
+            <dt className="code-type text-ink-2">
               {ACADEMIC_COPY.labelCurrentTerm}
             </dt>
-            <dd className="text-ink text-[15px]">
+            <dd className="text-ink mt-xs text-[17px]">
               {ACADEMIC_COPY.currentTermValue(
                 ACADEMIC.currentTermLabel,
                 ACADEMIC.currentTermCredits,
@@ -101,8 +110,13 @@ export default function AcademicPage() {
           {ACADEMIC_COPY.honoursHeading}
         </h2>
         {HONOURS.map((honour) => (
-          <article key={honour.name} className="mb-lg last:mb-0">
-            <h3 className="text-ink text-[17px] leading-snug">{honour.name}</h3>
+          <article
+            key={honour.name}
+            className="border-line-work bg-platform px-lg py-lg mb-md border-l-[3px] last:mb-0"
+          >
+            <h3 className="sign-type text-ink text-[17px] leading-snug">
+              {honour.name}
+            </h3>
             <p className="text-ink-2 mt-xs font-mono text-[13px]">
               {honour.period}
             </p>
@@ -161,7 +175,11 @@ export default function AcademicPage() {
         </details>
       </section>
 
-      <section className="bg-platform-2 px-lg py-xl">
+      {/*
+        Plain ground, not bg-platform-2 — RoleEntry fills with platform-2
+        itself, and the two stacked would blend into each other.
+      */}
+      <section className="px-lg py-xl">
         <h2 className="sign-type mb-lg text-ink text-[19px]">
           {ACADEMIC_COPY.teachingHeading}
         </h2>

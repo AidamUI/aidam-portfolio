@@ -42,8 +42,12 @@ export default function WorkPage() {
         ))}
       </section>
 
-      {/* Teaching roles */}
-      <section className="bg-platform-2 px-lg py-xl">
+      {/*
+        Teaching roles. Plain ground, not bg-platform-2 — RoleEntry fills
+        with platform-2 itself, and the two stacked would blend into each
+        other, losing the band that gives this section its shape.
+      */}
+      <section className="px-lg py-xl">
         <h2 className="code-type mb-lg text-ink-2 text-[15px]">Teaching</h2>
         {TEACHING_ROLES.map((role, i) => (
           <RoleEntry key={i} role={role} />
