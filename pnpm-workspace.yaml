@@ -1,8 +1,11 @@
 # Not a workspace — pnpm 11 keeps its settings here rather than in package.json,
 # and this is the only one the project needs.
 #
-# unrs-resolver ships a native binary that eslint-config-next's import resolver
-# loads; without its install script eslint cannot resolve the @/* alias. It is
-# the sole dependency allowed to run an install script.
+# Install scripts are denied by default. These two are allowed:
+#   unrs-resolver  native binary behind eslint-config-next's import resolver;
+#                  without it eslint cannot resolve the @/* alias.
+#   esbuild        bundled by drizzle-kit, which is a dev-only migration CLI.
+#                  It never runs in the deployed app.
 allowBuilds:
   unrs-resolver: true
+  esbuild: true

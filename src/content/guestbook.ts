@@ -30,6 +30,9 @@ export const GUESTBOOK = {
   rateLimited: "That's a few too many for one hour. Try again later.",
   tooLong: "That's over 500 characters. Trim it and try again.",
   empty: "Nothing to send yet.",
+  /** Shown when the guestbook has no database behind it yet. */
+  unavailable:
+    "The guestbook isn't taking messages just yet. Everything else on the site works.",
 
   wallHeading: "Posted",
   /**

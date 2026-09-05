@@ -50,6 +50,37 @@ Radius means something: `0` on signs, panels and bands; `999px` on station
 markers and route badges only. No shadows anywhere. One motion moment per
 session: the route line drawing top to bottom in 600ms.
 
+## Guestbook setup
+
+The guestbook is the only feature that needs a database. Without one the route
+still renders, says so honestly, and disables the form — the rest of the site
+is unaffected, and the build does not care.
+
+```bash
+# 1. Create a Postgres at neon.tech (free tier is ample), copy the pooled
+#    connection string into .env.local and into Vercel's environment settings.
+# 2. Create the table:
+pnpm db:push
+# 3. Set GUESTBOOK_ADMIN_SECRET (the /guestbook/admin password) and
+#    GUESTBOOK_IP_SALT. Both in .env.example.
+# 4. Check the limits still hold:
+pnpm test:db
+```
+
+`pnpm test:db` runs the real schema and the real rate-limiting SQL against
+Postgres compiled to WASM, so it proves the behaviour rather than mocking it:
+the fourth post in an hour is rejected, the limit is per sender, everything
+lands as `pending`, and the public read cannot see an unapproved message.
+
+**Moderation.** `/guestbook/admin` is Basic Auth — any username, the secret as
+the password. With no secret set the queue is closed to everyone, which is the
+intended default. Approve, reject and delete are plain forms, so the queue
+works without JavaScript like the rest of the site.
+
+**Retention.** `purgeExpired()` in `src/lib/messages.ts` deletes rejected rows
+after 7 days and blanks `ip_hash` after 30. Wire it to a cron when you want it;
+it is idempotent.
+
 ## Milestones
 
 M0 bootstrap and shell · M1 content layer · M2 home · M3 /work and /academic ·
@@ -120,7 +151,19 @@ settle outright. Each is also commented at the point in the code where it bites.
 12. **The theme switch is removed by `<noscript>`, not disabled.** Without
     JavaScript it cannot work, and a focusable control that announces an action
     it will never perform is worse than no control.
-13. **CV link withheld while GEMASTIK judging is open.** The PDF carries live
+13. **Rate limiting lives in Postgres, not Upstash.** `tech-plan.md` §1 picks
+    Upstash Redis because in-memory counters do not survive serverless — true,
+    and Postgres satisfies it equally: the rows are already there and already
+    indexed on `(ip_hash, created_at)`. Using them drops a second managed
+    service and a second set of credentials from a feature that accepts a few
+    sentences a week. The count and the insert are one statement, so two
+    simultaneous requests cannot both slip through.
+14. **The guestbook posts through a server action, not `fetch`.** `prd.md`
+    §5.6 requires the page to work without JavaScript; a server action posts
+    natively when React has not hydrated, and the outcome comes back as a
+    redirect so it survives a full page load. `POST /api/messages` exists too
+    and runs the identical validation.
+15. **CV link withheld while GEMASTIK judging is open.** The PDF carries live
     TERRA and Mantau repo URLs, TERRA's stack breakdown, and a phone number the
     PRD keeps off the site. `CV.available` in `src/content/site.ts` restores it
     in one line.
