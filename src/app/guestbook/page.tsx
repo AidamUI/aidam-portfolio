@@ -14,9 +14,6 @@ export const metadata: Metadata = {
   title: station.name,
   description: GUESTBOOK.intro,
   alternates: { canonical: station.href },
-  // Individual messages are other people's words, and the page is a form.
-  // Neither belongs in a search index.
-  robots: { index: false, follow: true },
 };
 
 /**

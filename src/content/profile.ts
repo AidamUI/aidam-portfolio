@@ -12,6 +12,15 @@ export const PROFILE = {
   location: "Jakarta, Indonesia",
 
   /**
+   * The hero name, broken exactly as design-system.md's wireframes set it.
+   * These are explicit lines rather than a wrapped string on purpose: a
+   * wrapped heading changes line count with the rendered font width, and
+   * Archivo at wdth 115 is wider than the fallback, so the name grew a line
+   * when the font loaded and shifted the whole page. Fixed lines cannot.
+   */
+  nameLines: ["Muhammad", "Kaila", "Aidam Riyan"],
+
+  /**
    * content.md §2, option A — the recommended hero line. Plain and specific.
    * "Four CS courses" is the count of TA appointments held, not four at once:
    * PF1 and PF2 ran back to back. /academic states the load properly.

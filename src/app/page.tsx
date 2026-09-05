@@ -6,15 +6,24 @@ import { StationSign } from "@/components/StationSign";
 import { PROFILE } from "@/content/profile";
 import { PROJECTS } from "@/content/projects";
 import { EMAIL, SOCIALS } from "@/content/site";
+import { PersonSchema } from "@/components/PersonSchema";
 
 export default function HomePage() {
   const featuredProjects = PROJECTS.filter((p) => p.featured);
 
   return (
     <>
+      <PersonSchema />
       {/* Hero */}
       <section className="px-lg pt-2xl pb-xl">
-        <h1 className="hero-type measure text-ink">{PROFILE.name}</h1>
+        <h1 className="hero-type text-ink">
+          {/* One span per line, so the wrap count never depends on the font. */}
+          {PROFILE.nameLines.map((line) => (
+            <span key={line} className="block">
+              {line}
+            </span>
+          ))}
+        </h1>
         <p className="measure mt-lg text-ink text-[17px] leading-relaxed">
           {PROFILE.hero}
         </p>

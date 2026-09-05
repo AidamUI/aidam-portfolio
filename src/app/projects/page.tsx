@@ -24,7 +24,7 @@ export default function ProjectsPage() {
         <div className="mb-xl">
           {PROJECTS.map((project) => (
             <div key={project.slug} className="mb-md last:mb-0">
-              <ProjectBand project={project} />
+              <ProjectBand project={project} as="h2" />
             </div>
           ))}
         </div>

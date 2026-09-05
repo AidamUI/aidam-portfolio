@@ -13,7 +13,9 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
-    "test:db": "node --experimental-strip-types --no-warnings --import ./scripts/register-alias.mjs tests/guestbook.test.ts"
+    "test:db": "node --experimental-strip-types --no-warnings --import ./scripts/register-alias.mjs tests/guestbook.test.ts",
+    "test:e2e": "playwright test",
+    "test": "pnpm test:db && pnpm test:e2e"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -23,8 +25,10 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@electric-sql/pglite": "^0.5.8",
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

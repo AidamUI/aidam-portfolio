@@ -14,7 +14,16 @@ import { Archivo, IBM_Plex_Mono } from "next/font/google";
 export const archivo = Archivo({
   subsets: ["latin"],
   axes: ["wdth"],
-  display: "swap",
+  // `optional`, not `swap`. next/font's metric-matched fallback is generated
+  // from Archivo at normal width, and the signage sets it at wdth 110-115, so
+  // the real face is measurably wider than the fallback it is standing in for.
+  // With `swap` that difference flipped a wrap point in the hero the moment
+  // the font landed, dropping the page 35px — 0.028 CLS against a 0.02 budget.
+  // `optional` never swaps: the browser either has the font in time or uses
+  // the fallback for that paint and keeps it. Same-origin and immutably
+  // cached, so it is there from the second view onward, and there is no
+  // arrangement of line breaks that makes `swap` safe at every viewport width.
+  display: "optional",
   variable: "--font-archivo",
 });
 
@@ -22,6 +31,7 @@ export const archivo = Archivo({
 export const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
+  // Same reasoning; mono sits next to prose whose height it would disturb.
+  display: "optional",
   variable: "--font-plex-mono",
 });
