@@ -182,23 +182,28 @@ test.describe("the confidentiality rule", () => {
   ];
 
   for (const slug of ["terra", "mantau"]) {
-    test(`/projects/${slug} shows problem and what-it-does only`, async ({
+    test(`/projects/${slug} withholds every implementation detail`, async ({
       page,
     }) => {
       await page.goto(`/projects/${slug}`);
 
-      await expect(
-        page.getByRole("heading", { name: "My role" }),
-      ).toBeVisible();
-      await expect(
-        page.getByRole("heading", { name: "Problem" }),
-      ).toBeVisible();
+      // What a withheld project DOES say.
+      await expect(page.getByRole("heading", { name: "Problem" })).toBeVisible();
       await expect(
         page.getByRole("heading", { name: "What it does" }),
       ).toBeVisible();
+      await expect(page.getByText("My part")).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Details withheld" }),
+      ).toBeVisible();
 
-      // The withheld sections must be absent, not merely empty.
-      for (const heading of ["Build", "Outcome", "Stack", "Links"]) {
+      // Asserted on the shape of the page rather than on section titles, so
+      // renaming a heading cannot quietly turn this check off: a withheld
+      // project must carry no screenshots and no outbound links at all.
+      await expect(page.locator("article img")).toHaveCount(0);
+      await expect(page.locator('article a[href^="http"]')).toHaveCount(0);
+
+      for (const heading of ["Build", "Built with", "Screens", "Outcome", "Links"]) {
         await expect(
           page.getByRole("heading", { name: heading, exact: true }),
         ).toHaveCount(0);
@@ -215,11 +220,21 @@ test.describe("the confidentiality rule", () => {
 
   test("an open project still gets the full template", async ({ page }) => {
     await page.goto("/projects/skillpath");
-    for (const heading of ["Build", "Outcome", "Stack", "Links"]) {
+    for (const heading of ["Build", "Built with", "Screens", "Outcome", "Links"]) {
       await expect(
         page.getByRole("heading", { name: heading, exact: true }),
       ).toBeVisible();
     }
+    // And it actually renders its images rather than declaring a slot.
+    const images = page.locator("article img");
+    expect(await images.count()).toBeGreaterThan(0);
+    await expect(images.first()).toHaveAttribute("alt", /\S/);
+  });
+
+  test("the index says a withheld project is withheld", async ({ page }) => {
+    await page.goto("/projects");
+    const terra = page.locator("article", { hasText: "TERRA" }).first();
+    await expect(terra.getByText("Details withheld")).toBeVisible();
   });
 });
 

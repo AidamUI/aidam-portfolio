@@ -41,6 +41,35 @@ export const PROFILE = {
     "The plan is software engineering, then solutions architecture, then a master's abroad. I'm committed to getting there.",
   ],
 
+  /**
+   * The home page's "at a glance" panel. Every line is a claim with a page
+   * behind it — prd.md's rule is that nothing goes on the site that cannot be
+   * expanded on for five minutes, so each one links to where it is backed up.
+   * No invented metrics, no "years of experience" ticker.
+   */
+  glance: [
+    {
+      figure: "IBM",
+      label: "Brand Technical Sales Specialist Intern, AIOps & Observability",
+      href: "/work",
+    },
+    {
+      figure: "4",
+      label: "teaching assistant appointments across three CS courses",
+      href: "/academic",
+    },
+    {
+      figure: "3.87",
+      label: "CGPA at Universitas Indonesia, 84 credits done",
+      href: "/academic",
+    },
+    {
+      figure: "2",
+      label: "GEMASTIK XIX entries in the national round",
+      href: "/projects",
+    },
+  ],
+
   /** Share cards and meta descriptions. content.md §4. */
   shortBio:
     "Information Systems student at Universitas Indonesia. Technical intern on AIOps and observability at IBM. Teaching assistant across four CS courses. Building TERRA and Mantau for GEMASTIK XIX.",

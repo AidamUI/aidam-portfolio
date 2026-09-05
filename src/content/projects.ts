@@ -1,4 +1,11 @@
-import type { LegacyProject, Project } from "./types";
+import type { LegacyProject, Project, ProjectStatus } from "./types";
+
+/**
+ * Placeholder images ship at 1600x1000. Replacing one is a file swap at the
+ * same path in public/images/projects/<slug>/; only a different aspect ratio
+ * needs these numbers changed. Regenerate them with `pnpm placeholders`.
+ */
+const SHOT = { width: 1600, height: 1000 } as const;
 
 /**
  * Every project on the site. Source: content.md §7.
@@ -94,6 +101,21 @@ export const PROJECTS: Project[] = [
         href: "https://public.tableau.com/app/profile/tasya.pandya/viz/COMPFESTIndonesiasUnemployment/IndonesiaUnemployementDemograph",
       },
     ],
+    images: [
+      {
+        src: "/images/projects/skillpath/01.png",
+        alt: "The regional skill-gap dashboard, showing demand by city.",
+        caption: "The dashboard the pipeline feeds. Built with Tasya Pandya.",
+        ...SHOT,
+      },
+      {
+        src: "/images/projects/skillpath/02.png",
+        alt: "The merge step that normalises 35+ provincial datasets to one city-level schema.",
+        caption:
+          "Thirty-five provincial datasets, one schema. Most of the work is here.",
+        ...SHOT,
+      },
+    ],
   },
   {
     slug: "praktikum-apap",
@@ -116,6 +138,20 @@ export const PROJECTS: Project[] = [
       {
         label: "praktikum-apap-fe",
         href: "https://github.com/AidamUI/praktikum-apap-fe",
+      },
+    ],
+    images: [
+      {
+        src: "/images/projects/praktikum-apap/01.png",
+        alt: "The service layer of the practicum back end.",
+        caption: "The layered service the course is actually about.",
+        ...SHOT,
+      },
+      {
+        src: "/images/projects/praktikum-apap/02.png",
+        alt: "The practicum front end talking to that back end.",
+        caption: "The front end that consumes it.",
+        ...SHOT,
       },
     ],
   },
@@ -144,6 +180,20 @@ export const PROJECTS: Project[] = [
         href: "https://github.com/AidamUI/KosinduyYNWA-mobile",
       },
     ],
+    images: [
+      {
+        src: "/images/projects/kosinduy/01.png",
+        alt: "The football store running on the web.",
+        caption: "The store, server-rendered.",
+        ...SHOT,
+      },
+      {
+        src: "/images/projects/kosinduy/02.png",
+        alt: "The Flutter client consuming the same REST API.",
+        caption: "Same API, second client. That is the point of the course.",
+        ...SHOT,
+      },
+    ],
   },
   {
     slug: "football-news",
@@ -165,6 +215,20 @@ export const PROJECTS: Project[] = [
       {
         label: "football-news mobile",
         href: "https://github.com/AidamUI/football-news-mobile",
+      },
+    ],
+    images: [
+      {
+        src: "/images/projects/football-news/01.png",
+        alt: "The news reader running on the web.",
+        caption: "The reader on the web.",
+        ...SHOT,
+      },
+      {
+        src: "/images/projects/football-news/02.png",
+        alt: "The Flutter client for the same backend.",
+        caption: "And on a phone.",
+        ...SHOT,
       },
     ],
   },
@@ -204,4 +268,66 @@ export const FEATURED_PROJECTS = PROJECTS.filter((p) => p.featured);
 
 export function projectBySlug(slug: string): Project | undefined {
   return PROJECTS.find((p) => p.slug === slug);
+}
+
+/**
+ * How each status reads on the index, and the order the groups appear in.
+ * Competing first because it is what is live right now; early work last.
+ */
+export const STATUS_GROUPS: {
+  status: ProjectStatus;
+  code: string;
+  heading: string;
+  blurb: string;
+}[] = [
+  {
+    status: "competing",
+    code: "P1.A",
+    heading: "In competition",
+    blurb:
+      "GEMASTIK XIX, national round. Both are still being judged, so both pages stop at the problem and what the thing does.",
+  },
+  {
+    status: "shipped",
+    code: "P1.B",
+    heading: "Shipped",
+    blurb: "Built, finished, and public.",
+  },
+  {
+    status: "coursework",
+    code: "P1.C",
+    heading: "Coursework",
+    blurb:
+      "Built for a course. Listed because the brief was real and the code is there to read, not because it is the strongest work here.",
+  },
+  {
+    status: "archived",
+    code: "P1.D",
+    heading: "Archived",
+    blurb: "Kept for the record.",
+  },
+];
+
+export const STATUS_LABEL: Record<ProjectStatus, string> = {
+  competing: "competing",
+  shipped: "shipped",
+  coursework: "coursework",
+  archived: "archived",
+};
+
+export const PROJECTS_COPY = {
+  intro:
+    "Everything I have built that is worth showing, newest first. Each page says what the problem was, what the thing does, and which parts were mine. Where a project is still being judged, it says that instead of pretending otherwise.",
+  roleLabel: "My part",
+  stackLabel: "Built with",
+  withheldLabel: "Details withheld",
+  imagesLabel: "Screens",
+  noImagesYet: "No screenshots up yet.",
+  moreProjects: "More projects",
+  nextProject: "Next",
+  prevProject: "Previous",
+} as const;
+
+export function projectsWithStatus(status: ProjectStatus): Project[] {
+  return PROJECTS.filter((project) => project.status === status);
 }

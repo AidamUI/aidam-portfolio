@@ -105,6 +105,13 @@ export type ProjectImage = {
   /** Required, always. */
   alt: string;
   caption?: string;
+  /**
+   * Intrinsic size, so next/image reserves the box before the file arrives and
+   * nothing shifts. Replacing a placeholder with a real image of the same
+   * aspect ratio needs no change here; a different ratio does.
+   */
+  width: number;
+  height: number;
 };
 
 type ProjectBase = {

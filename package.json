@@ -15,7 +15,8 @@
     "db:generate": "drizzle-kit generate",
     "test:db": "node --experimental-strip-types --no-warnings --import ./scripts/register-alias.mjs tests/guestbook.test.ts",
     "test:e2e": "playwright test",
-    "test": "pnpm test:db && pnpm test:e2e"
+    "test": "pnpm test:db && pnpm test:e2e",
+    "placeholders": "node scripts/make-placeholders.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -38,6 +39,7 @@
     "eslint-config-next": "15.5.25",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

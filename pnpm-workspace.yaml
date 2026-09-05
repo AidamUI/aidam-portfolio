@@ -7,5 +7,6 @@
 #   esbuild        bundled by drizzle-kit, which is a dev-only migration CLI.
 #                  It never runs in the deployed app.
 allowBuilds:
+  sharp: true
   unrs-resolver: true
   esbuild: true
