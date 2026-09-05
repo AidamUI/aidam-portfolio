@@ -19,6 +19,7 @@ import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Work",
+  alternates: { canonical: "/work" },
   description: `Professional and organisational experience — ${SITE.goesBy}`,
 };
 

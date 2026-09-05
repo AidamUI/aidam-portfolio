@@ -32,6 +32,21 @@ test.describe("every route", () => {
       await expect(description).toHaveAttribute("content", /\S/);
     });
 
+    test(`${route} is its own canonical`, async ({ page }) => {
+      await page.goto(route);
+      const href = await page
+        .locator('link[rel="canonical"]')
+        .getAttribute("href");
+      // Inheriting the layout's canonical made /work and /projects declare
+      // themselves duplicates of the home page, which asks Google not to index
+      // them separately. Each route must name itself.
+      expect(href, `${route} canonical`).toBe(
+        route === "/"
+          ? "https://aidam-portfolio.vercel.app"
+          : `https://aidam-portfolio.vercel.app${route}`,
+      );
+    });
+
     test(`${route} has no accessibility violations`, async ({ page }) => {
       await page.goto(route);
       const results = await new AxeBuilder({ page })

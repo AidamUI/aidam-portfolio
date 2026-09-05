@@ -6,6 +6,7 @@ import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Projects",
+  alternates: { canonical: "/projects" },
   description: `Everything shipped, newest first — ${SITE.goesBy}`,
 };
 

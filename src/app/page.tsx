@@ -7,6 +7,12 @@ import { PROFILE } from "@/content/profile";
 import { PROJECTS } from "@/content/projects";
 import { EMAIL, SOCIALS } from "@/content/site";
 import { PersonSchema } from "@/components/PersonSchema";
+import type { Metadata } from "next";
+
+// Canonical lives here, not on the layout, so no other route can inherit it.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   const featuredProjects = PROJECTS.filter((p) => p.featured);
