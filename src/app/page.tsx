@@ -43,7 +43,7 @@ export default function HomePage() {
       </div>
 
       {/* Contact strip */}
-      <section className="bg-platform-2 border-line-life border-t-[3px] px-lg py-xl">
+      <section className="bg-platform-2 border-line-life px-lg py-xl border-t-[3px]">
         <h2 className="sign-type mb-lg text-ink text-[19px]">Elsewhere</h2>
         <ul className="gap-sm flex flex-col">
           <li>
@@ -90,5 +90,3 @@ export default function HomePage() {
     </>
   );
 }
-
-// Made with Bob

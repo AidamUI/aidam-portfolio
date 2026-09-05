@@ -19,31 +19,37 @@ import type { Album, AlbumSlug, GalleryItem } from "./types";
 export const ALBUMS: Album[] = [
   {
     slug: "jalan-jalan",
+    code: "O1.1",
     name: "Jalan-jalan",
     blurb: "Travel and trips.",
   },
   {
     slug: "kerja",
+    code: "O1.2",
     name: "Kerja",
     blurb: "IBM, the office, conferences, demos.",
   },
   {
     slug: "ngajar",
+    code: "O1.3",
     name: "Ngajar",
     blurb: "Teaching: labs, review sessions, the whiteboard.",
   },
   {
     slug: "lomba",
+    code: "O1.4",
     name: "Lomba",
     blurb: "GEMASTIK, Datathon, competition rooms.",
   },
   {
     slug: "organisasi",
+    code: "O1.5",
     name: "Organisasi",
     blurb: "AIESEC, BETIS, BEM, RISTEK, Open House.",
   },
   {
     slug: "random",
+    code: "O1.6",
     name: "Random",
     blurb: "The ones that don't fit.",
   },
@@ -67,6 +73,11 @@ export const GALLERY_COPY = {
   lightboxClose: "Close",
   lightboxPrev: "Previous photo",
   lightboxNext: "Next photo",
+  /** Photo counts on the album index. */
+  countNone: "empty",
+  countOne: "1 photo",
+  countMany: (n: number) => `${n} photos`,
+  allAlbums: "All albums",
 } as const;
 
 export function albumBySlug(slug: string): Album | undefined {

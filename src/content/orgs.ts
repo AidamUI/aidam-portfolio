@@ -8,7 +8,7 @@ import type { Artifact, Role } from "./types";
  * is honest about it being one relationship over two years.
  *
  * The outreach figure is 100+ companies, per LinkedIn — the CV's "200+" is
- * wrong (context.md §10).
+ * wrong (prd.md §10).
  */
 
 export const ORG_ROLES: Role[] = [
@@ -144,3 +144,9 @@ export const TECHTONIC: Artifact[] = [
   { label: "TechTonic #5", href: "https://instagram.com/p/DJGyLujPHBd" },
   { label: "TechTonic #6", href: "https://instagram.com/p/DKEvi8lPhn2" },
 ];
+
+export const TECHTONIC_COPY = {
+  heading: "TechTonic series",
+  blurb:
+    "A bi-weekly series on industry trends and the ethics people skip, co-written for RISTEK Fasilkom UI's Instagram. 5,000–20,000 views per post.",
+} as const;

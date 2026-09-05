@@ -6,12 +6,15 @@ import {
   CERTIFICATIONS,
   LANGUAGES,
   PRACTICE,
-  SKILLS,
   SKILL_TIERS,
   skillsInTier,
 } from "@/content/skills";
-import { ORG_ROLES, TECHTONIC } from "@/content/orgs";
-import { PROFESSIONAL_ROLES, TEACHING_LOAD, TEACHING_ROLES } from "@/content/roles";
+import { ORG_ROLES, TECHTONIC, TECHTONIC_COPY } from "@/content/orgs";
+import {
+  PROFESSIONAL_ROLES,
+  TEACHING_LOAD,
+  TEACHING_ROLES,
+} from "@/content/roles";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -27,6 +30,7 @@ export default function WorkPage() {
         name="Work"
         line="kerja"
         blurb="IBM, teaching, and the organisations"
+        as="h1"
       />
 
       {/* Professional roles */}
@@ -61,12 +65,10 @@ export default function WorkPage() {
       {/* TechTonic series */}
       <section className="bg-platform-2 px-lg py-xl">
         <h3 className="sign-type mb-md text-ink text-[19px]">
-          TechTonic series
+          {TECHTONIC_COPY.heading}
         </h3>
         <p className="measure text-ink-2 mb-lg text-[15px] leading-relaxed">
-          A bi-weekly series on industry trends and the ethics people skip,
-          co-written for RISTEK Fasilkom UI's Instagram. 5,000–20,000 views per
-          post.
+          {TECHTONIC_COPY.blurb}
         </p>
         <ul className="gap-sm flex flex-wrap">
           {TECHTONIC.map((post, i) => (
@@ -152,9 +154,7 @@ export default function WorkPage() {
           {LANGUAGES.map((lang, i) => (
             <li key={i}>
               <span className="text-ink text-[17px]">{lang.name}</span>
-              <span className="text-ink-2 ml-sm text-[15px]">
-                {lang.level}
-              </span>
+              <span className="text-ink-2 ml-sm text-[15px]">{lang.level}</span>
             </li>
           ))}
         </ul>
@@ -174,5 +174,3 @@ export default function WorkPage() {
     </>
   );
 }
-
-// Made with Bob

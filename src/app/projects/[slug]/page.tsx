@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: project.name,
     description: project.tagline,
+    alternates: { canonical: `/projects/${project.slug}` },
   };
 }
 
@@ -46,6 +47,7 @@ export default async function ProjectPage({ params }: Props) {
         name={project.name}
         line="kerja"
         blurb={project.tagline}
+        as="h1"
       />
 
       <article className="px-lg py-xl">
@@ -77,9 +79,7 @@ export default async function ProjectPage({ params }: Props) {
 
         {/* What it does */}
         <section className="mb-2xl">
-          <h2 className="sign-type mb-sm text-ink text-[19px]">
-            What it does
-          </h2>
+          <h2 className="sign-type mb-sm text-ink text-[19px]">What it does</h2>
           <p className="measure text-ink text-[17px] leading-relaxed">
             {project.what}
           </p>
@@ -87,7 +87,7 @@ export default async function ProjectPage({ params }: Props) {
 
         {/* Confidential notice */}
         {confidential ? (
-          <div className="bg-platform-2 border-marker mb-2xl border-l-[4px] p-lg">
+          <div className="bg-platform-2 border-marker mb-2xl p-lg border-l-[4px]">
             <p className="measure text-ink-2 text-[15px] leading-relaxed">
               {project.withheldNote}
             </p>
@@ -121,8 +121,8 @@ export default async function ProjectPage({ params }: Props) {
               <section className="mb-2xl">
                 <h2 className="sign-type mb-sm text-ink text-[19px]">Stack</h2>
                 <ul className="gap-md flex flex-wrap">
-                  {project.stack.map((tech, i) => (
-                    <li key={i} className="text-ink font-mono text-[15px]">
+                  {project.stack.map((tech) => (
+                    <li key={tech} className="text-ink font-mono text-[15px]">
                       {tech}
                     </li>
                   ))}
@@ -135,14 +135,15 @@ export default async function ProjectPage({ params }: Props) {
               <section className="mb-2xl">
                 <h2 className="sign-type mb-sm text-ink text-[19px]">Links</h2>
                 <ul className="gap-sm flex flex-col">
-                  {project.links.map((link, i) => (
-                    <li key={i}>
-                      <Link
+                  {project.links.map((link) => (
+                    <li key={link.href}>
+                      <a
                         href={link.href}
+                        rel="noopener noreferrer"
                         className="text-ink text-[17px] underline"
                       >
                         {link.label}
-                      </Link>
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -152,7 +153,7 @@ export default async function ProjectPage({ params }: Props) {
         )}
 
         {/* Back link */}
-        <div className="border-rule mt-2xl border-t pt-lg">
+        <div className="border-rule mt-2xl pt-lg border-t">
           <Link href="/projects" className="text-ink-2 text-[15px] underline">
             ← All projects
           </Link>
@@ -161,5 +162,3 @@ export default async function ProjectPage({ params }: Props) {
     </>
   );
 }
-
-// Made with Bob

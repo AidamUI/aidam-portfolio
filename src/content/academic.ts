@@ -143,6 +143,22 @@ export const COURSE_COUNT = TERMS.reduce(
 );
 
 export const ACADEMIC_COPY = {
+  /** Section headings and field labels — no user-visible string in a component. */
+  degreeHeading: "Degree",
+  honoursHeading: "Scholarships and honours",
+  teachingHeading: "Teaching",
+  priorSchoolHeading: "Prior school",
+  labelPeriod: "Period",
+  labelCgpa: "CGPA",
+  labelCredits: "Credits",
+  labelCurrentTerm: "Current term",
+  creditsValue: (done: number, doing: number) =>
+    `${done} completed, ${doing} in progress`,
+  currentTermValue: (label: string, credits: number) =>
+    `${label} — ${credits} credits`,
+  coursesSummary: (courses: number, credits: number) =>
+    `${courses} courses, ${credits} credits.`,
+  creditSuffix: "cr",
   coursesHeading: "Full course record",
   /**
    * The course list is long, so it sits behind a disclosure rather than

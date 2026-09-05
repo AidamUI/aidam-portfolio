@@ -75,14 +75,14 @@ export const PROJECTS: Project[] = [
     status: "shipped",
     year: 2025,
     featured: true,
-    role: "I built the data pipeline: the merge of the provincial datasets and the posting parser behind the dashboard.",
+    role: "I built it end to end — the dataset merge, the posting parser, and the dashboard on top of them — with Tasya Pandya.",
     problem:
       "Reskilling programmes get pointed at whatever skills sound current, not at what a particular city's employers are actually short of.",
     what: "Merges 35+ BPS provincial datasets into one city-level national database, parses 4,800+ JobStreet postings for the skills they ask for, and surfaces the gap per region so a reskilling platform can recommend against real demand.",
     build:
       "Python for the merge and the parsing — 35+ provincial datasets normalised to a common city-level schema, then 4,800+ job postings processed to pull out the skill requirements behind them. The output feeds a Tableau dashboard of regional skill gaps.",
     outcome:
-      "Built for the Compfest Data Science Academy. The dashboard is public and hosted on teammate Tasya Pandya's Tableau Public profile — the visualisation work is hers, the pipeline underneath it is mine.",
+      "Built for the Compfest Data Science Academy, with Tasya Pandya. The dashboard is public and lives on her Tableau Public profile.",
     stack: ["Python", "Tableau", "SQL"],
     links: [
       {
@@ -125,7 +125,10 @@ export const PROJECTS: Project[] = [
     name: "kosinduy_YNWA",
     tagline: "Django and Flutter football store",
     status: "coursework",
-    year: 2026,
+    // Platform-Based Programming sits in content.md §8's "2025/2026, Term 1",
+    // so the calendar year the course opened is 2025 — matching football-news,
+    // which is the same course.
+    year: 2025,
     role: "Coursework for Platform-Based Programming — the web app and the mobile client that consumes it.",
     problem:
       "Platform-Based Programming asks for one product delivered twice: a Django web app and a Flutter client against the same REST API.",

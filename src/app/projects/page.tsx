@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ProjectBand } from "@/components/ProjectBand";
 import { StationSign } from "@/components/StationSign";
 import { LEGACY_COPY, LEGACY_PROJECTS, PROJECTS } from "@/content/projects";
@@ -18,6 +17,7 @@ export default function ProjectsPage() {
         name="Projects"
         line="kerja"
         blurb="Everything shipped, newest first"
+        as="h1"
       />
 
       <section className="px-lg py-xl">
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
         </div>
 
         {/* Legacy projects */}
-        <div className="border-rule border-t pt-xl">
+        <div className="border-rule pt-xl border-t">
           <h2 className="sign-type mb-sm text-ink text-[19px]">
             {LEGACY_COPY.heading}
           </h2>
@@ -55,5 +55,3 @@ export default function ProjectsPage() {
     </>
   );
 }
-
-// Made with Bob

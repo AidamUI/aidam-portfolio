@@ -38,7 +38,7 @@ export function RoleEntry({ role }: RoleEntryProps) {
       </div>
 
       {role.stages && role.stages.length > 0 ? (
-        <div className="mt-lg border-line-work border-l-[3px] pl-lg">
+        <div className="mt-lg border-line-work pl-lg border-l-[3px]">
           {role.stages.map((stage, i) => {
             const stagePeriod = formatPeriod(stage.start, stage.end);
             return (
@@ -82,5 +82,3 @@ function formatPeriod(start: string, end: string | null): string {
   const endFormatted = monthYear(end);
   return `${startFormatted} – ${endFormatted}`;
 }
-
-// Made with Bob

@@ -1,66 +1,77 @@
-import { PageShell } from "@/components/PageShell";
-import { StationSign } from "@/components/StationSign";
-import { StationBadge } from "@/components/StationBadge";
-import { ALBUMS, GALLERY_COPY, albumCount } from "@/content/gallery";
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
+import { StationBadge } from "@/components/StationBadge";
+import { StationSign } from "@/components/StationSign";
+import { ALBUMS, GALLERY_COPY, albumCount } from "@/content/gallery";
 
 export const metadata: Metadata = {
   title: "Documentation",
   description: GALLERY_COPY.blurb,
+  alternates: { canonical: "/documentation" },
 };
 
+/**
+ * The album index.
+ *
+ * No `PageShell` here: the root layout already wraps every route in one. Doing
+ * it again produced two route lines and a second `<main id="main">`, which is
+ * invalid HTML and gives the skip link two targets to choose between.
+ */
 export default function DocumentationPage() {
   const hasAnyPhotos = ALBUMS.some((album) => albumCount(album.slug) > 0);
 
   return (
-    <PageShell>
-      <div className="space-y-2xl">
-        {/* Station sign */}
-        <StationSign code="O1" name="Documentation" line="pribadi" blurb={GALLERY_COPY.blurb} />
+    <>
+      <StationSign
+        code="O1"
+        name={GALLERY_COPY.heading}
+        line="pribadi"
+        blurb={GALLERY_COPY.blurb}
+        as="h1"
+      />
 
-        {/* Empty state or album grid */}
+      <div className="px-lg py-xl">
         {!hasAnyPhotos ? (
-          <div className="bg-platform-2 border-route-line mb-2xl border-l-[4px] p-lg">
-            <p className="measure text-ink-2 text-[15px] leading-relaxed">
-              {GALLERY_COPY.emptyIndex}
-            </p>
-          </div>
+          <p className="measure border-line-life text-ink-2 mb-xl pl-md border-l-[4px] text-[15px]">
+            {GALLERY_COPY.emptyIndex}
+          </p>
         ) : null}
 
-        {/* Album list */}
-        <div className="space-y-lg">
+        <ul className="flex flex-col">
           {ALBUMS.map((album) => {
             const count = albumCount(album.slug);
             return (
-              <Link
-                key={album.slug}
-                href={`/documentation/${album.slug}`}
-                className="bg-platform-2 hover:bg-platform-3 block border-l-[4px] border-transparent p-lg transition-colors hover:border-route-line"
-              >
-                <div className="flex items-start justify-between gap-md">
-                  <div className="flex-1">
-                    <div className="mb-xs flex items-center gap-sm">
-                      <StationBadge code="O1" line="pribadi" />
-                      <h2 className="sign-type text-ink text-[19px]">
-                        {album.name}
-                      </h2>
-                    </div>
-                    <p className="text-ink-2 text-[15px] leading-relaxed">
+              <li key={album.slug} className="border-rule border-b">
+                <Link
+                  href={`/documentation/${album.slug}`}
+                  className="gap-md py-md flex items-start"
+                >
+                  <StationBadge
+                    code={album.code}
+                    line="pribadi"
+                    className="mt-[3px]"
+                  />
+                  <span className="flex-1">
+                    <span className="sign-type text-ink block text-[19px]">
+                      {album.name}
+                    </span>
+                    <span className="measure text-ink-2 block text-[15px]">
                       {album.blurb}
-                    </p>
-                  </div>
-                  <div className="text-ink-2 shrink-0 text-[15px]">
-                    {count === 0 ? "—" : `${count} ${count === 1 ? "photo" : "photos"}`}
-                  </div>
-                </div>
-              </Link>
+                    </span>
+                  </span>
+                  <span className="text-ink-2 shrink-0 font-mono text-[13px]">
+                    {count === 0
+                      ? GALLERY_COPY.countNone
+                      : count === 1
+                        ? GALLERY_COPY.countOne
+                        : GALLERY_COPY.countMany(count)}
+                  </span>
+                </Link>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
-    </PageShell>
+    </>
   );
 }
-
-// Made with Bob

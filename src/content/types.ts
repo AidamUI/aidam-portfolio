@@ -236,6 +236,8 @@ export type GalleryItem = {
 
 export type Album = {
   slug: AlbumSlug;
+  /** Station sub-code, e.g. O1.1 — same pattern as the projects' P1.1. */
+  code: string;
   name: string;
   blurb: string;
   /** Empty until the first photo lands; the album still renders. */

@@ -26,7 +26,7 @@ export function ProjectBand({ project, featured = false }: ProjectBandProps) {
         href={`/projects/${project.slug}`}
         className={`block border-l-[3px] ${
           lineColor === "kerja" ? "border-line-work" : "border-line-life"
-        } bg-platform-2 px-lg py-xl transition-colors hover:bg-platform`}
+        } bg-platform-2 px-lg py-xl hover:bg-platform transition-colors`}
       >
         <div className="gap-md mb-md flex items-center">
           <StationBadge code={project.code} line={lineColor} />
@@ -48,7 +48,7 @@ export function ProjectBand({ project, featured = false }: ProjectBandProps) {
       href={`/projects/${project.slug}`}
       className={`block border-l-[3px] ${
         lineColor === "kerja" ? "border-line-work" : "border-line-life"
-      } px-lg py-md transition-colors hover:bg-platform-2`}
+      } px-lg py-md hover:bg-platform-2 transition-colors`}
     >
       <div className="gap-md flex flex-wrap items-baseline">
         <StationBadge code={project.code} line={lineColor} />
@@ -61,5 +61,3 @@ export function ProjectBand({ project, featured = false }: ProjectBandProps) {
     </Link>
   );
 }
-
-// Made with Bob

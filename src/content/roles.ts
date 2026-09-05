@@ -3,7 +3,7 @@ import type { Role } from "./types";
 /**
  * Professional and teaching roles, reverse-chronological. Source: content.md §5.
  *
- * Three corrections from context.md §10 are baked in here and must not drift
+ * Three corrections from prd.md §10 are baked in here and must not drift
  * back toward the CV or LinkedIn, both of which are wrong on these:
  *   - the IBM title is "Brand Technical Sales Specialist Intern", which matches
  *     neither document;

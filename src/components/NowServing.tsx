@@ -17,14 +17,14 @@ export function NowServing() {
 
   return (
     <section className="px-lg py-xl">
-      <div className="bg-platform-2 border-marker relative border-l-[4px] p-lg">
+      <div className="bg-platform-2 border-marker p-lg relative border-l-[4px]">
         {/* Marker dot */}
         <div
-          className="bg-marker absolute -left-[10px] top-[24px] h-[16px] w-[16px] rounded-full"
+          className="bg-marker absolute top-[24px] -left-[10px] h-[16px] w-[16px] rounded-full"
           aria-hidden="true"
         />
-        
-        <div className="mb-md flex items-baseline justify-between gap-md">
+
+        <div className="mb-md gap-md flex items-baseline justify-between">
           <h2 className="sign-type text-ink text-[19px]">{NOW.heading}</h2>
           <time
             dateTime={NOW.updated}
@@ -45,5 +45,3 @@ export function NowServing() {
     </section>
   );
 }
-
-// Made with Bob
