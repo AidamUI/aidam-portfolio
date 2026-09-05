@@ -57,5 +57,5 @@ next-env.d.ts
 /playwright/.cache/
 
 # Lighthouse reports
-lh-*.json
+lh?*.json
 prod_*.json
