@@ -21,7 +21,7 @@ export const dynamic = "force-dynamic";
 
 function PageHeading({ blurb }: { blurb?: string }) {
   return (
-    <div className="mx-auto max-w-[940px] px-6 pt-13 pb-6 sm:px-8 sm:pt-20">
+    <div className="mx-auto max-w-[1180px] px-6 pt-13 pb-6 sm:px-8 sm:pt-20">
       <h1 className="text-4xl sm:text-5xl">{GUESTBOOK_ADMIN.heading}</h1>
       {blurb ? <p className="text-mut mt-3">{blurb}</p> : null}
     </div>

@@ -900,20 +900,33 @@ function artFor(stage: Stage) {
  * crop the composition (signposts and trees pushed off the visible edges,
  * fog bands — sized in absolute pixels — shrinking to near-invisible against
  * an enlarged scene). Matching the native ratio keeps every hand-placed
- * element exactly where it was drawn; content always sits in a solid card
- * below regardless, so legibility never depends on the illustration.
+ * element exactly where it was drawn.
+ *
+ * The bottom edge is masked to transparent rather than cut off square: a hard
+ * rectangle where illustrated ground meets the flat page background reads as
+ * a UI seam, not a horizon. Fading it lets the page's own `--ground` show
+ * through underneath — always an exact colour match, in both themes, with no
+ * gradient colour to keep in sync by hand. `white → transparent` rather than
+ * `black → transparent` is deliberate: `mask-image` defaults to a luminance
+ * mask (white = opaque) while legacy `-webkit-mask-image` defaults to alpha
+ * (opacity = opaque), and only the white-to-transparent direction reads
+ * correctly under both.
  *
  * Parallax offset (`--px`) comes from scroll position on THIS page; it resets
  * to 0 on every route change because `useScrollProgress` remounts per page.
  */
 export function Scene({ stage }: { stage: Stage }) {
   const progress = useScrollProgress();
+  const fade =
+    "linear-gradient(to bottom, white 0%, white 88%, transparent 100%)";
 
   return (
     <div
       className="relative w-full overflow-hidden"
       style={{
         aspectRatio: "1440 / 620",
+        maskImage: fade,
+        WebkitMaskImage: fade,
         ["--px" as string]: `${progress * 180}px`,
       }}
     >

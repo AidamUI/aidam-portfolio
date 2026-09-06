@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { PROJECTS_COPY, STATUS_LABEL } from "@/content/projects";
 import type { Project } from "@/content/types";
@@ -39,15 +40,18 @@ export function ProjectRow({
 
         <div className="mt-4">
           {withheld ? (
-            <span className="text-warm border-warm inline-flex rounded-full border border-dashed px-3.5 py-2 text-xs font-semibold">
+            <span className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
               {PROJECTS_COPY.withheldLabel}
             </span>
           ) : project.stack && project.stack.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {project.stack.map((tech) => (
-                <StackTag key={tech} name={tech} interactive={false} />
+            <p className="text-mut text-sm">
+              {project.stack.map((tech, i) => (
+                <Fragment key={tech}>
+                  {i > 0 ? " · " : null}
+                  <StackTag name={tech} interactive={false} />
+                </Fragment>
               ))}
-            </div>
+            </p>
           ) : null}
         </div>
       </Link>

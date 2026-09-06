@@ -88,7 +88,7 @@ export function Header() {
         </Link>
 
         <nav aria-label={A11Y.primaryNav} className="hidden sm:block">
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-6">
             {STATIONS.map((station) => {
               const current = isCurrent(station.href);
               return (
@@ -96,10 +96,8 @@ export function Header() {
                   <Link
                     href={station.href}
                     aria-current={current ? "page" : undefined}
-                    className={`rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${
-                      current
-                        ? "bg-pill-bg text-pill-ink"
-                        : "text-mut hover:text-ink"
+                    className={`text-sm font-semibold transition-colors ${
+                      current ? "text-ink" : "text-mut hover:text-ink"
                     }`}
                   >
                     <span

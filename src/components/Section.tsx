@@ -17,7 +17,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="card px-6 py-8 sm:px-11 sm:py-11">
+    <section className="card px-6 py-8 sm:px-12 sm:py-11 lg:px-14">
       {heading ? (
         <header className="mb-6 sm:mb-8">
           <Heading
@@ -40,7 +40,7 @@ export function Section({
 /** The vertical rhythm between a page's cards, under the overlapping Hero. */
 export function Stack({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto flex max-w-[940px] flex-col gap-6 px-6 pt-6 pb-16 sm:gap-7 sm:px-8 sm:pt-7 sm:pb-24">
+    <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-6 pt-6 pb-16 sm:gap-7 sm:px-8 sm:pt-7 sm:pb-24">
       {children}
     </div>
   );

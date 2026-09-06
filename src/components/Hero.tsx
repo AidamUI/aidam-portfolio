@@ -18,8 +18,8 @@ export function Hero({
   children?: ReactNode;
 }) {
   return (
-    <div className="relative z-10 mx-auto -mt-14 max-w-[940px] px-6 sm:-mt-20 sm:px-8">
-      <div className="card px-7 py-10 sm:px-12 sm:py-12">
+    <div className="relative z-10 mx-auto -mt-14 max-w-[1180px] px-6 sm:-mt-20 sm:px-8">
+      <div className="card px-7 py-10 sm:px-12 sm:py-12 lg:px-14">
         {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
         <Heading
           className={

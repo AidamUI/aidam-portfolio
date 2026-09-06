@@ -7,7 +7,7 @@ import { buildDate } from "@/lib/format";
 export function Footer() {
   return (
     <footer className="bg-card border-line border-t">
-      <div className="mx-auto max-w-[940px] px-6 py-13 sm:px-8 sm:py-15">
+      <div className="mx-auto max-w-[1180px] px-6 py-13 sm:px-8 sm:py-15">
         <div className="grid gap-8 sm:grid-cols-3">
           <div className="flex flex-col gap-3">
             <h2 className="eyebrow">{FOOTER.navHeading}</h2>

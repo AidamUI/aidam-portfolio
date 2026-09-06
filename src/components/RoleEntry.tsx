@@ -7,6 +7,7 @@
 import Link from "next/link";
 import type { Role } from "@/content/types";
 import { monthYear } from "@/lib/format";
+import { TagList } from "./StackTag";
 
 type RoleEntryProps = {
   role: Role;
@@ -56,18 +57,21 @@ export function RoleEntry({ role }: RoleEntryProps) {
       ) : null}
 
       {role.artifacts && role.artifacts.length > 0 ? (
-        <ul className="mt-6 flex flex-wrap gap-2.5">
-          {role.artifacts.map((artifact) => (
-            <li key={artifact.href}>
-              <Link
-                href={artifact.href}
-                className="bg-pill-bg text-pill-ink inline-block rounded-full px-3.5 py-1.5 text-sm font-semibold hover:opacity-80"
-              >
-                {artifact.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-6">
+          <TagList
+            items={role.artifacts.map((artifact) => ({
+              key: artifact.href,
+              node: (
+                <Link
+                  href={artifact.href}
+                  className="text-accent font-semibold underline decoration-1 underline-offset-2 hover:opacity-80"
+                >
+                  {artifact.label}
+                </Link>
+              ),
+            }))}
+          />
+        </div>
       ) : null}
     </article>
   );

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
 import { Hero } from "@/components/Hero";
 import { Scene } from "@/components/mountain/Scene";
 import { RoleEntry } from "@/components/RoleEntry";
 import { Section, Stack } from "@/components/Section";
+import { TagList } from "@/components/StackTag";
 import { STAGE_EYEBROW } from "@/content/stage";
 import { ORG_ROLES, TECHTONIC, TECHTONIC_COPY } from "@/content/orgs";
 import {
@@ -68,19 +70,20 @@ export default function WorkPage() {
         </Section>
 
         <Section heading={TECHTONIC_COPY.heading} blurb={TECHTONIC_COPY.blurb}>
-          <ul className="flex flex-wrap gap-2.5">
-            {TECHTONIC.map((post) => (
-              <li key={post.href}>
+          <TagList
+            items={TECHTONIC.map((post) => ({
+              key: post.href,
+              node: (
                 <a
                   href={post.href}
                   rel="noopener noreferrer"
-                  className="bg-pill-bg text-pill-ink inline-block rounded-full px-3.5 py-1.5 text-sm font-semibold hover:opacity-80"
+                  className="text-accent font-semibold underline decoration-1 underline-offset-2 hover:opacity-80"
                 >
                   {post.label}
                 </a>
-              </li>
-            ))}
-          </ul>
+              ),
+            }))}
+          />
         </Section>
 
         <Section
@@ -133,16 +136,14 @@ export default function WorkPage() {
         </Section>
 
         <Section heading="Practice">
-          <ul className="flex flex-wrap gap-2.5">
-            {PRACTICE.map((item) => (
-              <li
-                key={item}
-                className="border-line-strong rounded-full border px-4 py-1.5 text-sm"
-              >
+          <p className="text-lg">
+            {PRACTICE.map((item, i) => (
+              <Fragment key={item}>
+                {i > 0 ? <span className="text-mut"> · </span> : null}
                 {item}
-              </li>
+              </Fragment>
             ))}
-          </ul>
+          </p>
         </Section>
 
         <Section heading="Languages">

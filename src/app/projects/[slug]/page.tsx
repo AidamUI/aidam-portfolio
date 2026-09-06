@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/Hero";
 import { Scene } from "@/components/mountain/Scene";
@@ -118,13 +119,14 @@ export default async function ProjectPage({ params }: Props) {
 
               {project.stack && project.stack.length > 0 ? (
                 <Section heading={PROJECTS_COPY.stackLabel}>
-                  <ul className="flex flex-wrap gap-2.5">
-                    {project.stack.map((tech) => (
-                      <li key={tech}>
+                  <p className="text-lg">
+                    {project.stack.map((tech, i) => (
+                      <Fragment key={tech}>
+                        {i > 0 ? <span className="text-mut"> · </span> : null}
                         <StackTag name={tech} />
-                      </li>
+                      </Fragment>
                     ))}
-                  </ul>
+                  </p>
                 </Section>
               ) : null}
 

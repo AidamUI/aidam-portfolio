@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
 import { Hero } from "@/components/Hero";
 import { CareerRoute } from "@/components/CareerRoute";
 import { Scene } from "@/components/mountain/Scene";
@@ -109,13 +110,14 @@ export default function HomePage() {
         </Section>
 
         <Section heading={HOME.skills.heading} blurb={HOME.skills.blurb}>
-          <ul className="flex flex-wrap gap-2.5">
-            {core.map((skill) => (
-              <li key={skill.name}>
+          <p className="text-lg">
+            {core.map((skill, i) => (
+              <Fragment key={skill.name}>
+                {i > 0 ? <span className="text-mut"> · </span> : null}
                 <StackTag name={skill.name} />
-              </li>
+              </Fragment>
             ))}
-          </ul>
+          </p>
           <p className="text-mut mt-8 max-w-prose text-sm">
             {HOME.skills.note}
           </p>
