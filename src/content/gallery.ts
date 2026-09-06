@@ -76,7 +76,7 @@ export const ITEMS: GalleryItem[] = [];
  * on purpose so the masonry grid reads as a photo grid rather than identical
  * cards, cycled across however many preview tiles an album shows.
  */
-const PLACEHOLDER_SHAPES = [
+export const PLACEHOLDER_SHAPES = [
   { id: "a", width: 1200, height: 1500 },
   { id: "b", width: 1600, height: 1000 },
   { id: "c", width: 1400, height: 1400 },

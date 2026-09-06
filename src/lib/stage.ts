@@ -2,16 +2,19 @@ import { projectBySlug } from "@/content/projects";
 import { isConfidential } from "@/content/types";
 
 /**
- * The nine scenes of one Gunung Rinjani ascent, one per route. `confidential`
+ * The ten scenes of one Gunung Rinjani ascent, one per route. `confidential`
  * and `open` are both the crater-wall descent (see Scene.tsx); only the mist
  * differs, because that is the one page whose content itself is partly
- * withheld.
+ * withheld. `blog` sits at the rim campsite, right after the rim viewpoint
+ * itself — the real spot on Rinjani where trekkers stop, pitch a tent by the
+ * trailside warungs, and write up the day.
  */
 export type Stage =
   | "home"
   | "work"
   | "academic"
   | "projects"
+  | "blog"
   | "confidential"
   | "open"
   | "docs"
@@ -23,6 +26,7 @@ export const STAGE_ORDER: Stage[] = [
   "work",
   "academic",
   "projects",
+  "blog",
   "confidential",
   "open",
   "docs",
@@ -36,6 +40,7 @@ export const STAGE_STOPS: Record<Stage, readonly [number, number, string]> = {
   work: [25, 24, "savanna"],
   academic: [43, 19, "pine switchbacks"],
   projects: [61, 11, "rim viewpoint"],
+  blog: [70, 13, "rim camp"],
   confidential: [79, 16, "crater descent"],
   open: [97, 16, "crater descent"],
   docs: [114, 19, "lake camp"],
@@ -57,6 +62,7 @@ export function stageFromPathname(pathname: string): Stage {
     return project && isConfidential(project) ? "confidential" : "open";
   }
   if (pathname.startsWith("/projects")) return "projects";
+  if (pathname.startsWith("/blog")) return "blog";
   if (pathname.startsWith("/documentation")) return "docs";
   if (pathname.startsWith("/guestbook")) return "guestbook";
   return "notfound";

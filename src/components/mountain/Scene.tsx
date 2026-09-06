@@ -476,6 +476,116 @@ function RimArt() {
   );
 }
 
+/**
+ * The rim campsite — the same Pelawangan Sembalun viewpoint as `RimArt`,
+ * because it's the same physical spot; only the foreground changes, from a
+ * bare vista to a warung and tents pitched at it for the night.
+ */
+function BlogArt() {
+  return (
+    <>
+      <SkyGradient />
+      <StarField seed={19} />
+      <SunOrb left="10%" top="10%" size="4.6%" />
+      <svg {...viewport} style={svgFill}>
+        <g style={px(0.12)}>
+          <path
+            d="M0 296Q200 274 420 288L640 196Q680 174 720 200L900 292Q1100 314 1440 288L1440 470L0 470Z"
+            fill="var(--ridge)"
+          />
+          <path d="M700 198L900 292L744 292Z" fill="var(--ridge-2)" />
+          <path
+            d="M180 436Q520 396 900 408Q1240 418 1332 452Q1240 506 880 518Q460 526 210 490Q148 464 180 436Z"
+            fill="var(--lake)"
+          />
+          <path
+            d="M212 442Q540 408 900 420Q1180 428 1290 452Q1180 470 890 464Q500 456 236 462Q194 454 212 442Z"
+            fill="var(--lake-2)"
+            opacity="0.75"
+          />
+          <path
+            d="M688 408L758 300Q772 284 786 300L860 408Z"
+            fill="var(--cone)"
+          />
+          <path
+            d="M786 300Q772 284 762 302L860 408L792 408Z"
+            fill="var(--cone-2)"
+          />
+        </g>
+        <g style={px(0.42)}>
+          <path
+            d="M0 520Q300 476 700 528Q1060 574 1440 512L1440 620L0 620Z"
+            fill="var(--near)"
+          />
+          <path
+            d="M0 540Q300 496 700 548Q1060 594 1440 532L1440 620L0 620Z"
+            fill="var(--near-2)"
+          />
+          {/* The warung: a plank counter under a lean-to roof. */}
+          <rect
+            x="220"
+            y="500"
+            width="12"
+            height="90"
+            rx="5"
+            fill="var(--wood)"
+          />
+          <rect
+            x="428"
+            y="500"
+            width="12"
+            height="90"
+            rx="5"
+            fill="var(--wood)"
+          />
+          <path d="M204 502L448 502L410 458L242 458Z" fill="var(--wood-2)" />
+          <rect
+            x="212"
+            y="546"
+            width="228"
+            height="30"
+            rx="6"
+            fill="var(--wood-2)"
+          />
+          {/* Two tents pitched beside it. */}
+          <path d="M560 590L614 522L668 590Z" fill="var(--tent)" />
+          <path d="M614 522L668 590L642 590Z" fill="var(--tent-2)" />
+          <path d="M700 598L742 544L784 598Z" fill="var(--tent)" />
+          <path d="M742 544L784 598L764 598Z" fill="var(--tent-2)" />
+          <path
+            d="M120 560l14-38 14 38zM162 568l12-32 12 32z"
+            fill="var(--tree-2)"
+          />
+        </g>
+      </svg>
+      {/* A small fire in front of the warung, glowing warmer at night. */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          left: "40.5%",
+          top: "89%",
+          width: "1.6%",
+          aspectRatio: "1",
+          background:
+            "radial-gradient(circle, var(--fig-accent), transparent 70%)",
+        }}
+      />
+      <NightGlow left="40.5%" top="89%" size="2.6%" />
+      <MistBand
+        left="6%"
+        top="62%"
+        width="52%"
+        height="18px"
+        blur={7}
+        opacity={0.4}
+        duration={40}
+        reverse
+      />
+      <HikerAt left="35%" top="90%" width="1.3%" height="4.2%" />
+    </>
+  );
+}
+
 function DescentArt({ misty }: { misty: boolean }) {
   const veil = misty ? 1 : 0.18;
   const veilSoft = misty ? 0.85 : 0.12;
@@ -878,6 +988,8 @@ function artFor(stage: Stage) {
       return <AcademicArt />;
     case "projects":
       return <RimArt />;
+    case "blog":
+      return <BlogArt />;
     case "confidential":
       return <DescentArt misty />;
     case "open":

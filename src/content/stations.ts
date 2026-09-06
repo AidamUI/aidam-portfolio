@@ -46,6 +46,13 @@ export const STATIONS: Station[] = [
     blurb: "Everything shipped, newest first",
   },
   {
+    code: "B1",
+    name: "Blog",
+    href: "/blog",
+    line: "pribadi",
+    blurb: "Posts, reposts and the odd video, copied over by hand",
+  },
+  {
     code: "O1",
     name: "Documentation",
     href: "/documentation",
