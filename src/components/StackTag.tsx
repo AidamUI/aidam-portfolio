@@ -20,7 +20,7 @@ export function StackTag({
   const evidence = skill && skill.tier === "used" ? skill.evidence[0] : null;
 
   const pill =
-    "border-border-strong text-text-muted inline-block rounded-full border px-3 py-1 text-sm";
+    "bg-pill-bg text-pill-ink inline-block rounded-full px-3.5 py-1.5 text-sm font-semibold";
 
   if (!evidence || !interactive) {
     return <span className={pill}>{name}</span>;
@@ -29,7 +29,7 @@ export function StackTag({
   return (
     <Link
       href={evidence.href}
-      className={`${pill} hover:border-accent hover:text-accent transition-colors`}
+      className={`${pill} transition-opacity hover:opacity-80`}
     >
       {name}
     </Link>

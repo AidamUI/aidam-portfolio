@@ -27,10 +27,14 @@ export function ThemeToggle() {
       type="button"
       data-theme-toggle
       onClick={toggle}
-      className="text-text hover:bg-bg-subtle inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors"
+      className="border-line-strong text-ink inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors"
     >
       <SunIcon className="when-light" />
       <MoonIcon className="when-dark" />
+      <span aria-hidden="true">
+        <span className="when-light">Day</span>
+        <span className="when-dark">Night</span>
+      </span>
       <span className="sr-only">
         {/* Exactly one of these is displayed, and therefore exactly one is in
             the accessibility tree, so the button announces what it will do. */}

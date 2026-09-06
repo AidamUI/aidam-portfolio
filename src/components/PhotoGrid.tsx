@@ -25,7 +25,7 @@ export function PhotoGrid({ items }: { items: GalleryItem[] }) {
             className="h-auto w-full rounded-lg"
           />
           {item.caption ? (
-            <figcaption className="text-text-muted mt-2 text-sm">
+            <figcaption className="text-mut mt-2 text-sm">
               {item.caption}
             </figcaption>
           ) : null}

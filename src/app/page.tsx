@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Hero } from "@/components/Hero";
 import { CareerRoute } from "@/components/CareerRoute";
+import { Scene } from "@/components/mountain/Scene";
 import { NowServing } from "@/components/NowServing";
 import { PersonSchema } from "@/components/PersonSchema";
 import { ProjectRow } from "@/components/ProjectRow";
-import { Section } from "@/components/Section";
+import { Section, Stack } from "@/components/Section";
 import { StackTag } from "@/components/StackTag";
 import { HOME } from "@/content/home";
+import { NOW } from "@/content/now";
 import { PROFILE } from "@/content/profile";
 import { PROJECTS, PROJECTS_COPY } from "@/content/projects";
 import { TEACHING_LOAD } from "@/content/roles";
@@ -19,17 +22,14 @@ export const metadata: Metadata = {
 };
 
 /**
- * The home page. prd.md §5.1 asks the hero to carry the positioning in one
- * screen, then a dated "currently" block, then featured projects, then a
- * contact strip. This adds the connective tissue between those: who he is in
- * his own words, the facts a recruiter is scanning for, and what he builds
- * with — each linking to the page that backs it up.
+ * The home page — the trailhead. prd.md §5.1 asks the hero to carry the
+ * positioning in one screen, then a dated "currently" block, then featured
+ * projects, then a contact strip. This adds the connective tissue between
+ * those: who he is in his own words, the facts a recruiter is scanning for,
+ * and what he builds with — each linking to the page that backs it up.
  *
  * Every figure on this page is one he can expand on for five minutes
  * (prd.md §6). No invented metrics.
- *
- * Single column throughout, generous spacing between every block — the
- * redesign favours a long, calm page over cramming everything above the fold.
  */
 export default function HomePage() {
   const featured = PROJECTS.filter((project) => project.featured);
@@ -38,117 +38,124 @@ export default function HomePage() {
   return (
     <>
       <PersonSchema />
+      <Scene stage="home" />
 
-      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
-        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
-          {PROFILE.name}
-        </h1>
-        <p className="mt-6 max-w-prose text-lg">{PROFILE.hero}</p>
-        <p className="text-text-muted mt-4 font-mono text-sm">
-          {PROFILE.heroSub}
-        </p>
-      </div>
+      <Hero
+        eyebrow={`${PROFILE.name} · goes by ${PROFILE.goesBy}`}
+        title={PROFILE.hero}
+      >
+        <div className="border-line mt-6 border-t pt-6">
+          <p className="eyebrow">Now serving</p>
+          <p className="text-mut mt-2 max-w-prose">{PROFILE.heroSub}</p>
+        </div>
+      </Hero>
 
-      <CareerRoute />
-      <NowServing />
+      <Stack>
+        <Section heading="Four stops so far">
+          <CareerRoute />
+        </Section>
 
-      <Section heading={HOME.glance.heading} blurb={HOME.glance.blurb}>
-        <ul className="flex flex-col gap-8">
-          {PROFILE.glance.map((item) => (
-            <li key={item.label}>
-              <Link href={item.href} className="group block">
-                <span className="text-accent block text-3xl leading-none font-black">
+        <Section heading={NOW.heading}>
+          <NowServing />
+        </Section>
+
+        <Section heading={HOME.glance.heading} blurb={HOME.glance.blurb}>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {PROFILE.glance.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="card flex flex-col gap-3 px-5 py-6 transition-opacity hover:opacity-90"
+              >
+                <span className="font-display text-3xl font-semibold tracking-tight">
                   {item.figure}
                 </span>
-                <span className="text-text-muted group-hover:text-text mt-2 block max-w-prose transition-colors">
-                  {item.label}
-                </span>
+                <span className="text-mut text-sm">{item.label}</span>
               </Link>
-            </li>
-          ))}
-        </ul>
-        <p className="text-text-muted mt-10 max-w-prose text-sm">
-          {TEACHING_LOAD}
-        </p>
-      </Section>
+            ))}
+          </div>
+          <p className="text-mut mt-8 max-w-prose text-sm">{TEACHING_LOAD}</p>
+        </Section>
 
-      <Section heading={HOME.about.heading} blurb={HOME.about.blurb} subtle>
-        <div className="flex flex-col gap-6">
-          {PROFILE.about.slice(0, 2).map((paragraph) => (
-            <p key={paragraph.slice(0, 24)} className="max-w-prose">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-        <p className="mt-8">
-          <Link href="/work" className="text-accent font-medium underline">
-            {HOME.about.more}
-          </Link>
-        </p>
-      </Section>
+        <Section heading={HOME.about.heading} blurb={HOME.about.blurb}>
+          <div className="flex flex-col gap-6">
+            {PROFILE.about.slice(0, 2).map((paragraph) => (
+              <p key={paragraph.slice(0, 24)} className="max-w-prose">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          <p className="mt-8">
+            <Link href="/work" className="text-accent font-semibold underline">
+              {HOME.about.more}
+            </Link>
+          </p>
+        </Section>
 
-      <Section heading={HOME.featured.heading} blurb={HOME.featured.blurb}>
-        <div className="flex flex-col gap-6">
-          {featured.map((project) => (
-            <ProjectRow key={project.slug} project={project} as="h3" />
-          ))}
-        </div>
-        <p className="mt-8">
-          <Link href="/projects" className="text-accent font-medium underline">
-            {PROJECTS_COPY.moreProjects}
-          </Link>
-        </p>
-      </Section>
-
-      <Section heading={HOME.skills.heading} blurb={HOME.skills.blurb} subtle>
-        <ul className="flex flex-wrap gap-3">
-          {core.map((skill) => (
-            <li key={skill.name}>
-              <StackTag name={skill.name} />
-            </li>
-          ))}
-        </ul>
-        <p className="text-text-muted mt-8 max-w-prose text-sm">
-          {HOME.skills.note}
-        </p>
-        <p className="mt-4">
-          <Link href="/work" className="text-accent font-medium underline">
-            {HOME.skills.more}
-          </Link>
-        </p>
-      </Section>
-
-      <Section heading={HOME.contact.heading}>
-        <ul className="flex flex-col gap-4">
-          <li>
-            <a
-              href={EMAIL.href}
-              className="hover:text-accent text-lg transition-colors"
+        <Section heading={HOME.featured.heading} blurb={HOME.featured.blurb}>
+          <div className="flex flex-col gap-7">
+            {featured.map((project) => (
+              <ProjectRow key={project.slug} project={project} as="h3" />
+            ))}
+          </div>
+          <p className="mt-7">
+            <Link
+              href="/projects"
+              className="text-accent font-semibold underline"
             >
-              {/* Split so the rendered HTML holds no contiguous address. */}
-              <span>{EMAIL.user}</span>
-              <span>@</span>
-              <span>{EMAIL.domain}</span>
-            </a>
-          </li>
-          {SOCIALS.map((social) => (
-            <li key={social.href}>
+              {PROJECTS_COPY.moreProjects}
+            </Link>
+          </p>
+        </Section>
+
+        <Section heading={HOME.skills.heading} blurb={HOME.skills.blurb}>
+          <ul className="flex flex-wrap gap-2.5">
+            {core.map((skill) => (
+              <li key={skill.name}>
+                <StackTag name={skill.name} />
+              </li>
+            ))}
+          </ul>
+          <p className="text-mut mt-8 max-w-prose text-sm">
+            {HOME.skills.note}
+          </p>
+          <p className="mt-4">
+            <Link href="/work" className="text-accent font-semibold underline">
+              {HOME.skills.more}
+            </Link>
+          </p>
+        </Section>
+
+        <Section heading={HOME.contact.heading}>
+          <ul className="flex flex-col gap-3">
+            <li>
               <a
-                href={social.href}
-                rel="me noopener noreferrer"
+                href={EMAIL.href}
                 className="hover:text-accent text-lg transition-colors"
               >
-                {social.label}
+                {/* Split so the rendered HTML holds no contiguous address. */}
+                <span>{EMAIL.user}</span>
+                <span>@</span>
+                <span>{EMAIL.domain}</span>
               </a>
-              {social.note ? (
-                <span className="text-text-muted ml-2 text-sm">
-                  {social.note}
-                </span>
-              ) : null}
             </li>
-          ))}
-        </ul>
-      </Section>
+            {SOCIALS.map((social) => (
+              <li key={social.href}>
+                <a
+                  href={social.href}
+                  rel="me noopener noreferrer"
+                  className="hover:text-accent text-lg transition-colors"
+                >
+                  {social.label}
+                </a>
+                {social.note ? (
+                  <span className="text-mut ml-2 text-sm">{social.note}</span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      </Stack>
     </>
   );
 }

@@ -20,50 +20,36 @@ export function ProjectRow({
   const withheld = isConfidential(project);
 
   return (
-    <article className="border-border rounded-xl border p-8 sm:p-10">
+    <article className="border-line border-t pt-7 first:border-t-0 first:pt-0">
       <Link href={`/projects/${project.slug}`} className="group block">
-        <div className="mb-3 flex flex-wrap items-baseline gap-3">
-          <Heading className="group-hover:text-accent text-xl font-bold transition-colors">
+        <div className="mb-2 flex flex-wrap items-baseline justify-between gap-3">
+          <Heading className="font-display group-hover:text-accent text-xl font-semibold transition-colors">
             {project.name}
           </Heading>
-          <span className="text-text-muted text-sm">
-            {STATUS_LABEL[project.status]}
-          </span>
-          <span className="text-text-muted ml-auto shrink-0 font-mono text-sm">
-            {project.year}
+          <span className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
+            {STATUS_LABEL[project.status]} · {project.year}
           </span>
         </div>
 
-        <p className="mb-6 max-w-prose">{project.tagline}</p>
+        <p className="mb-4 max-w-prose">
+          <span className="text-mut">{PROJECTS_COPY.roleLabel} — </span>
+          {project.role}
+        </p>
+        <p className="max-w-prose">{project.tagline}</p>
 
-        <dl className="flex flex-col gap-4">
-          <div>
-            <dt className="text-text-muted mb-1 text-sm font-semibold">
-              {PROJECTS_COPY.roleLabel}
-            </dt>
-            <dd className="max-w-prose">{project.role}</dd>
-          </div>
-
+        <div className="mt-4">
           {withheld ? (
-            <div>
-              <dt className="text-text-muted mb-1 text-sm font-semibold">
-                {PROJECTS_COPY.stackLabel}
-              </dt>
-              <dd className="text-text-muted">{PROJECTS_COPY.withheldLabel}</dd>
-            </div>
+            <span className="text-warm border-warm inline-flex rounded-full border border-dashed px-3.5 py-2 text-xs font-semibold">
+              {PROJECTS_COPY.withheldLabel}
+            </span>
           ) : project.stack && project.stack.length > 0 ? (
-            <div>
-              <dt className="text-text-muted mb-1 text-sm font-semibold">
-                {PROJECTS_COPY.stackLabel}
-              </dt>
-              <dd className="flex flex-wrap gap-2">
-                {project.stack.map((tech) => (
-                  <StackTag key={tech} name={tech} interactive={false} />
-                ))}
-              </dd>
+            <div className="flex flex-wrap gap-2">
+              {project.stack.map((tech) => (
+                <StackTag key={tech} name={tech} interactive={false} />
+              ))}
             </div>
           ) : null}
-        </dl>
+        </div>
       </Link>
     </article>
   );

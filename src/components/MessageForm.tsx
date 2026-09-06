@@ -57,14 +57,14 @@ export function MessageForm({ disabled = false }: { disabled?: boolean }) {
           required
           disabled={disabled}
           placeholder={GUESTBOOK.placeholder}
-          className="border-border-strong bg-bg mt-3 w-full rounded-lg border px-4 py-3 disabled:opacity-50"
+          className="border-line-strong mt-3 w-full rounded-2xl border bg-transparent px-5 py-4 disabled:opacity-50"
         />
       </CharacterCounter>
 
       <button
         type="submit"
         disabled={disabled}
-        className="bg-accent text-on-accent mt-4 rounded-full px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="bg-accent text-on-accent mt-4 rounded-full px-7 py-3.5 text-sm font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {GUESTBOOK.submit}
       </button>

@@ -12,10 +12,10 @@ import { ImageResponse } from "next/og";
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
-const BG = "#FFFFFF";
-const TEXT = "#16181D";
-const TEXT_MUTED = "#5B6270";
-const ACCENT = "#2F5CE0";
+const BG = "#FDFBF6";
+const TEXT = "#22302B";
+const TEXT_MUTED = "#5D6D66";
+const ACCENT = "#2F6B52";
 
 /**
  * Satori needs real font data — it cannot use a system font stack, and it

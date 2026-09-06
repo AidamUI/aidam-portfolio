@@ -4,10 +4,10 @@ export const THEME_STORAGE_KEY = "aidam:theme";
 
 export const THEMES: readonly ThemeName[] = ["light", "dark"] as const;
 
-/** The two grounds, for the browser-chrome colour. Mirrors --bg. */
+/** The two grounds, for the browser-chrome colour. Mirrors --ground. */
 export const THEME_CHROME: Record<ThemeName, string> = {
-  light: "#FFFFFF",
-  dark: "#14161A",
+  light: "#EFEAE1",
+  dark: "#0B141B",
 };
 
 export function isThemeName(value: unknown): value is ThemeName {

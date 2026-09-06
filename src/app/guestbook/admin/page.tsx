@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { Section } from "@/components/Section";
+import { Section, Stack } from "@/components/Section";
 import { GUESTBOOK_ADMIN } from "@/content/guestbook";
 import { isDatabaseConfigured } from "@/db";
 import { isAuthorised } from "@/lib/admin-auth";
@@ -21,11 +21,9 @@ export const dynamic = "force-dynamic";
 
 function PageHeading({ blurb }: { blurb?: string }) {
   return (
-    <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
-      <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
-        {GUESTBOOK_ADMIN.heading}
-      </h1>
-      {blurb ? <p className="text-text-muted mt-3">{blurb}</p> : null}
+    <div className="mx-auto max-w-[940px] px-6 pt-13 pb-6 sm:px-8 sm:pt-20">
+      <h1 className="text-4xl sm:text-5xl">{GUESTBOOK_ADMIN.heading}</h1>
+      {blurb ? <p className="text-mut mt-3">{blurb}</p> : null}
     </div>
   );
 }
@@ -84,41 +82,81 @@ export default async function AdminPage() {
     <>
       <PageHeading blurb={`${pending.length} pending`} />
 
-      <div className="mx-auto max-w-3xl px-6 pb-24 sm:px-8">
-        {pending.length === 0 ? (
-          <p className="text-text-muted">{GUESTBOOK_ADMIN.emptyQueue}</p>
-        ) : (
-          <ul className="flex flex-col gap-8">
-            {pending.map((message) => (
-              <li key={message.id} className="border-border border-t pt-8">
-                <p className="max-w-prose whitespace-pre-line">
-                  {message.body}
-                </p>
-                <p className="text-text-muted mt-3 font-mono text-xs">
-                  <time dateTime={message.createdAt.toISOString()}>
-                    {dayMonthYear(message.createdAt)}
-                  </time>
-                </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <form action={approve}>
-                    <input type="hidden" name="id" value={message.id} />
-                    <button
-                      type="submit"
-                      className="border-accent text-accent rounded-full border px-4 py-1.5 text-sm font-semibold"
-                    >
-                      {GUESTBOOK_ADMIN.approve}
-                    </button>
-                  </form>
-                  <form action={reject}>
-                    <input type="hidden" name="id" value={message.id} />
-                    <button
-                      type="submit"
-                      className="border-border-strong text-text-muted rounded-full border px-4 py-1.5 text-sm font-semibold"
-                    >
-                      {GUESTBOOK_ADMIN.reject}
-                    </button>
-                  </form>
-                  <form action={remove}>
+      <Stack>
+        <Section>
+          {pending.length === 0 ? (
+            <p className="text-mut">{GUESTBOOK_ADMIN.emptyQueue}</p>
+          ) : (
+            <ul className="flex flex-col gap-7">
+              {pending.map((message) => (
+                <li
+                  key={message.id}
+                  className="border-line border-t pt-7 first:border-t-0 first:pt-0"
+                >
+                  <p className="max-w-prose whitespace-pre-line">
+                    {message.body}
+                  </p>
+                  <p className="text-mut mt-3 font-mono text-xs">
+                    <time dateTime={message.createdAt.toISOString()}>
+                      {dayMonthYear(message.createdAt)}
+                    </time>
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <form action={approve}>
+                      <input type="hidden" name="id" value={message.id} />
+                      <button
+                        type="submit"
+                        className="border-accent text-accent rounded-full border px-4 py-1.5 text-sm font-semibold"
+                      >
+                        {GUESTBOOK_ADMIN.approve}
+                      </button>
+                    </form>
+                    <form action={reject}>
+                      <input type="hidden" name="id" value={message.id} />
+                      <button
+                        type="submit"
+                        className="border-line-strong text-mut rounded-full border px-4 py-1.5 text-sm font-semibold"
+                      >
+                        {GUESTBOOK_ADMIN.reject}
+                      </button>
+                    </form>
+                    <form action={remove}>
+                      <input type="hidden" name="id" value={message.id} />
+                      <button
+                        type="submit"
+                        className="rounded-full border border-red-500 px-4 py-1.5 text-sm font-semibold text-red-500"
+                      >
+                        {GUESTBOOK_ADMIN.remove}
+                      </button>
+                    </form>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Section>
+
+        <Section heading="Decided">
+          {decided.length === 0 ? (
+            <p className="text-mut">Nothing decided yet.</p>
+          ) : (
+            <ul className="flex flex-col gap-6">
+              {decided.map((message) => (
+                <li
+                  key={message.id}
+                  className="border-line border-t pt-6 first:border-t-0 first:pt-0"
+                >
+                  <p className="text-mut text-sm font-semibold">
+                    {
+                      GUESTBOOK_ADMIN.statusLabels[
+                        message.status as keyof typeof GUESTBOOK_ADMIN.statusLabels
+                      ]
+                    }
+                  </p>
+                  <p className="mt-1 max-w-prose whitespace-pre-line">
+                    {message.body}
+                  </p>
+                  <form action={remove} className="mt-3">
                     <input type="hidden" name="id" value={message.id} />
                     <button
                       type="submit"
@@ -127,44 +165,12 @@ export default async function AdminPage() {
                       {GUESTBOOK_ADMIN.remove}
                     </button>
                   </form>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      <Section heading="Decided" subtle>
-        {decided.length === 0 ? (
-          <p className="text-text-muted">Nothing decided yet.</p>
-        ) : (
-          <ul className="flex flex-col gap-6">
-            {decided.map((message) => (
-              <li key={message.id} className="border-border border-t pt-6">
-                <p className="text-text-muted text-sm font-semibold">
-                  {
-                    GUESTBOOK_ADMIN.statusLabels[
-                      message.status as keyof typeof GUESTBOOK_ADMIN.statusLabels
-                    ]
-                  }
-                </p>
-                <p className="mt-1 max-w-prose whitespace-pre-line">
-                  {message.body}
-                </p>
-                <form action={remove} className="mt-3">
-                  <input type="hidden" name="id" value={message.id} />
-                  <button
-                    type="submit"
-                    className="rounded-full border border-red-500 px-4 py-1.5 text-sm font-semibold text-red-500"
-                  >
-                    {GUESTBOOK_ADMIN.remove}
-                  </button>
-                </form>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Section>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Section>
+      </Stack>
     </>
   );
 }

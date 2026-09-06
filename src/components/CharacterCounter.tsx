@@ -42,7 +42,7 @@ export function CharacterCounter({
         id={id}
         aria-live={close ? "polite" : "off"}
         className={`mt-2 font-mono text-xs ${
-          close ? "text-accent" : "text-text-muted"
+          close ? "text-accent" : "text-mut"
         }`}
       >
         {used} {suffix}

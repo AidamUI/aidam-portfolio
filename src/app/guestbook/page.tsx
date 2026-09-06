@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { Hero } from "@/components/Hero";
+import { Scene } from "@/components/mountain/Scene";
 import { MessageForm } from "@/components/MessageForm";
 import { MessageWall } from "@/components/MessageWall";
-import { Section } from "@/components/Section";
+import { Section, Stack } from "@/components/Section";
 import { GUESTBOOK } from "@/content/guestbook";
+import { STAGE_EYEBROW } from "@/content/stage";
 import { stationForPath } from "@/content/stations";
 import { isDatabaseConfigured } from "@/db";
 import { getApprovedMessages } from "@/lib/messages";
@@ -64,41 +67,41 @@ export default async function GuestbookPage({ searchParams }: Props) {
 
   return (
     <>
-      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
-        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
-          {GUESTBOOK.heading}
-        </h1>
-      </div>
+      <Scene stage="guestbook" />
+      <Hero eyebrow={STAGE_EYEBROW.guestbook} title={GUESTBOOK.heading}>
+        <p className="mt-4 max-w-prose text-lg">{GUESTBOOK.intro}</p>
+      </Hero>
 
-      <div className="mx-auto max-w-3xl px-6 pb-24 sm:px-8">
-        <p className="max-w-prose">{GUESTBOOK.intro}</p>
-
-        {confirmation ? (
-          <p
-            role="status"
-            className={`mt-8 max-w-prose border-l-4 pl-6 ${
-              isGood ? "border-accent" : "border-red-500"
-            }`}
-          >
-            {confirmation}
-          </p>
-        ) : null}
-
-        {isDatabaseConfigured ? (
-          <MessageForm />
-        ) : (
-          <>
-            <p className="text-text-muted mt-8 max-w-prose">
-              {GUESTBOOK.unavailable}
+      <Stack>
+        <Section>
+          {confirmation ? (
+            <p
+              role="status"
+              className={`mb-8 max-w-prose border-l-4 pl-6 ${
+                isGood ? "border-accent" : "border-red-500"
+              }`}
+            >
+              {confirmation}
             </p>
-            <MessageForm disabled />
-          </>
-        )}
-      </div>
+          ) : null}
 
-      <Section heading={GUESTBOOK.wallHeading} subtle>
-        <MessageWall messages={messages} />
-      </Section>
+          {isDatabaseConfigured ? (
+            <MessageForm />
+          ) : (
+            <>
+              <p className="text-mut max-w-prose">{GUESTBOOK.unavailable}</p>
+              <MessageForm disabled />
+            </>
+          )}
+        </Section>
+
+        <div className="flex flex-col gap-5">
+          <h2 className="text-2xl font-semibold sm:text-[26px]">
+            {GUESTBOOK.wallHeading}
+          </h2>
+          <MessageWall messages={messages} />
+        </div>
+      </Stack>
     </>
   );
 }
