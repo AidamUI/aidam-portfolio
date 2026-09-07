@@ -37,7 +37,7 @@ export function TrailMarker({
           style={{ display: "block", width: "148px", height: "34px" }}
         >
           <path
-            d="M8 26L25 24L43 19L61 11L79 16L97 16L114 19L132 6"
+            d="M8 26L25 24L43 19L61 11L70 13L79 16L97 16L114 19L132 6"
             fill="none"
             stroke="var(--line-strong)"
             strokeWidth="2"

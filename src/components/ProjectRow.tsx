@@ -33,7 +33,7 @@ export function ProjectRow({
         </div>
 
         <p className="mb-4 max-w-prose">
-          <span className="text-mut">{PROJECTS_COPY.roleLabel} — </span>
+          <span className="text-mut">{PROJECTS_COPY.roleLabel}: </span>
           {project.role}
         </p>
         <p className="max-w-prose">{project.tagline}</p>

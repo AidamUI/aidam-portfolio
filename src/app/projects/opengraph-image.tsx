@@ -3,7 +3,7 @@ import { OG_CONTENT_TYPE, OG_SIZE, renderCard } from "@/lib/og";
 
 const station = STATIONS.find((s) => s.code === "P1")!;
 
-export const alt = `${station.name} — ${station.blurb}`;
+export const alt = `${station.name} · ${station.blurb}`;
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Hero } from "@/components/Hero";
 import { Scene } from "@/components/mountain/Scene";
 import { RoleEntry } from "@/components/RoleEntry";
@@ -14,6 +15,7 @@ import {
   PRIOR_SCHOOL,
   TERMS,
 } from "@/content/academic";
+import { PERSONAL_PHOTOS } from "@/content/media";
 import { TEACHING_LOAD, TEACHING_ROLES } from "@/content/roles";
 import { SITE } from "@/content/site";
 import { STAGE_EYEBROW } from "@/content/stage";
@@ -23,7 +25,7 @@ const station = stationForPath("/academic")!;
 
 export const metadata: Metadata = {
   title: station.name,
-  description: `${ACADEMIC.programme} at ${ACADEMIC.institution}, teaching, scholarships and the full course record — ${SITE.goesBy}`,
+  description: `${ACADEMIC.programme} at ${ACADEMIC.institution}, teaching, scholarships and the full course record, ${SITE.goesBy}`,
   alternates: { canonical: station.href },
 };
 
@@ -47,6 +49,13 @@ export default function AcademicPage() {
 
       <Stack>
         <Section heading={ACADEMIC.institution}>
+          <Image
+            src={PERSONAL_PHOTOS.academic.src}
+            alt={PERSONAL_PHOTOS.academic.alt}
+            width={PERSONAL_PHOTOS.academic.width}
+            height={PERSONAL_PHOTOS.academic.height}
+            className="mb-8 h-auto w-full max-w-xs rounded-2xl object-cover"
+          />
           <p className="max-w-prose font-semibold">{ACADEMIC.faculty}</p>
           <p className="text-mut max-w-prose">{ACADEMIC.programme}</p>
 

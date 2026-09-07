@@ -78,18 +78,14 @@ export const SKILL_TIERS = [
   {
     tier: "core" as const,
     heading: "Build with regularly",
-    blurb: "What I reach for without thinking about it.",
   },
   {
     tier: "used" as const,
     heading: "Worked with on real projects",
-    blurb: "Each one links to the thing that proves it.",
   },
   {
     tier: "learning" as const,
     heading: "Learning",
-    blurb:
-      "No named project or role behind these yet, certificate or not. They stay here until there is one.",
   },
 ];
 

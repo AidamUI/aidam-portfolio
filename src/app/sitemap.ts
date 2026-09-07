@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { BLOG_POSTS } from "@/content/blog";
 import { ALBUMS } from "@/content/gallery";
 import { PROJECTS } from "@/content/projects";
 import { SITE } from "@/content/site";
@@ -38,6 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...ALBUMS.map((album) => ({
       url: url(`/documentation/${album.slug}`),
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.4,
+    })),
+    ...BLOG_POSTS.map((post) => ({
+      url: url(`/blog/${post.slug}`),
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.4,

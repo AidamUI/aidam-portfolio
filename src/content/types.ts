@@ -250,3 +250,40 @@ export type Album = {
   /** Empty until the first photo lands; the album still renders. */
   cover?: string;
 };
+
+/* ── Blog ───────────────────────────────────────────────────────────────── */
+
+/**
+ * There is no LinkedIn API for a personal profile's activity, so this is a
+ * one-time copy of the posts, not a live sync. `repost` keeps someone else's
+ * post honestly attributed as theirs rather than folded into Aidam's own
+ * voice; `video` marks the two posts that were originally a video, which
+ * renders here as a placeholder frame rather than a missing file.
+ */
+export type BlogPostKind = "post" | "repost" | "video";
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  /** ISO `YYYY-MM-DD`. LinkedIn only gives a relative age ("2mo"); dated as
+   *  precisely as that allows, snapped to a real anchor date where the site
+   *  already records one (an internship or role start date). */
+  date: string;
+  kind: BlogPostKind;
+  /** One line for the index. */
+  excerpt: string;
+  /**
+   * Paragraphs, cleaned of LinkedIn's own chrome (like counts, "View image").
+   * A `{ code }` entry renders as a monospace block instead of prose.
+   */
+  body: (string | { code: string })[];
+  tags?: string[];
+  /** Required when `kind` is "repost" — whose post this originally was. */
+  repostedFrom?: { name: string; title: string };
+  /** Real photos for this post. Takes priority over `placeholderImages`. */
+  images?: { src: string; alt: string; width: number; height: number }[];
+  /** How many placeholder tiles to show when there are no real photos yet. */
+  placeholderImages?: number;
+  /** Set when `kind` is "video" — the original clip's running time. */
+  videoDuration?: string;
+};

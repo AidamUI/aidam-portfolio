@@ -76,7 +76,7 @@ export const ITEMS: GalleryItem[] = [];
  * on purpose so the masonry grid reads as a photo grid rather than identical
  * cards, cycled across however many preview tiles an album shows.
  */
-const PLACEHOLDER_SHAPES = [
+export const PLACEHOLDER_SHAPES = [
   { id: "a", width: 1200, height: 1500 },
   { id: "b", width: 1600, height: 1000 },
   { id: "c", width: 1400, height: 1400 },
@@ -92,7 +92,7 @@ const PLACEHOLDER_BLUR =
 export function placeholderPreview(album: AlbumSlug, count = 4): GalleryItem[] {
   return PLACEHOLDER_SHAPES.slice(0, count).map((shape) => ({
     src: `/images/documentation/placeholder-${shape.id}.png`,
-    alt: "Placeholder — a real photo from this album will replace this tile.",
+    alt: "Placeholder. A real photo from this album will replace this tile.",
     caption: undefined,
     kind: "photo" as const,
     album,
@@ -119,17 +119,16 @@ export function albumDisplayItems(slug: AlbumSlug): {
 
 export const GALLERY_COPY = {
   heading: "Documentation",
-  blurb:
-    "Photos and documentation, in the Indonesian student-org sense — the whole record, not just the nice pictures.",
+  blurb: "Photos and documentation, in the Indonesian student-org sense.",
   /** Shown on an album with no items yet. */
   emptyAlbum: "Nothing here yet.",
   emptyAlbumDetail:
     "This album is built and waiting. Photos land here as they get taken.",
   /** Sits above the placeholder preview grid, so it reads as a mockup, not real photos. */
-  previewLabel: "Preview — every tile below is a placeholder",
+  previewLabel: "Preview: every tile below is a placeholder",
   previewDetail:
     "This is what the album will look like once photos are in. Nothing here is a real photo.",
-  emptyIndex: "No photos up yet — the albums below are ready for them.",
+  emptyIndex: "No photos up yet. The albums below are ready for them.",
   lightboxClose: "Close",
   lightboxPrev: "Previous photo",
   lightboxNext: "Next photo",

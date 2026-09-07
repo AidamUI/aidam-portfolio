@@ -10,8 +10,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} — ${SITE.goesBy}`,
-    template: `%s — ${SITE.goesBy}`,
+    default: `${SITE.name} · ${SITE.goesBy}`,
+    template: `%s · ${SITE.goesBy}`,
   },
   description: SITE.description,
   openGraph: {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: SITE.url,
     siteName: SITE.name,
-    title: `${SITE.name} — ${SITE.goesBy}`,
+    title: `${SITE.name} · ${SITE.goesBy}`,
     description: SITE.description,
   },
   twitter: { card: "summary_large_image" },

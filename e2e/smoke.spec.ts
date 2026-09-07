@@ -13,6 +13,9 @@ const ROUTES = [
   "/projects",
   "/projects/terra",
   "/projects/skillpath",
+  "/blog",
+  "/blog/two-months-into-ibm",
+  "/blog/failed-as-a-mentee-succeeded-as-a-mentor",
   "/documentation",
   "/documentation/lomba",
   "/guestbook",
@@ -324,6 +327,7 @@ test.describe("discovery", () => {
       "/work",
       "/academic",
       "/projects/terra",
+      "/blog/two-months-into-ibm",
       "/documentation/lomba",
     ]) {
       expect(xml).toContain(path);

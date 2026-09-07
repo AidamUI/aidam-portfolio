@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { Hero } from "@/components/Hero";
@@ -10,6 +11,7 @@ import { ProjectRow } from "@/components/ProjectRow";
 import { Section, Stack } from "@/components/Section";
 import { StackTag } from "@/components/StackTag";
 import { HOME } from "@/content/home";
+import { PERSONAL_PHOTOS } from "@/content/media";
 import { NOW } from "@/content/now";
 import { PROFILE } from "@/content/profile";
 import { PROJECTS, PROJECTS_COPY } from "@/content/projects";
@@ -44,9 +46,10 @@ export default function HomePage() {
       <Hero
         eyebrow={`${PROFILE.name} · goes by ${PROFILE.goesBy}`}
         title={PROFILE.hero}
+        image={PERSONAL_PHOTOS.headshot}
       >
         <div className="border-line mt-6 border-t pt-6">
-          <p className="eyebrow">Now serving</p>
+          <p className="eyebrow">Right now</p>
           <p className="text-mut mt-2 max-w-prose">{PROFILE.heroSub}</p>
         </div>
       </Hero>
@@ -60,7 +63,7 @@ export default function HomePage() {
           <NowServing />
         </Section>
 
-        <Section heading={HOME.glance.heading} blurb={HOME.glance.blurb}>
+        <Section heading={HOME.glance.heading}>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {PROFILE.glance.map((item) => (
               <Link
@@ -78,13 +81,22 @@ export default function HomePage() {
           <p className="text-mut mt-8 max-w-prose text-sm">{TEACHING_LOAD}</p>
         </Section>
 
-        <Section heading={HOME.about.heading} blurb={HOME.about.blurb}>
-          <div className="flex flex-col gap-6">
-            {PROFILE.about.slice(0, 2).map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} className="max-w-prose">
-                {paragraph}
-              </p>
-            ))}
+        <Section heading={HOME.about.heading}>
+          <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
+            <Image
+              src={PERSONAL_PHOTOS.about.src}
+              alt={PERSONAL_PHOTOS.about.alt}
+              width={PERSONAL_PHOTOS.about.width}
+              height={PERSONAL_PHOTOS.about.height}
+              className="h-auto w-full max-w-[240px] shrink-0 rounded-2xl object-cover sm:w-56"
+            />
+            <div className="flex flex-col gap-6">
+              {PROFILE.about.slice(0, 2).map((paragraph) => (
+                <p key={paragraph.slice(0, 24)} className="max-w-prose">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
           <p className="mt-8">
             <Link href="/work" className="text-accent font-semibold underline">
@@ -93,7 +105,7 @@ export default function HomePage() {
           </p>
         </Section>
 
-        <Section heading={HOME.featured.heading} blurb={HOME.featured.blurb}>
+        <Section heading={HOME.featured.heading}>
           <div className="flex flex-col gap-7">
             {featured.map((project) => (
               <ProjectRow key={project.slug} project={project} as="h3" />
@@ -109,7 +121,7 @@ export default function HomePage() {
           </p>
         </Section>
 
-        <Section heading={HOME.skills.heading} blurb={HOME.skills.blurb}>
+        <Section heading={HOME.skills.heading}>
           <p className="text-lg">
             {core.map((skill, i) => (
               <Fragment key={skill.name}>
@@ -117,9 +129,6 @@ export default function HomePage() {
                 <StackTag name={skill.name} />
               </Fragment>
             ))}
-          </p>
-          <p className="text-mut mt-8 max-w-prose text-sm">
-            {HOME.skills.note}
           </p>
           <p className="mt-4">
             <Link href="/work" className="text-accent font-semibold underline">

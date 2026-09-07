@@ -47,7 +47,7 @@ export const PROJECTS: Project[] = [
     role: "Sole backend developer.",
     problem:
       "A farmer holding damaged or substandard harvest has no efficient way to reach the buyer who actually wants that grade, so it gets dumped or sold at a loss.",
-    what: "Photo-based grading, then matching — upload a crop image, get a condition and severity read, get routed to nearby buyers who want that grade.",
+    what: "Photo-based grading, then matching: upload a crop image, get a condition and severity read, and get routed to nearby buyers who want that grade.",
     withheldNote:
       "TERRA is still being judged in the GEMASTIK XIX national round, so the build details, the architecture and the repositories stay off this page until the competition concludes.",
   },
@@ -82,12 +82,12 @@ export const PROJECTS: Project[] = [
     status: "shipped",
     year: 2025,
     featured: true,
-    role: "I built it end to end — the dataset merge, the posting parser, and the dashboard on top of them — with Tasya Pandya.",
+    role: "I built it end to end with Tasya Pandya: the dataset merge, the posting parser, and the dashboard on top of them.",
     problem:
-      "Reskilling programmes get pointed at whatever skills sound current, not at what a particular city's employers are actually short of.",
-    what: "Merges 35+ BPS provincial datasets into one city-level national database, parses 4,800+ JobStreet postings for the skills they ask for, and surfaces the gap per region so a reskilling platform can recommend against real demand.",
+      "Reskilling programmes often get built around whatever skills sound current, without data on what a specific city's employers actually need.",
+    what: "Unifies 35+ BPS provincial datasets into one national city-level database using Python, processes 4,800+ JobStreet postings to extract specific skill requirements, and feeds a Tableau dashboard visualising regional skill gaps to power a reskilling platform's recommendation engine.",
     build:
-      "Python for the merge and the parsing — 35+ provincial datasets normalised to a common city-level schema, then 4,800+ job postings processed to pull out the skill requirements behind them. The output feeds a Tableau dashboard of regional skill gaps.",
+      "Built in Python: 35+ provincial datasets normalised to a common city-level schema, then 4,800+ job postings processed to pull out the skill requirements behind them. The output feeds a Tableau dashboard of regional skill gaps.",
     outcome:
       "Built for the Compfest Data Science Academy, with Tasya Pandya. The dashboard is public and lives on her Tableau Public profile.",
     stack: ["Python", "Tableau", "SQL"],
@@ -111,8 +111,7 @@ export const PROJECTS: Project[] = [
       {
         src: "/images/projects/skillpath/02.png",
         alt: "The merge step that normalises 35+ provincial datasets to one city-level schema.",
-        caption:
-          "Thirty-five provincial datasets, one schema. Most of the work is here.",
+        caption: "Thirty-five provincial datasets, unified into one schema.",
         ...SHOT,
       },
     ],
@@ -126,8 +125,8 @@ export const PROJECTS: Project[] = [
     year: 2026,
     role: "Coursework, built across the front end and the back end.",
     problem:
-      "The Enterprise Application Programming practicum: build a service the way an enterprise would, rather than the way a student would.",
-    what: "A split front end and back end, exercising the layered architecture and service boundaries the course is about.",
+      "Coursework for the Enterprise Application Programming practicum, built using enterprise application architecture patterns.",
+    what: "A split front end and back end exercising the layered architecture and service boundaries the course covers.",
     /** [CHECK] Spring Boot is inferred from the course, not confirmed outright. */
     stack: ["Spring Boot", "Java"],
     links: [
@@ -144,7 +143,7 @@ export const PROJECTS: Project[] = [
       {
         src: "/images/projects/praktikum-apap/01.png",
         alt: "The service layer of the practicum back end.",
-        caption: "The layered service the course is actually about.",
+        caption: "The layered service architecture the course focuses on.",
         ...SHOT,
       },
       {
@@ -165,7 +164,7 @@ export const PROJECTS: Project[] = [
     // so the calendar year the course opened is 2025 — matching football-news,
     // which is the same course.
     year: 2025,
-    role: "Coursework for Platform-Based Programming — the web app and the mobile client that consumes it.",
+    role: "Coursework for Platform-Based Programming: the web app and the mobile client that consumes it.",
     problem:
       "Platform-Based Programming asks for one product delivered twice: a Django web app and a Flutter client against the same REST API.",
     what: "A football merchandise store, server-rendered on the web and consumed by a Flutter app over REST.",
@@ -184,13 +183,13 @@ export const PROJECTS: Project[] = [
       {
         src: "/images/projects/kosinduy/01.png",
         alt: "The football store running on the web.",
-        caption: "The store, server-rendered.",
+        caption: "The store, server-rendered on the web.",
         ...SHOT,
       },
       {
         src: "/images/projects/kosinduy/02.png",
         alt: "The Flutter client consuming the same REST API.",
-        caption: "Same API, second client. That is the point of the course.",
+        caption: "The same API, consumed by a second client.",
         ...SHOT,
       },
     ],
@@ -202,7 +201,7 @@ export const PROJECTS: Project[] = [
     tagline: "news app, web and mobile",
     status: "coursework",
     year: 2025,
-    role: "Coursework for Platform-Based Programming — the web app and the mobile client that consumes it.",
+    role: "Coursework for Platform-Based Programming: the web app and the mobile client that consumes it.",
     problem:
       "The same course, the same shape: prove the web app and the mobile client can share one backend.",
     what: "A football news reader with a Django backend and a Flutter client.",
@@ -221,13 +220,13 @@ export const PROJECTS: Project[] = [
       {
         src: "/images/projects/football-news/01.png",
         alt: "The news reader running on the web.",
-        caption: "The reader on the web.",
+        caption: "The reader, on the web.",
         ...SHOT,
       },
       {
         src: "/images/projects/football-news/02.png",
         alt: "The Flutter client for the same backend.",
-        caption: "And on a phone.",
+        caption: "The same reader, on a phone.",
         ...SHOT,
       },
     ],
@@ -255,7 +254,7 @@ export const LEGACY_PROJECTS: LegacyProject[] = [
 
 export const LEGACY_COPY = {
   heading: "Early work, 2023–24",
-  blurb: "Where I started. Left up on purpose.",
+  blurb: "Where I started.",
 } as const;
 
 /**
@@ -284,27 +283,25 @@ export const STATUS_GROUPS: {
     status: "competing",
     code: "P1.A",
     heading: "In competition",
-    blurb:
-      "GEMASTIK XIX, national round. Both are still being judged, so both pages stop at the problem and what the thing does.",
+    blurb: "GEMASTIK XIX, national round. Still being judged.",
   },
   {
     status: "shipped",
     code: "P1.B",
     heading: "Shipped",
-    blurb: "Built, finished, and public.",
+    blurb: "Finished and public.",
   },
   {
     status: "coursework",
     code: "P1.C",
     heading: "Coursework",
-    blurb:
-      "Built for a course. Listed because the brief was real and the code is there to read, not because it is the strongest work here.",
+    blurb: "Built for coursework.",
   },
   {
     status: "archived",
     code: "P1.D",
     heading: "Archived",
-    blurb: "Kept for the record.",
+    blurb: "Older work.",
   },
 ];
 
@@ -316,8 +313,7 @@ export const STATUS_LABEL: Record<ProjectStatus, string> = {
 };
 
 export const PROJECTS_COPY = {
-  intro:
-    "Everything I have built that is worth showing, newest first. Each page says what the problem was, what the thing does, and which parts were mine. Where a project is still being judged, it says that instead of pretending otherwise.",
+  intro: "Projects and competitions, newest first.",
   roleLabel: "My part",
   stackLabel: "Built with",
   withheldLabel: "Details withheld",

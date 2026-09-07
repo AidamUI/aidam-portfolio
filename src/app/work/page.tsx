@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { Hero } from "@/components/Hero";
@@ -6,6 +7,7 @@ import { Scene } from "@/components/mountain/Scene";
 import { RoleEntry } from "@/components/RoleEntry";
 import { Section, Stack } from "@/components/Section";
 import { TagList } from "@/components/StackTag";
+import { PERSONAL_PHOTOS } from "@/content/media";
 import { STAGE_EYEBROW } from "@/content/stage";
 import { ORG_ROLES, TECHTONIC, TECHTONIC_COPY } from "@/content/orgs";
 import {
@@ -25,7 +27,7 @@ import { SITE } from "@/content/site";
 export const metadata: Metadata = {
   title: "Work",
   alternates: { canonical: "/work" },
-  description: `Professional and organisational experience — ${SITE.goesBy}`,
+  description: `Professional and organisational experience, ${SITE.goesBy}`,
 };
 
 /**
@@ -38,13 +40,19 @@ export default function WorkPage() {
       <Scene stage="work" />
       <Hero eyebrow={STAGE_EYEBROW.work} title="Work">
         <p className="text-mut mt-4 max-w-prose">
-          IBM, teaching, and the organisations — the long walk across open
-          ground.
+          IBM, teaching, and the organisations I work with.
         </p>
       </Hero>
 
       <Stack>
         <Section heading="Professional">
+          <Image
+            src={PERSONAL_PHOTOS.workProfessional.src}
+            alt={PERSONAL_PHOTOS.workProfessional.alt}
+            width={PERSONAL_PHOTOS.workProfessional.width}
+            height={PERSONAL_PHOTOS.workProfessional.height}
+            className="mb-8 h-auto w-full max-w-sm rounded-2xl object-cover"
+          />
           <div className="flex flex-col gap-8">
             {PROFESSIONAL_ROLES.map((role) => (
               <RoleEntry key={role.title} role={role} />
@@ -53,6 +61,13 @@ export default function WorkPage() {
         </Section>
 
         <Section heading="Teaching">
+          <Image
+            src={PERSONAL_PHOTOS.workTeaching.src}
+            alt={PERSONAL_PHOTOS.workTeaching.alt}
+            width={PERSONAL_PHOTOS.workTeaching.width}
+            height={PERSONAL_PHOTOS.workTeaching.height}
+            className="mb-8 h-auto w-full max-w-sm rounded-2xl object-cover"
+          />
           <div className="flex flex-col gap-8">
             {TEACHING_ROLES.map((role) => (
               <RoleEntry key={role.title} role={role} />
@@ -62,6 +77,13 @@ export default function WorkPage() {
         </Section>
 
         <Section heading="Organisational">
+          <Image
+            src={PERSONAL_PHOTOS.workOrganisational.src}
+            alt={PERSONAL_PHOTOS.workOrganisational.alt}
+            width={PERSONAL_PHOTOS.workOrganisational.width}
+            height={PERSONAL_PHOTOS.workOrganisational.height}
+            className="mb-8 h-auto w-full max-w-sm rounded-2xl object-cover"
+          />
           <div className="flex flex-col gap-8">
             {ORG_ROLES.map((role) => (
               <RoleEntry key={role.title} role={role} />
@@ -86,10 +108,7 @@ export default function WorkPage() {
           />
         </Section>
 
-        <Section
-          heading="Skills"
-          blurb="Tiered strictly by evidence — every claim links to what proves it."
-        >
+        <Section heading="Skills">
           <div className="flex flex-col gap-10">
             {SKILL_TIERS.map((tierDef) => {
               const skills = skillsInTier(tierDef.tier);
@@ -97,10 +116,7 @@ export default function WorkPage() {
 
               return (
                 <div key={tierDef.tier}>
-                  <p className="eyebrow">{tierDef.heading}</p>
-                  <p className="text-mut mt-2 mb-4 max-w-prose text-sm">
-                    {tierDef.blurb}
-                  </p>
+                  <p className="eyebrow mb-4">{tierDef.heading}</p>
 
                   <ul className="flex flex-col gap-3">
                     {skills.map((skill) => (

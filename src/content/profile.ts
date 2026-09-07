@@ -20,16 +20,16 @@ export const PROFILE = {
 
   /** Runs under the hero, in mono. content.md §2. */
   heroSub:
-    "now serving: IBM AIOps & Observability, GEMASTIK XIX national round, third year at Fasilkom UI",
+    "IBM AIOps & Observability, GEMASTIK XIX national round, third year at Fasilkom UI.",
 
   /**
    * content.md §4 — the CV-style version, first person. The more personal
    * draft about doubting the field was rejected; don't reintroduce that register.
    */
   about: [
-    "I've been into technology since I was a kid — the kind of interest that starts with tinkering with phones and computers and doesn't really stop. My first real exposure to development was building a game in Scratch in sixth grade. Since then I've kept building, mostly with Python and JavaScript, which is how I ended up between software development, data science, and now IT consulting.",
-    "I like being out of my depth. It's mostly worked out: I've picked up skills fast enough to keep saying yes to things — an internship at IBM, four teaching assistant roles at once, a national-finalist GEMASTIK team — and each one has taught me more than the last. Right now that means building software, explaining it to the people who have to buy it, and teaching it to the students who are still deciding if they like it.",
-    "The plan is software engineering, then solutions architecture, then a master's abroad. I'm committed to getting there.",
+    "I've had a love for technology since I was young. I spent hours tinkering with phones and computers, and my first real exposure to development was building a game in Scratch back in sixth grade. Since then I've kept learning and building, mostly with Python and JavaScript, which is how I ended up somewhere between software development, data science, and now IT consulting.",
+    "I like getting out of my comfort zone and pushing past what I'm used to. I'd say I'm highly adaptable, and that's helped every time I've said yes to something new: an internship at IBM, four teaching assistant roles at once, a national round GEMASTIK team. Right now that means building software, explaining it to the people who have to buy it, and teaching it to students who are just starting out.",
+    "The plan is software engineering, then solutions architecture, then a master's abroad. I'm ambitious about it and committed to doing whatever it takes to get there.",
   ],
 
   /**
