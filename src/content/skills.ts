@@ -7,10 +7,9 @@ import type { Skill } from "./types";
  * project or a role explicitly backs it. Everything else — certificate or no
  * certificate — goes in Learning.
  *
- * The `Skill` type enforces the half that matters: the "used" tier requires an
- * `evidence` array, so a skill cannot claim real-project backing without
- * carrying the link that proves it. `core` is a statement about what you reach
- * for daily and needs no artifact; `learning` is honest about having none.
+ * The `Skill` type enforces this: the "used" tier requires an `evidence`
+ * array, so a skill cannot claim project backing without the link that
+ * proves it. `core` needs no artifact; `learning` has none.
  *
  * ── Why some entries carry no evidence ────────────────────────────────────
  * A few skills here can only be evidenced by work that is under an open

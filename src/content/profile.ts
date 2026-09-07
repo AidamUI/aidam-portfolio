@@ -16,20 +16,20 @@ export const PROFILE = {
    * "Four CS courses" is the count of TA appointments held, not four at once:
    * PF1 and PF2 ran back to back. /academic states the load properly.
    */
-  hero: "I'm Aidam. I study Information Systems at Universitas Indonesia, work on observability at IBM, and teach four CS courses.",
+  hero: "I'm Aidam. Information Systems student at Universitas Indonesia with a focus on bridging the gap between technology and business.",
 
-  /** Runs under the hero, in mono. content.md §2. */
+  /** Runs under the hero. LinkedIn headline, expanded from its acronym. */
   heroSub:
-    "IBM AIOps & Observability, GEMASTIK XIX national round, third year at Fasilkom UI.",
+    "Brand Technical Sales Specialist Intern at IBM · Teaching Assistant at Universitas Indonesia.",
 
   /**
    * content.md §4 — the CV-style version, first person. The more personal
    * draft about doubting the field was rejected; don't reintroduce that register.
    */
   about: [
-    "I've had a love for technology since I was young. I spent hours tinkering with phones and computers, and my first real exposure to development was building a game in Scratch back in sixth grade. Since then I've kept learning and building, mostly with Python and JavaScript, which is how I ended up somewhere between software development, data science, and now IT consulting.",
-    "I like getting out of my comfort zone and pushing past what I'm used to. I'd say I'm highly adaptable, and that's helped every time I've said yes to something new: an internship at IBM, four teaching assistant roles at once, a national round GEMASTIK team. Right now that means building software, explaining it to the people who have to buy it, and teaching it to students who are just starting out.",
-    "The plan is software engineering, then solutions architecture, then a master's abroad. I'm ambitious about it and committed to doing whatever it takes to get there.",
+    "From a young age, I've had a special love for technology. I loved spending hours tinkering with phones and computers, and my first exposure to development was making a game using Scratch back in 6th grade. From there, I've continuously learned and acquired skills related to software development, data science, and IT consulting, building personal projects mainly with Python and JavaScript.",
+    "I love getting out of my comfort zone and pushing beyond my limits. I consider myself highly adaptable to various situations, which has aided me in my journey thus far: an internship at IBM, four teaching assistant roles at once, and a national-round GEMASTIK team.",
+    "The plan is software engineering, then solutions architecture, then a master's abroad. I'm ambitious and optimistic about it, and committed to doing whatever it takes to get there.",
   ],
 
   /**

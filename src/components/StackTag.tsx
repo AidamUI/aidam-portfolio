@@ -3,22 +3,45 @@ import Link from "next/link";
 import { SKILLS } from "@/content/skills";
 
 /**
- * One technology, as running text rather than a boxed chip. Where Aidam has
- * a named project or role behind it, it's an underlined link to that
- * evidence; where he does not, it stays plain — never linking somewhere that
- * would not back it up.
+ * One technology. Default rendering is running text rather than a boxed
+ * chip. Where Aidam has a named project or role behind it, it's an
+ * underlined link to that evidence; where he does not, it stays plain —
+ * never linking somewhere that would not back it up.
+ *
+ * `pill` swaps that for a bordered chip, for the one place (project preview
+ * cards) that wants a stack read as a row of tags rather than a sentence.
  */
 export function StackTag({
   name,
   interactive = true,
+  pill = false,
 }: {
   name: string;
   interactive?: boolean;
+  pill?: boolean;
 }) {
   const skill = SKILLS.find(
     (candidate) => candidate.name.toLowerCase() === name.toLowerCase(),
   );
   const evidence = skill && skill.tier === "used" ? skill.evidence[0] : null;
+
+  if (pill) {
+    const pillClass =
+      "border-line inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium";
+
+    if (!evidence || !interactive) {
+      return <span className={pillClass}>{name}</span>;
+    }
+
+    return (
+      <Link
+        href={evidence.href}
+        className={`${pillClass} hover:border-accent hover:text-accent transition-colors`}
+      >
+        {name}
+      </Link>
+    );
+  }
 
   if (!evidence || !interactive) {
     return <span className="font-semibold">{name}</span>;

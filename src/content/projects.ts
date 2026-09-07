@@ -67,7 +67,7 @@ export const PROJECTS: Project[] = [
      * division (ICT Business Development) and kept free of any business-model
      * detail. Replace it with Aidam's own wording when he supplies one.
      */
-    role: "I work the business side of this entry rather than the build.",
+    role: "Business planning and go-to-market, in GEMASTIK's ICT Business Development division.",
     problem:
       "Elderly fall detection means wearables people won't wear or hardware families won't buy.",
     what: "Connects an existing household CCTV feed to a detection engine and alerts family fast, without new hardware.",
@@ -123,10 +123,10 @@ export const PROJECTS: Project[] = [
     tagline: "enterprise application architecture coursework",
     status: "coursework",
     year: 2026,
-    role: "Coursework, built across the front end and the back end.",
+    role: "Coursework, split across a front end repo and a back end repo.",
     problem:
-      "Coursework for the Enterprise Application Programming practicum, built using enterprise application architecture patterns.",
-    what: "A split front end and back end exercising the layered architecture and service boundaries the course covers.",
+      "Coursework for Enterprise Application Programming, a course on this term's schedule.",
+    what: "The practicum asks for a front end and a back end built the way the course's enterprise application architecture module expects. In progress this term, so the repositories below are still empty.",
     /** [CHECK] Spring Boot is inferred from the course, not confirmed outright. */
     stack: ["Spring Boot", "Java"],
     links: [
@@ -137,20 +137,6 @@ export const PROJECTS: Project[] = [
       {
         label: "praktikum-apap-fe",
         href: "https://github.com/AidamUI/praktikum-apap-fe",
-      },
-    ],
-    images: [
-      {
-        src: "/images/projects/praktikum-apap/01.png",
-        alt: "The service layer of the practicum back end.",
-        caption: "The layered service architecture the course focuses on.",
-        ...SHOT,
-      },
-      {
-        src: "/images/projects/praktikum-apap/02.png",
-        alt: "The practicum front end talking to that back end.",
-        caption: "The front end that consumes it.",
-        ...SHOT,
       },
     ],
   },
@@ -167,8 +153,8 @@ export const PROJECTS: Project[] = [
     role: "Coursework for Platform-Based Programming: the web app and the mobile client that consumes it.",
     problem:
       "Platform-Based Programming asks for one product delivered twice: a Django web app and a Flutter client against the same REST API.",
-    what: "A football merchandise store, server-rendered on the web and consumed by a Flutter app over REST.",
-    stack: ["Django", "Flutter", "Dart", "PostgreSQL"],
+    what: "A Django football merchandise store styled with Tailwind CSS: product CRUD, JSON and XML API endpoints, and session-based auth with last-login tracking. The Flutter client reuses that same Django session to consume the store over its API, themed around Liverpool FC's colours.",
+    stack: ["Django", "Flutter", "Dart", "Tailwind CSS"],
     links: [
       {
         label: "kosinduy_YNWA",
@@ -228,6 +214,67 @@ export const PROJECTS: Project[] = [
         alt: "The Flutter client for the same backend.",
         caption: "The same reader, on a phone.",
         ...SHOT,
+      },
+    ],
+  },
+  {
+    slug: "triathlon",
+    code: "P1.4",
+    name: "Triathlon",
+    tagline: "an integrated platform for endurance-sport athletes",
+    status: "coursework",
+    year: 2025,
+    role: "Coursework for Platform-Based Programming, on a six-person team. I owned the Forum module, web and mobile, plus its test suite and performance work.",
+    problem:
+      "An athlete's digital life is currently split across separate apps: activity tracking, community discussion, buying gear, and booking a facility.",
+    what: "Triathlon consolidates activity tracking, a community forum, an equipment shop, and facility booking into one platform, with role-based access for regular users, sellers, and facility admins. Built by six students. I owned the Forum module: thread-based discussion with auto-bumping and voting, on both the Django web app and the Flutter mobile client.",
+    build:
+      "Django (MVT) on the web, a Flutter client consuming it over a REST/JSON API with session-based auth. For the Forum module specifically: 195 tests across models, services, utilities and caching, a TTL-cached forum feed, and a 300ms search debounce, both covered in more detail on the blog.",
+    outcome:
+      "Built with Randuichi Touya (Activities), Muhammad Helmi Alfarissi (User/Profile), Syakirah Zahra Dhawini (Ticketing), Justin Dwitama Seniang (Places), and Jarred Muhammad Radithya (Shop).",
+    stack: ["Django", "Flutter", "Dart", "Python"],
+    links: [
+      {
+        label: "triathlon",
+        href: "https://github.com/pbp-kelompok-d1/triathlon",
+      },
+      {
+        label: "triathlon-mobile",
+        href: "https://github.com/pbp-kelompok-d1/triathlon-mobile",
+      },
+      {
+        label: "Blog: testing the Triathlon forum",
+        href: "/blog/testing-the-triathlon-forum",
+      },
+      {
+        label: "Blog: optimising the Triathlon forum",
+        href: "/blog/optimising-the-triathlon-forum",
+      },
+    ],
+    images: [
+      {
+        src: "/images/blog/testing-the-triathlon-forum/01.jpg",
+        alt: "The Triathlon app's splash screen.",
+        width: 568,
+        height: 1076,
+      },
+      {
+        src: "/images/blog/testing-the-triathlon-forum/02.jpg",
+        alt: "The Triathlon app's home dashboard, with training summary and quick access tiles.",
+        width: 568,
+        height: 1079,
+      },
+      {
+        src: "/images/blog/testing-the-triathlon-forum/03.jpg",
+        alt: "The Triathlon app's Forum tab, listing recent posts.",
+        width: 568,
+        height: 1083,
+      },
+      {
+        src: "/images/blog/testing-the-triathlon-forum/04.jpg",
+        alt: "A Triathlon forum post open, with replies underneath.",
+        width: 566,
+        height: 1076,
       },
     ],
   },
@@ -320,6 +367,7 @@ export const PROJECTS_COPY = {
   imagesLabel: "Screens",
   noImagesYet: "No screenshots up yet.",
   moreProjects: "More projects",
+  viewCaseStudy: "Full case study",
   nextProject: "Next",
   prevProject: "Previous",
 } as const;

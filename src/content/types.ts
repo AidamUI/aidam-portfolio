@@ -1,14 +1,10 @@
 /**
  * Single source of content types.
  *
- * Two rules from the PRD are enforced here by the compiler rather than by
- * convention, because a rule that only lives in a comment is a rule that gets
- * broken at 1am six months from now:
- *
- *   1. A confidential project CANNOT carry a stack, links, images, a build
- *      write-up or an outcome. Not "should not" — the type makes it a build
- *      error. See `Project`.
- *   2. A skill in the "worked with" tier CANNOT exist without a named artifact
+ * Two rules enforced by the compiler, not by convention:
+ *   1. A confidential project cannot carry a stack, links, images, a build
+ *      write-up or an outcome — the type makes it a build error. See `Project`.
+ *   2. A skill in the "worked with" tier cannot exist without a named artifact
  *      behind it. See `Skill`.
  *
  * `role` on a project and `alt` on an image are non-optional for the same
@@ -176,12 +172,9 @@ export type LegacyProject = {
 /* ── Skills ─────────────────────────────────────────────────────────────── */
 
 /**
- * Tiered strictly by evidence.
- *
- * `used` requires an artifact — that is the whole point of the tier, and the
- * type refuses to let one exist without proof. `core` is a statement about
- * what you reach for daily and needs no artifact; `learning` is everything
- * with no named project or role behind it, certificate or not.
+ * Tiered strictly by evidence. `used` requires an artifact array, enforced
+ * by the type; `core` needs none; `learning` covers everything with no
+ * named project or role behind it, certificate or not.
  */
 export type Skill =
   | { name: string; tier: "core" }
@@ -192,11 +185,7 @@ export type SkillTier = Skill["tier"];
 
 /* ── Academic ───────────────────────────────────────────────────────────── */
 
-/**
- * Name and credits. There is deliberately no grade field anywhere in this
- * type: no grades are published on the site, so the shape makes it impossible
- * rather than merely discouraged.
- */
+/** Name and credits only. No grade field — no grades are published on the site. */
 export type Course = {
   name: string;
   credits: number;
@@ -227,7 +216,7 @@ export type GalleryItem = {
   src: string;
   /** Required, always. */
   alt: string;
-  /** One line, in your voice. An uncaptioned gallery is a screensaver. */
+  /** One line, in your voice. Optional, but every album should have most captioned. */
   caption?: string;
   kind: "photo" | "screenshot" | "document";
   album: AlbumSlug;
@@ -254,11 +243,10 @@ export type Album = {
 /* ── Blog ───────────────────────────────────────────────────────────────── */
 
 /**
- * There is no LinkedIn API for a personal profile's activity, so this is a
- * one-time copy of the posts, not a live sync. `repost` keeps someone else's
- * post honestly attributed as theirs rather than folded into Aidam's own
- * voice; `video` marks the two posts that were originally a video, which
- * renders here as a placeholder frame rather than a missing file.
+ * No LinkedIn API for a personal profile's activity, so this is a one-time
+ * copy, not a live sync. `repost` marks a post that originated from someone
+ * else. `video` marks the two posts that were originally a video; those
+ * render as a placeholder frame.
  */
 export type BlogPostKind = "post" | "repost" | "video";
 

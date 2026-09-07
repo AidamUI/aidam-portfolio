@@ -1,21 +1,17 @@
 import type { BlogPost } from "./types";
 
 /**
- * A one-time transplant of LinkedIn activity, newest first. There is no API
- * for a personal profile's posts, so this is copied by hand rather than
- * synced — it will drift out of date, and that is the honest cost of there
- * being no other way to do it.
+ * A one-time transplant of LinkedIn activity, newest first — no API for a
+ * personal profile's posts, so this is copied by hand, not synced.
  *
- * `repost` entries are someone else's post, kept in their voice and
- * attributed to them — Aidam shared it, he did not write it. `video` entries
- * were originally a clip; there is no file to embed, so the page shows a
- * placeholder frame and describes what was in it. Every photo referenced by
- * `placeholderImages` is likewise a placeholder — none of the original images
- * were carried over.
+ * `repost` entries are someone else's post, attributed to them. `video`
+ * entries were originally a clip with no file to embed; the page shows a
+ * placeholder frame describing it. Photos referenced by `placeholderImages`
+ * are placeholders — none of the original images were carried over.
  *
- * Dates are as precise as LinkedIn's own relative timestamps ("2mo", "1yr")
+ * Dates are as precise as LinkedIn's relative timestamps ("2mo", "1yr")
  * allow, snapped to a real date where the site already records one (an
- * internship or role start date) rather than left as a guess twice over.
+ * internship or role start date).
  */
 export const BLOG_POSTS: BlogPost[] = [
   {
@@ -337,8 +333,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const BLOG_COPY = {
   heading: "Blog",
-  blurb:
-    "Posts, reposts and a couple of videos, copied over from LinkedIn by hand — there's no API for a personal profile's activity, so this is a one-time transplant, not a live feed. It will drift out of date, and that's the honest cost of there being no other way to do it.",
+  blurb: "Posts, reposts, and a couple of videos from LinkedIn.",
   kindLabel: {
     post: "Post",
     repost: "Repost",

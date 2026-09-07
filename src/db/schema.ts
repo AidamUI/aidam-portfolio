@@ -4,11 +4,10 @@ import { index, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 /**
  * The guestbook. Anonymous by design — tech-plan.md §4.
  *
- * There is no name column because there is no name. That is the feature, and
- * it also means there is nothing to leak: no account, no email, no handle, no
- * session. The only thing stored that relates to a sender at all is a salted
- * hash of their IP, which exists solely to make the rate limit work and is
- * never displayed, never joined against anything, and purged on a schedule.
+ * No name column, no account, no email, no handle, no session. The only
+ * thing stored that relates to a sender at all is a salted hash of their IP,
+ * which exists solely to make the rate limit work: never displayed, never
+ * joined against anything, purged on a schedule.
  *
  * `status` is deliberately a plain text column with a check constraint rather
  * than a pg enum: a portfolio guestbook will never need a migration dance to
