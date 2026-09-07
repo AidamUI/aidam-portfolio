@@ -48,14 +48,11 @@ export default function HomePage() {
         title={PROFILE.hero}
         image={PERSONAL_PHOTOS.headshot}
       >
-        <div className="border-line mt-6 border-t pt-6">
-          <p className="eyebrow">Right now</p>
-          <p className="text-mut mt-2 max-w-prose">{PROFILE.heroSub}</p>
-        </div>
+        <p className="text-mut mt-6 max-w-prose">{PROFILE.heroSub}</p>
       </Hero>
 
       <Stack>
-        <Section heading="Four stops so far">
+        <Section heading="Timeline">
           <CareerRoute />
         </Section>
 

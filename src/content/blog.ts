@@ -337,8 +337,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const BLOG_COPY = {
   heading: "Blog",
-  blurb:
-    "Posts, reposts and a couple of videos, copied over from LinkedIn by hand — there's no API for a personal profile's activity, so this is a one-time transplant, not a live feed. It will drift out of date, and that's the honest cost of there being no other way to do it.",
+  blurb: "Posts, reposts, and a couple of videos from LinkedIn.",
   kindLabel: {
     post: "Post",
     repost: "Repost",

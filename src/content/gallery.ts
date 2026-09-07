@@ -122,13 +122,11 @@ export const GALLERY_COPY = {
   blurb: "Photos and documentation, in the Indonesian student-org sense.",
   /** Shown on an album with no items yet. */
   emptyAlbum: "Nothing here yet.",
-  emptyAlbumDetail:
-    "This album is built and waiting. Photos land here as they get taken.",
+  emptyAlbumDetail: "Photos haven't been added yet.",
   /** Sits above the placeholder preview grid, so it reads as a mockup, not real photos. */
   previewLabel: "Preview: every tile below is a placeholder",
-  previewDetail:
-    "This is what the album will look like once photos are in. Nothing here is a real photo.",
-  emptyIndex: "No photos up yet. The albums below are ready for them.",
+  previewDetail: "These are placeholder images, not real photos.",
+  emptyIndex: "No photos up yet.",
   lightboxClose: "Close",
   lightboxPrev: "Previous photo",
   lightboxNext: "Next photo",

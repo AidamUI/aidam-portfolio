@@ -24,7 +24,7 @@ export const PROFESSIONAL_ROLES: Role[] = [
     kind: "professional",
     place: "Jakarta",
     summary:
-      "I deliver technical demonstrations and pitches of IBM Instana to prospective enterprise clients, translating observability capabilities across Kubernetes, virtual machines, and hybrid infrastructure into business value. I support technical scoping and advisory for enterprise proofs of concept, defining target architecture and validating what the client actually has to provision. I also worked with implementation partners on an Instana deployment for a regional government client, which gave me exposure to real-time application performance monitoring in production.",
+      "I deliver technical demonstrations and pitches of IBM Instana to prospective enterprise clients, translating observability capabilities across Kubernetes, virtual machines, and hybrid infrastructure into business value. I support technical scoping and advisory for enterprise Proof of Concepts (PoCs), defining target architectural topologies spanning containerized and VM-based workloads, and validating client technical resource requirements. I shadow implementation partners during IBM Instana deployment for a regional government client, gaining exposure to real-time application performance monitoring in production environments.",
     artifacts: [
       {
         label: "terraform-instana",
@@ -52,7 +52,7 @@ export const TEACHING_ROLES: Role[] = [
     kind: "teaching",
     scale: "400 students batch-wide",
     summary:
-      "I TA the international class section of a two-track, 400-student course covering web development with JavaScript and Django, and mobile development with Flutter. I design and grade labs and projects, evaluating students' REST API-driven web applications and the Flutter clients that consume them.",
+      "I design and grade labs and projects for a two-track, 400-student course covering web development (JavaScript, Django) and mobile development (Flutter). I evaluate students' implementation of REST API-driven web applications and their corresponding Flutter-based mobile clients, mirroring real-world full-stack development workflows.",
   },
   {
     org: "Faculty of Computer Science, Universitas Indonesia",
@@ -62,7 +62,7 @@ export const TEACHING_ROLES: Role[] = [
     kind: "teaching",
     scale: "40 students",
     summary:
-      "I support an intensive short-semester course for 40 students, providing academic mentorship and running pre-exam review sessions to reinforce core computing concepts. I deliver live coding demonstrations and grade C programming assignments covering virtualisation, concurrency, and persistence.",
+      "I support an intensive short-semester course for a class of 40 students, providing dedicated academic mentorship and conducting pre-exam review sessions to reinforce high-level computing concepts. I deliver live coding demonstrations and grade C programming assignments, evaluating students' practical implementation of core course materials including virtualization, concurrency, and persistence.",
   },
   {
     org: "Faculty of Computer Science, Universitas Indonesia",
@@ -73,7 +73,7 @@ export const TEACHING_ROLES: Role[] = [
     kind: "teaching",
     scale: "400+ students, 40+ in the international cohort",
     summary:
-      "I manage lab instruction and academic evaluation for 400+ students, and mentor the 40+ student international cohort in object-oriented programming principles, class architecture, and practical software implementation in Java.",
+      "I facilitated first-year foundational programming courses, managing lab instruction and academic evaluation for over 400 students, including a specialized cohort of 40+ international students. I mentored the international cohort in object-oriented programming (OOP) principles, class architecture, and practical software implementation utilizing Java.",
   },
   {
     org: "Faculty of Computer Science, Universitas Indonesia",
@@ -84,7 +84,7 @@ export const TEACHING_ROLES: Role[] = [
     kind: "teaching",
     scale: "400+ students",
     summary:
-      "I co-created and graded programming lab assignments for 400+ students, and ran assistance sessions providing academic support.",
+      "I co-created and graded programming lab assignments for 400+ students. I conducted programming assistance sessions and provided academic support to students.",
   },
 ];
 

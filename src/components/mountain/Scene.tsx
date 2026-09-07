@@ -107,6 +107,36 @@ function MistBand({
   );
 }
 
+/**
+ * A soft three-lobe cloud, for the wide-open stretches of sky that would
+ * otherwise sit empty. Uses the same `--cloud` token as the summit's cloud
+ * sea, so it stays theme-correct without a colour of its own.
+ */
+function CloudPuff({
+  left,
+  top,
+  width,
+  opacity = 1,
+}: {
+  left: string;
+  top: string;
+  width: string;
+  opacity?: number;
+}) {
+  return (
+    <svg
+      className="absolute"
+      style={{ left, top, width, height: "auto", opacity, ...px(0.08) }}
+      viewBox="0 0 120 40"
+      aria-hidden="true"
+    >
+      <ellipse cx="30" cy="27" rx="28" ry="12" fill="var(--cloud)" />
+      <ellipse cx="60" cy="18" rx="24" ry="17" fill="var(--cloud)" />
+      <ellipse cx="90" cy="27" rx="26" ry="12" fill="var(--cloud)" />
+    </svg>
+  );
+}
+
 /** A small warm glow standing in for a headlamp, visible only at night. */
 function NightGlow({
   left,
@@ -308,6 +338,9 @@ function WorkArt() {
           />
         </g>
       </svg>
+      <CloudPuff left="6%" top="30%" width="11%" opacity={0.8} />
+      <CloudPuff left="34%" top="18%" width="8%" opacity={0.6} />
+      <CloudPuff left="52%" top="34%" width="9%" opacity={0.55} />
       <MistBand
         left="8%"
         top="52%"
@@ -319,10 +352,7 @@ function WorkArt() {
         reverse
       />
       <NightGlow left="24%" top="66%" size="4%" />
-      <NightGlow left="44%" top="59%" size="3.2%" />
       <HikerAt left="25.4%" top="67.5%" width="1.4%" height="4.4%" />
-      <HikerAt left="45%" top="60.5%" width="1.1%" height="3.5%" />
-      <HikerAt left="58%" top="56%" width="0.85%" height="2.7%" />
     </>
   );
 }
@@ -332,7 +362,21 @@ function AcademicArt() {
     <>
       <SkyGradient />
       <StarField seed={9} />
+      <CloudPuff left="8%" top="14%" width="10%" opacity={0.7} />
+      <CloudPuff left="70%" top="10%" width="9%" opacity={0.55} />
       <svg {...viewport} style={svgFill}>
+        <g style={px(0.1)}>
+          <path
+            d="M508 264L594 182Q605 172 616 182L702 264Z"
+            fill="var(--ridge)"
+            opacity="0.35"
+          />
+          <path
+            d="M652 282L718 224Q727 214 736 224L812 282Z"
+            fill="var(--ridge)"
+            opacity="0.22"
+          />
+        </g>
         <g style={px(0.15)}>
           <path
             d="M0 300Q200 250 420 286Q700 330 1000 262Q1220 212 1440 254L1440 620L0 620Z"
@@ -383,7 +427,7 @@ function AcademicArt() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(112deg, rgb(255 244 214 / 17%) 0 22px, rgb(255 255 255 / 0%) 22px 96px)",
+            "repeating-linear-gradient(112deg, rgb(255 244 214 / 9%) 0 18px, rgb(255 255 255 / 0%) 18px 160px)",
           opacity: "calc(1 - var(--night, 0))",
         }}
       />
@@ -432,6 +476,7 @@ function RimArt() {
             d="M786 300Q772 284 762 302L860 408L792 408Z"
             fill="var(--cone-2)"
           />
+          <ellipse cx="772" cy="296" rx="8" ry="4" fill="rgb(0 0 0 / 35%)" />
         </g>
         <g style={px(0.42)}>
           <path
@@ -452,6 +497,18 @@ function RimArt() {
           />
         </g>
       </svg>
+      <div
+        className="absolute rounded-full"
+        style={{
+          left: "53%",
+          top: "39%",
+          width: "2%",
+          height: "28px",
+          background: "linear-gradient(180deg, rgb(255 255 255 / 55%), transparent)",
+          filter: "blur(4px)",
+          animation: "rj-steam 9s ease-in-out infinite",
+        }}
+      />
       <MistBand
         left="6%"
         top="62%"
@@ -511,6 +568,7 @@ function BlogArt() {
             d="M786 300Q772 284 762 302L860 408L792 408Z"
             fill="var(--cone-2)"
           />
+          <ellipse cx="772" cy="296" rx="8" ry="4" fill="rgb(0 0 0 / 35%)" />
         </g>
         <g style={px(0.42)}>
           <path
@@ -558,6 +616,18 @@ function BlogArt() {
           />
         </g>
       </svg>
+      <div
+        className="absolute rounded-full"
+        style={{
+          left: "53%",
+          top: "39%",
+          width: "2%",
+          height: "28px",
+          background: "linear-gradient(180deg, rgb(255 255 255 / 55%), transparent)",
+          filter: "blur(4px)",
+          animation: "rj-steam 9s ease-in-out infinite",
+        }}
+      />
       {/* A small fire in front of the warung, glowing warmer at night. */}
       <div
         className="absolute rounded-full"
@@ -594,6 +664,8 @@ function DescentArt({ misty }: { misty: boolean }) {
       <SkyGradient />
       <StarField seed={17} />
       <SunOrb left="70%" top="7%" size="4.6%" />
+      <CloudPuff left="34%" top="16%" width="10%" opacity={0.6} />
+      <CloudPuff left="50%" top="30%" width="8%" opacity={0.5} />
       <svg {...viewport} style={svgFill}>
         <g style={px(0.12)}>
           <path
@@ -617,6 +689,7 @@ function DescentArt({ misty }: { misty: boolean }) {
             d="M1082 344Q1070 330 1062 346L1136 428L1088 428Z"
             fill="var(--cone-2)"
           />
+          <ellipse cx="1070" cy="340" rx="8" ry="4" fill="rgb(0 0 0 / 35%)" />
         </g>
         <g style={px(0.42)}>
           <path
@@ -650,6 +723,18 @@ function DescentArt({ misty }: { misty: boolean }) {
           />
         </g>
       </svg>
+      <div
+        className="absolute rounded-full"
+        style={{
+          left: "73.6%",
+          top: "50%",
+          width: "1.8%",
+          height: "24px",
+          background: "linear-gradient(180deg, rgb(255 255 255 / 45%), transparent)",
+          filter: "blur(4px)",
+          animation: "rj-steam 9s ease-in-out infinite",
+        }}
+      />
       {/*
         The thin drifting bands below read as texture, not as weather on
         their own — a scene-wide scrim is what actually makes "in mist" vs.
@@ -823,10 +908,12 @@ function SummitArt() {
           <path
             d="M840 400L920 306Q934 290 948 308L1024 400Z"
             fill="var(--ridge)"
+            opacity="0.8"
           />
           <path
             d="M1120 400L1178 330Q1190 316 1202 332L1258 400Z"
             fill="var(--ridge)"
+            opacity="0.8"
           />
           <path
             d="M0 404Q140 366 300 396Q420 418 560 400Q700 380 840 404Q980 426 1120 404Q1280 378 1440 406L1440 470L0 470Z"
@@ -879,6 +966,9 @@ function LostArt() {
     <>
       <SkyGradient />
       <StarField seed={33} />
+      <CloudPuff left="12%" top="16%" width="11%" opacity={0.6} />
+      <CloudPuff left="64%" top="12%" width="9%" opacity={0.5} />
+      <CloudPuff left="40%" top="28%" width="8%" opacity={0.4} />
       <svg {...viewport} style={svgFill}>
         <g style={px(0.14)}>
           <path

@@ -12,8 +12,7 @@
 
 export const GUESTBOOK = {
   heading: "Leave an anonymous message",
-  intro:
-    "No name, no login, nothing tracked back to you. Ask me something, tell me something, be honest. I read everything and pick what gets posted here.",
+  intro: "Anonymous. I review messages before they're posted.",
 
   fieldLabel: "Your message",
   placeholder: "Say anything",
@@ -22,24 +21,22 @@ export const GUESTBOOK = {
   counterSuffix: "/ 500",
 
   submit: "Send",
-  /** Shown after a successful submit. Not a fake "posted!". */
-  sent: "Sent. I read all of these. If it goes up, it goes up here.",
+  sent: "Sent. I'll review it before it's posted.",
 
-  emptyWall: "Nothing posted yet. Be the first.",
+  emptyWall: "Nothing posted yet.",
   error: "Couldn't send that. Check your connection and try again.",
-  rateLimited: "That's a few too many for one hour. Try again later.",
+  rateLimited: "Too many messages this hour. Try again later.",
   tooLong: "That's over 500 characters. Trim it and try again.",
   empty: "Nothing to send yet.",
   /** Shown when the guestbook has no database behind it yet. */
-  unavailable:
-    "The guestbook isn't taking messages just yet. Everything else on the site works.",
+  unavailable: "The guestbook isn't taking messages yet.",
 
   wallHeading: "Posted",
   /**
    * Posted messages carry a date and nothing else, because there is no
    * attribution to show. Do not add one.
    */
-  wallNote: "Messages show a date and nothing else. There is nothing else.",
+  wallNote: "Messages show a date only.",
 } as const;
 
 /** Admin queue at /guestbook/admin, gated by a secret. M6. */

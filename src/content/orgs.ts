@@ -20,34 +20,35 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "IDR 50M+ closed, 100+ companies approached",
     summary:
-      "Four roles over two years, moving from company outreach to managing how the organisation keeps its partners. Right now that means the stakeholder database and the partnership documentation, including LoAs, minutes, and partner evaluations, across every department.",
+      "Four roles at AIESEC in UI since 2024: Business Development Intern, OC Partnership for Global Village Winter 2025, Strategic Business Growth in Business Development, and now Stakeholder Manager.",
     stages: [
       {
         title: "Stakeholder Manager",
         start: "2026-02",
         end: null,
         summary:
-          "I manage the stakeholder database and partnership documentation across departments, and ensure compliance with partnership governance including LoAs, minutes, and partner evaluations.",
+          "I manage the stakeholder database and partnership documentation across organisational departments. I ensure compliance with partnership governance including LoAs, MoMs, and partner evaluations.",
       },
       {
         title: "Strategic Business Growth, Business Development",
         start: "2025-02",
         end: "2026-01",
         summary:
-          "Secured in-kind and financial partnerships for LeadSeries 2025 worth over IDR 50M, reaching out to 100+ companies. Delivered partnership pitches and sales meetings with corporate stakeholders.",
+          "I secured in-kind and financial partnerships for LeadSeries 2025 worth over IDR 50M. I reached out to over 100 companies, offering partnerships with AIESEC in UI.",
       },
       {
         title: "OC Partnership, Global Village Winter 2025",
         start: "2024-11",
         end: "2025-02",
         summary:
-          "Secured partnerships with in-kind and media partners for the event, and served as Master of Ceremony, engaging with 100+ participants.",
+          "I secured partnerships with in-kind and media partners for Global Village Winter 2025. I served as Master of Ceremony for Global Village Winter 2025, engaging with 100+ participants.",
       },
       {
         title: "Business Development Intern",
         start: "2024-10",
         end: "2025-02",
-        summary: "Co-organised an org-wide company visit with Blu by BCA.",
+        summary:
+          "I co-organised an organisation-wide company visit with Blu by BCA.",
       },
     ],
   },
@@ -69,7 +70,7 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "8 PR programmes",
     summary:
-      "Two roles with the student executive board: an internship building Django backends, and now directing strategic communications for the board.",
+      "Two roles with BEM Fasilkom UI: IT Development Intern, and now Deputy of Public Relations.",
     stages: [
       {
         title: "Deputy of Public Relations",
@@ -82,7 +83,8 @@ export const ORG_ROLES: Role[] = [
         title: "IT Development Intern",
         start: "2024-09",
         end: "2024-12",
-        summary: "Backend web development with Django.",
+        summary:
+          "I gained hands-on experience in back-end web development with Django.",
       },
     ],
   },
@@ -94,7 +96,7 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "5,000–20,000 views per post",
     summary:
-      "I produce social media content getting 5,000 to 20,000 views per post, and co-author TechTonic, a bi-weekly tech article series covering industry trends and ethical dilemmas in technology, published on RISTEK's Instagram. I also developed and executed the marketing strategy for Datathon 2025, which brought in 700+ registrants.",
+      "I produce social media content achieving 5,000 to 20,000 views per post, and co-author TechTonic, a bi-weekly tech article series covering industry trends and ethical dilemmas in technology, published on RISTEK's Instagram. I also developed and executed the marketing strategy for Datathon 2025, resulting in 700+ registrants.",
     stages: [
       {
         title: "Marketing and Communications",
@@ -120,7 +122,7 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "5,000+ views per post",
     summary:
-      "Developed and executed social media marketing strategies targeted at high school students choosing where to apply. Helped boost visibility to 5,000+ views per post on Instagram and TikTok.",
+      "I developed and executed social media marketing strategies targeted towards high school students. I collaborated in teams to create engaging content for the promotion of Open House Fasilkom UI. I helped boost visibility, achieving 5,000+ views per post on Instagram and TikTok.",
   },
 ];
 

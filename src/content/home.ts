@@ -25,6 +25,6 @@ export const HOME = {
     more: "Full skills list",
   },
   contact: {
-    heading: "Elsewhere",
+    heading: "Contact",
   },
 } as const;

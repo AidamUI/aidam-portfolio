@@ -85,7 +85,7 @@ export const FOOTER = {
   /** Prefix for the build date; the date itself is stamped at build time. */
   updatedPrefix: "Last updated",
   navHeading: "Pages",
-  elsewhereHeading: "Elsewhere",
+  elsewhereHeading: "Contact",
 } as const;
 
 export const A11Y = {
