@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { Scene } from "@/components/mountain/Scene";
@@ -35,26 +36,40 @@ export default function BlogPage() {
               >
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="hover:bg-pill-bg block rounded-2xl p-5 transition-colors sm:p-6"
+                  className="hover:bg-pill-bg flex items-start gap-4 rounded-2xl p-5 transition-colors sm:p-6"
                 >
-                  <div className="flex flex-wrap items-baseline justify-between gap-3">
-                    <span className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
-                      {BLOG_COPY.kindLabel[post.kind]}
-                      {post.kind === "repost" && post.repostedFrom
-                        ? ` · ${BLOG_COPY.repostedFromPrefix} ${post.repostedFrom.name}`
-                        : null}
-                    </span>
-                    <time
-                      dateTime={post.date}
-                      className="text-mut shrink-0 font-mono text-xs"
-                    >
-                      {formatDate(post.date)}
-                    </time>
+                  {post.images && post.images.length > 0 ? (
+                    <Image
+                      src={post.images[0].src}
+                      alt=""
+                      aria-hidden="true"
+                      width={post.images[0].width}
+                      height={post.images[0].height}
+                      className="h-16 w-16 shrink-0 rounded-xl object-cover"
+                    />
+                  ) : null}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-baseline justify-between gap-3">
+                      <span className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
+                        {BLOG_COPY.kindLabel[post.kind]}
+                        {post.kind === "repost" && post.repostedFrom
+                          ? ` · ${BLOG_COPY.repostedFromPrefix} ${post.repostedFrom.name}`
+                          : null}
+                      </span>
+                      <time
+                        dateTime={post.date}
+                        className="text-mut shrink-0 font-mono text-xs"
+                      >
+                        {formatDate(post.date)}
+                      </time>
+                    </div>
+                    <h2 className="font-display mt-2 text-lg font-semibold">
+                      {post.title}
+                    </h2>
+                    <p className="text-mut mt-1 max-w-prose">
+                      {post.excerpt}
+                    </p>
                   </div>
-                  <h2 className="font-display mt-2 text-lg font-semibold">
-                    {post.title}
-                  </h2>
-                  <p className="text-mut mt-1 max-w-prose">{post.excerpt}</p>
                 </Link>
               </li>
             ))}

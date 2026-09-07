@@ -280,7 +280,9 @@ export type BlogPost = {
   tags?: string[];
   /** Required when `kind` is "repost" — whose post this originally was. */
   repostedFrom?: { name: string; title: string };
-  /** How many placeholder tiles to show — there are no real photos to use. */
+  /** Real photos for this post. Takes priority over `placeholderImages`. */
+  images?: { src: string; alt: string; width: number; height: number }[];
+  /** How many placeholder tiles to show when there are no real photos yet. */
   placeholderImages?: number;
   /** Set when `kind` is "video" — the original clip's running time. */
   videoDuration?: string;

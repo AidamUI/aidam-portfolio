@@ -17,7 +17,7 @@ import { STAGE_EYEBROW } from "@/content/stage";
 export const metadata: Metadata = {
   title: "Projects",
   alternates: { canonical: "/projects" },
-  description: `Everything shipped, newest first — ${SITE.goesBy}`,
+  description: `Everything shipped, newest first, ${SITE.goesBy}`,
 };
 
 /**

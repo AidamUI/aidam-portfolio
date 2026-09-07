@@ -9,7 +9,7 @@ export default function NotFound() {
       <Scene stage="notfound" />
       <Hero eyebrow={STAGE_EYEBROW.notfound} title="Wrong fork.">
         <p className="mt-5 max-w-[48ch] text-lg">
-          The signpost here points at nothing — this page doesn&apos;t exist.
+          The signpost here points at nothing. This page doesn&apos;t exist.
         </p>
         <p className="mt-7">
           <Link

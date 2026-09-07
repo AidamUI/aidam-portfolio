@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { A11Y, SITE } from "@/content/site";
+import { PERSONAL_PHOTOS } from "@/content/media";
 import { STATIONS } from "@/content/stations";
 import { stageFromPathname } from "@/lib/stage";
 import { useScrollProgress } from "@/lib/use-scroll-progress";
@@ -81,9 +83,17 @@ export function Header() {
       <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-3.5 sm:px-8">
         <Link
           href="/"
-          className="font-display text-lg font-semibold tracking-tight"
+          className="font-display flex items-center gap-2.5 text-lg font-semibold tracking-tight"
           aria-current={isCurrent("/") ? "page" : undefined}
         >
+          <Image
+            src={PERSONAL_PHOTOS.headshot.src}
+            alt=""
+            aria-hidden="true"
+            width={72}
+            height={72}
+            className="h-8 w-8 rounded-full object-cover"
+          />
           {SITE.wordmark}
         </Link>
 

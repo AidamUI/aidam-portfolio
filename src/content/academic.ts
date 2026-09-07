@@ -18,9 +18,9 @@ export const ACADEMIC = {
   institution: "Universitas Indonesia",
   faculty: "Faculty of Computer Science",
   programme: "Bachelor of Computer Science, Information Systems",
-  start: "2024-06",
-  expectedEnd: "2027-12",
-  expectedEndLabel: "Expected December 2027",
+  start: "2024-07",
+  expectedEnd: "2028-2",
+  expectedEndLabel: "Expected February 2028",
   cgpa: "3.87 / 4.00",
   creditsCompleted: 84,
   currentTermLabel: "2026/2027, Term 1",
@@ -33,7 +33,7 @@ export const ACADEMIC = {
  */
 export const HONOURS: Honour[] = [
   {
-    name: "Dana Abadi UI — Dato' Dr. Low Tuck Kwong & Purnomo Yusgiantoro Center Scholarship",
+    name: "Dana Abadi UI – Dato' Dr. Low Tuck Kwong & Purnomo Yusgiantoro Center Scholarship",
     period: "Feb – Jun 2026",
   },
   {
@@ -56,7 +56,7 @@ export const PRIOR_SCHOOL = {
 export const TERMS: Term[] = [
   {
     label: "2026/2027, Term 1",
-    note: "In progress — 20 credits",
+    note: "In progress · 20 credits",
     inProgress: true,
     courses: [
       { name: "IS Analysis and Design", credits: 3 },
@@ -64,7 +64,7 @@ export const TERMS: Term[] = [
       { name: "Computer Vision", credits: 3 },
       { name: "Data Communication Networks", credits: 4 },
       { name: "Knowledge Graph", credits: 3 },
-      { name: "CS Special Topics", credits: 3 },
+      { name: "Computer Graphics", credits: 3 },
     ],
   },
   {
@@ -155,7 +155,7 @@ export const ACADEMIC_COPY = {
   creditsValue: (done: number, doing: number) =>
     `${done} completed, ${doing} in progress`,
   currentTermValue: (label: string, credits: number) =>
-    `${label} — ${credits} credits`,
+    `${label} · ${credits} credits`,
   coursesSummary: (courses: number, credits: number) =>
     `${courses} courses, ${credits} credits.`,
   creditSuffix: "cr",

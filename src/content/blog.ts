@@ -27,7 +27,26 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Two months of Instana demos taught me observability is mostly about closing the gap between what a team thinks is running and what actually is.",
     tags: ["IBM", "Instana", "Observability", "APM", "DevOps"],
-    placeholderImages: 5,
+    images: [
+      {
+        src: "/images/blog/two-months-into-ibm/01.jpg",
+        alt: "Group photo with IBM colleagues in front of the IBM eye logo wall.",
+        width: 800,
+        height: 1066,
+      },
+      {
+        src: "/images/blog/two-months-into-ibm/02.jpg",
+        alt: "IBM Instana's Events view, showing a triggered incident and its root-cause analysis.",
+        width: 1917,
+        height: 1078,
+      },
+      {
+        src: "/images/blog/two-months-into-ibm/03.jpg",
+        alt: "IBM Instana's infrastructure map, tracing a technology stack end to end.",
+        width: 800,
+        height: 448,
+      },
+    ],
     body: [
       "Working across technical demos, Instana pitches, and client deployment support alongside implementation partners has changed how I think about observability entirely.",
       "Application Performance Monitoring sounds abstract until you watch it in a production enterprise stack. Before this internship, I understood APM mostly as a checkbox item — something teams needed for compliance or peace of mind. It took sitting in on real deployments and demos to see that real-time monitoring isn't a nice-to-have. A latency spike buried three services deep, or a dependency nobody mapped, can quietly erode a company's bottom line long before anyone notices an outage.",
@@ -54,7 +73,20 @@ export const BLOG_POSTS: BlogPost[] = [
       "DevelopersOfIndonesia",
       "TechCommunity",
     ],
-    placeholderImages: 5,
+    images: [
+      {
+        src: "/images/blog/indonesia-builders-day-2026/01.jpg",
+        alt: "Group photo on stage in front of the Indonesia Builders Day 2026 sign.",
+        width: 1536,
+        height: 1536,
+      },
+      {
+        src: "/images/blog/indonesia-builders-day-2026/02.jpg",
+        alt: "Group photo with the event's mascot robots.",
+        width: 800,
+        height: 449,
+      },
+    ],
     body: [
       "Honored to be part of the energy at Indonesia Builders Day 2026! Empowering Developers. Shaping the Nation.",
       "Surrounded by brilliant minds and forward-thinking builders, this event was a huge inspiration for my journey at IBM. Grateful for the exposure, the connections, and the shared passion for technology and innovation.",
@@ -69,7 +101,14 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Joining IBM's Brand Technical Sales Specialist programme for the summer.",
     tags: ["IBM", "Internship", "BTSS", "Career", "TechSales"],
-    placeholderImages: 1,
+    images: [
+      {
+        src: "/images/blog/joining-ibm-as-btss/01.jpg",
+        alt: "Aidam standing in front of the IBM sign.",
+        width: 800,
+        height: 533,
+      },
+    ],
     body: [
       "I'm excited to share that I'm joining IBM as Brand Technical Sales Specialist (BTSS) for my summer internship.",
       "Looking forward to learning and growing from hands-on industry experience while making an impact along the way.",
@@ -90,7 +129,32 @@ export const BLOG_POSTS: BlogPost[] = [
       "Dart",
       "FasilkomUI",
     ],
-    placeholderImages: 4,
+    images: [
+      {
+        src: "/images/blog/testing-the-triathlon-forum/01.jpg",
+        alt: "The Triathlon app's splash screen.",
+        width: 568,
+        height: 1076,
+      },
+      {
+        src: "/images/blog/testing-the-triathlon-forum/02.jpg",
+        alt: "The Triathlon app's home dashboard, with training summary and quick access tiles.",
+        width: 568,
+        height: 1079,
+      },
+      {
+        src: "/images/blog/testing-the-triathlon-forum/03.jpg",
+        alt: "The Triathlon app's Forum tab, listing recent posts.",
+        width: 568,
+        height: 1083,
+      },
+      {
+        src: "/images/blog/testing-the-triathlon-forum/04.jpg",
+        alt: "A Triathlon forum post open, with replies underneath.",
+        width: 566,
+        height: 1076,
+      },
+    ],
     body: [
       'In the final stretch of our Platform-Based Programming project, I focused on the "safety net" of every professional application: unit testing. It\'s usually the first thing to get skipped, and the first thing you miss once the codebase grows.',
       "Three reasons it was worth the time: regression prevention, so new features don't quietly break what already worked; documentation, since a good test reads as a living record of how the code is supposed to behave; and refactoring safety — the confidence to clean up and optimise without guessing.",
@@ -144,7 +208,14 @@ export const BLOG_POSTS: BlogPost[] = [
       "CSUI",
       "HRTech",
     ],
-    placeholderImages: 1,
+    images: [
+      {
+        src: "/images/blog/ai-in-indonesian-hr-survey/01.jpg",
+        alt: "Promo graphic for the AI in HR survey, alongside a photo of the team discussing it on campus.",
+        width: 800,
+        height: 436,
+      },
+    ],
     body: [
       "How is AI reshaping human resources in Indonesia? For an Introduction to Statistics project at Universitas Indonesia, my team and I ran a short survey of HR practitioners — whether their company was fully leaning into AI or just starting to explore it — to get real data on adoption rather than assumptions.",
       "The call-out offered a small thank-you — IDR 500,000 in e-wallet credit, split across five respondents — for anyone willing to give five to ten minutes to it. The survey has since closed.",
@@ -162,7 +233,14 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     excerpt:
       "A repost from Mayangkasih Arynsyah Sheila on turning a COMPFEST rejection into a mentorship.",
-    placeholderImages: 4,
+    images: [
+      {
+        src: "/images/blog/failed-as-a-mentee-succeeded-as-a-mentor/01.jpg",
+        alt: "Team Gamma posing outside Fasilkom UI after the mentoring session.",
+        width: 800,
+        height: 533,
+      },
+    ],
     body: [
       "A few months ago I planned to register for a University of Indonesia programme with a product management track — and it turned out, I failed.",
       "COMPFEST was often a hot topic in my circle. Some people got in on the first try; others tried three times and gave up. A few months passed peacefully after my rejection. I kept busy sharing opinions on product management on LinkedIn, and a few professionals reached out to connect and swap perspectives.",
@@ -184,7 +262,26 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     excerpt:
       "A repost from Bintang Arieta Ramadhia on running LeadConnect x Global LeadSpace.",
-    placeholderImages: 4,
+    images: [
+      {
+        src: "/images/blog/leadconnect-x-global-leadspace/01.jpg",
+        alt: "Attendees watching a networking session countdown on the screen.",
+        width: 1536,
+        height: 1536,
+      },
+      {
+        src: "/images/blog/leadconnect-x-global-leadspace/02.jpg",
+        alt: "A small group in conversation around a table at the event.",
+        width: 1536,
+        height: 1536,
+      },
+      {
+        src: "/images/blog/leadconnect-x-global-leadspace/03.jpg",
+        alt: "Group photo of the organisers and attendees.",
+        width: 1536,
+        height: 1536,
+      },
+    ],
     body: [
       "Last Saturday reminded me why I love creating spaces that bring people together — spaces that spark meaningful conversations and genuine connection.",
       "Together with a co-lead, I had the honour of running LeadConnect x Global LeadSpace, a one-day event bringing together students, young leaders and professionals from companies like Spotify, McKinsey, PwC, Deloitte and GoTo.",
@@ -198,7 +295,14 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2025-02-10",
     kind: "post",
     excerpt: "Starting as Marketing and Communications at RISTEK Fasilkom UI.",
-    placeholderImages: 1,
+    images: [
+      {
+        src: "/images/blog/starting-at-ristek/01.jpg",
+        alt: "RISTEK Fasilkom UI logo.",
+        width: 506,
+        height: 312,
+      },
+    ],
     body: [
       "I'm happy to share that I'm starting a new position as Marketing and Communications at RISTEK, Fakultas Ilmu Komputer Universitas Indonesia!",
     ],

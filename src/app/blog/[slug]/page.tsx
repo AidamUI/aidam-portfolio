@@ -129,7 +129,24 @@ export default async function BlogPostPage({ params }: Props) {
           </Section>
         ) : null}
 
-        {post.placeholderImages && post.placeholderImages > 0 ? (
+        {post.images && post.images.length > 0 ? (
+          <Section heading="Photos">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {post.images.map((image) => (
+                <Image
+                  key={image.src}
+                  src={image.src}
+                  alt={image.alt}
+                  width={image.width}
+                  height={image.height}
+                  placeholder="blur"
+                  blurDataURL={PLACEHOLDER_BLUR}
+                  className="h-auto w-full rounded-xl"
+                />
+              ))}
+            </div>
+          </Section>
+        ) : post.placeholderImages && post.placeholderImages > 0 ? (
           <Section heading="Photos">
             <p className="text-mut mb-6 text-sm">
               Placeholders — the originals weren&apos;t carried over.

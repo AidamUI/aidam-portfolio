@@ -20,28 +20,28 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "IDR 50M+ closed, 100+ companies approached",
     summary:
-      "Four roles over two years, moving from running company outreach to owning how the organisation keeps its partners. Right now that means the stakeholder database and the partnership paperwork — LoAs, minutes, partner evaluations — across every department.",
+      "Four roles over two years, moving from company outreach to managing how the organisation keeps its partners. Right now that means the stakeholder database and the partnership documentation, including LoAs, minutes, and partner evaluations, across every department.",
     stages: [
       {
         title: "Stakeholder Manager",
         start: "2026-02",
         end: null,
         summary:
-          "I own the stakeholder database and partnership documentation across departments: LoAs, minutes, partner evaluations.",
+          "I manage the stakeholder database and partnership documentation across departments, and ensure compliance with partnership governance including LoAs, minutes, and partner evaluations.",
       },
       {
         title: "Strategic Business Growth, Business Development",
         start: "2025-02",
         end: "2026-01",
         summary:
-          "Closed IDR 50M+ in cash and in-kind partnerships for LeadSeries 2025, from outreach to 100+ companies. Ran the pitches and the meetings.",
+          "Secured in-kind and financial partnerships for LeadSeries 2025 worth over IDR 50M, reaching out to 100+ companies. Delivered partnership pitches and sales meetings with corporate stakeholders.",
       },
       {
         title: "OC Partnership, Global Village Winter 2025",
         start: "2024-11",
         end: "2025-02",
         summary:
-          "In-kind and media partners, and MC for the event in front of 100+ people.",
+          "Secured partnerships with in-kind and media partners for the event, and served as Master of Ceremony, engaging with 100+ participants.",
       },
       {
         title: "Business Development Intern",
@@ -59,7 +59,7 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "130+ person committee, 130+ students",
     summary:
-      "BETIS is Fasilkom's flagship social project: free, intensive university entrance exam prep for underprivileged high school and gap-year students. I led a 130+ person committee delivering it end to end — mentorship and academic support for 130+ students, execution, timelines, and the stakeholder work that keeps it free.",
+      "BETIS is Fasilkom's flagship social project, providing free, intensive college-entrance-exam preparation for underprivileged high school and gap-year students. I lead a 130+ member committee delivering the programme end to end: mentorship and academic support for 130+ students, execution, timelines, and the stakeholder coordination that keeps it fully free.",
   },
   {
     org: "BEM Fasilkom UI",
@@ -69,14 +69,14 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "8 PR programmes",
     summary:
-      "Two spells with the student executive board, the first writing Django backends and the second running how the board talks to everyone outside it.",
+      "Two roles with the student executive board: an internship building Django backends, and now directing strategic communications for the board.",
     stages: [
       {
         title: "Deputy of Public Relations",
         start: "2026-04",
         end: null,
         summary:
-          "Strategic comms for the student executive board: 8 PR programmes and the BEM Networking initiative for company visits and comparative studies with other universities.",
+          "I direct strategic communications for the student executive board, overseeing 8 core PR programmes and leading the BEM Networking initiative for company visits and external university comparative studies.",
       },
       {
         title: "IT Development Intern",
@@ -94,20 +94,21 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "5,000–20,000 views per post",
     summary:
-      "Social content in the 5,000–20,000 views range per post. I co-wrote TechTonic, a bi-weekly series on industry trends and the ethics people skip, published on RISTEK's Instagram. I also ran marketing for Datathon 2025, which brought in 700+ registrants.",
+      "I produce social media content getting 5,000 to 20,000 views per post, and co-author TechTonic, a bi-weekly tech article series covering industry trends and ethical dilemmas in technology, published on RISTEK's Instagram. I also developed and executed the marketing strategy for Datathon 2025, which brought in 700+ registrants.",
     stages: [
       {
         title: "Marketing and Communications",
         start: "2025-02",
         end: "2026-02",
         summary:
-          "Social content in the 5,000–20,000 views range per post, and co-author of the TechTonic series.",
+          "Social content getting 5,000 to 20,000 views per post, and co-author of the TechTonic series.",
       },
       {
         title: "Marketing Manager, Datathon 2025",
         start: "2025-05",
         end: "2025-08",
-        summary: "Strategy and execution. 700+ registrants.",
+        summary:
+          "Developed and executed the marketing strategy for Datathon 2025, resulting in 700+ registrants.",
       },
     ],
   },
@@ -119,7 +120,7 @@ export const ORG_ROLES: Role[] = [
     kind: "organisational",
     scale: "5,000+ views per post",
     summary:
-      "Social strategy and content aimed at high school students choosing where to apply. 5,000+ views per post on Instagram and TikTok.",
+      "Developed and executed social media marketing strategies targeted at high school students choosing where to apply. Helped boost visibility to 5,000+ views per post on Instagram and TikTok.",
   },
 ];
 
@@ -148,5 +149,5 @@ export const TECHTONIC: Artifact[] = [
 export const TECHTONIC_COPY = {
   heading: "TechTonic series",
   blurb:
-    "A bi-weekly series on industry trends and the ethics people skip, co-written for RISTEK Fasilkom UI's Instagram. 5,000–20,000 views per post.",
+    "A bi-weekly tech article series on industry trends and ethical dilemmas in technology, co-authored for RISTEK Fasilkom UI's Instagram. 5,000 to 20,000 views per post.",
 } as const;

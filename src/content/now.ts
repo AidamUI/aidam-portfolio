@@ -13,11 +13,11 @@ import { PROFILE } from "./profile";
  */
 export const NOW = {
   updated: "2026-09-04",
-  heading: "Now serving",
+  heading: "Currently",
   items: [
     "Technical intern, AIOps & Observability at IBM. Instana demos and PoC scoping for enterprise clients.",
     "GEMASTIK XIX national round: TERRA (software development) and Mantau (ICT business development).",
-    "Fall semester at UI: IS Analysis and Design, Enterprise Application Programming, Computer Vision, Data Communication Networks, Knowledge Graph, CS Special Topics — 20 credits.",
+    "Fall semester at UI: IS Analysis and Design, Enterprise Application Programming, Computer Vision, Data Communication Networks, Knowledge Graph, CS Special Topics. 20 credits total.",
     "TA for Platform-Based Programming and Operating Systems.",
   ],
 } as const;

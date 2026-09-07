@@ -24,7 +24,7 @@ export const PROFESSIONAL_ROLES: Role[] = [
     kind: "professional",
     place: "Jakarta",
     summary:
-      "I demo IBM Instana to prospective enterprise clients and translate what it does — tracing across Kubernetes, VMs, and hybrid infrastructure — into terms a buyer's finance team will accept. I help scope proofs of concept: target architecture, which workloads get instrumented, what the client actually has to provision. I worked with implementation partners on an Instana deployment for a regional government client, which is where I learned how much of observability is politics about who owns which alert.",
+      "I deliver technical demonstrations and pitches of IBM Instana to prospective enterprise clients, translating observability capabilities across Kubernetes, virtual machines, and hybrid infrastructure into business value. I support technical scoping and advisory for enterprise proofs of concept, defining target architecture and validating what the client actually has to provision. I also worked with implementation partners on an Instana deployment for a regional government client, which gave me exposure to real-time application performance monitoring in production.",
     artifacts: [
       {
         label: "terraform-instana",
@@ -46,45 +46,45 @@ export const TEACHING_ROLES: Role[] = [
   {
     org: "Faculty of Computer Science, Universitas Indonesia",
     title:
-      "Teaching Assistant — Platform-Based Programming (International Class)",
+      "Teaching Assistant of Platform-Based Programming (International Class)",
     start: "2026-07",
     end: null,
     kind: "teaching",
     scale: "400 students batch-wide",
     summary:
-      "I TA the international class section, but the whole batch — 400 students — takes the same course across sections: web with JavaScript and Django, mobile with Flutter. I design and grade the labs and the final projects, evaluating a REST-backed web app and the Flutter client that consumes it.",
+      "I TA the international class section of a two-track, 400-student course covering web development with JavaScript and Django, and mobile development with Flutter. I design and grade labs and projects, evaluating students' REST API-driven web applications and the Flutter clients that consume them.",
   },
   {
     org: "Faculty of Computer Science, Universitas Indonesia",
-    title: "Teaching Assistant — Operating Systems",
+    title: "Teaching Assistant of Operating Systems",
     start: "2026-06",
     end: null,
     kind: "teaching",
     scale: "40 students",
     summary:
-      "An intensive short-semester course for 40 students. Live coding demos, C assignment grading, pre-exam review sessions on virtualisation, concurrency, and persistence.",
+      "I support an intensive short-semester course for 40 students, providing academic mentorship and running pre-exam review sessions to reinforce core computing concepts. I deliver live coding demonstrations and grade C programming assignments covering virtualisation, concurrency, and persistence.",
   },
   {
     org: "Faculty of Computer Science, Universitas Indonesia",
     title:
-      "Teaching Assistant — Programming Foundations 2, Java & OOP (International Class)",
+      "Teaching Assistant of Programming Foundations 2, Java & OOP (International Class)",
     start: "2026-01",
     end: "2026-06",
     kind: "teaching",
     scale: "400+ students, 40+ in the international cohort",
     summary:
-      "Lab instruction and grading for 400+ students, mentoring the 40+ student international cohort through OOP, class architecture, and getting Java to compile.",
+      "I manage lab instruction and academic evaluation for 400+ students, and mentor the 40+ student international cohort in object-oriented programming principles, class architecture, and practical software implementation in Java.",
   },
   {
     org: "Faculty of Computer Science, Universitas Indonesia",
     title:
-      "Teaching Assistant — Programming Foundations 1, Python & Computational Thinking",
+      "Teaching Assistant of Programming Foundations 1, Python & Computational Thinking",
     start: "2025-07",
     end: "2026-01",
     kind: "teaching",
     scale: "400+ students",
     summary:
-      "Co-created and graded lab assignments for 400+ students, ran assistance sessions.",
+      "I co-created and graded programming lab assignments for 400+ students, and ran assistance sessions providing academic support.",
   },
 ];
 
