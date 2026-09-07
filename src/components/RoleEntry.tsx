@@ -7,6 +7,7 @@
 import Link from "next/link";
 import type { Role } from "@/content/types";
 import { monthYear } from "@/lib/format";
+import { TagList } from "./StackTag";
 
 type RoleEntryProps = {
   role: Role;
@@ -16,38 +17,39 @@ export function RoleEntry({ role }: RoleEntryProps) {
   const period = formatPeriod(role.start, role.end);
 
   return (
-    <article className="border-border border-b pb-10 last:border-b-0 last:pb-0">
+    <article className="border-line border-t pt-6 first:border-t-0 first:pt-0">
       <header className="mb-4">
-        <h3 className="text-lg font-bold">{role.org}</h3>
-        <p className="text-text-muted mt-1">{role.title}</p>
-        <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-          <time className="text-text-muted font-mono text-sm">{period}</time>
-          {role.place ? (
-            <span className="text-text-muted text-sm">{role.place}</span>
-          ) : null}
-          {role.scale ? (
-            <span className="text-accent text-sm font-medium">
-              {role.scale}
-            </span>
-          ) : null}
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 className="font-display text-lg font-semibold">{role.org}</h3>
+          <span className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
+            {period}
+            {role.place ? ` · ${role.place}` : ""}
+          </span>
         </div>
+        <p className="text-mut mt-1">{role.title}</p>
+        {role.scale ? (
+          <p className="text-mut mt-1 text-sm font-semibold">{role.scale}</p>
+        ) : null}
       </header>
 
       <p className="max-w-prose">{role.summary}</p>
 
       {role.stages && role.stages.length > 0 ? (
-        <div className="border-border mt-6 flex flex-col gap-6 border-l pl-6">
-          {role.stages.map((stage) => {
+        <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3">
+          {role.stages.map((stage, i) => {
             const stagePeriod = formatPeriod(stage.start, stage.end);
             return (
-              <div key={stage.title}>
-                <p className="font-semibold">{stage.title}</p>
-                <time className="text-text-muted block font-mono text-sm">
+              <div
+                key={stage.title}
+                className={`flex flex-col gap-1.5 border-t-2 pt-4 ${
+                  i === 0 ? "border-accent" : "border-line"
+                }`}
+              >
+                <time className="text-warm font-mono text-[10.5px] tracking-[0.1em]">
                   {stagePeriod}
                 </time>
-                <p className="text-text-muted mt-1 max-w-prose">
-                  {stage.summary}
-                </p>
+                <p className="font-display font-semibold">{stage.title}</p>
+                <p className="text-mut max-w-prose text-sm">{stage.summary}</p>
               </div>
             );
           })}
@@ -55,18 +57,21 @@ export function RoleEntry({ role }: RoleEntryProps) {
       ) : null}
 
       {role.artifacts && role.artifacts.length > 0 ? (
-        <ul className="mt-6 flex flex-wrap gap-3">
-          {role.artifacts.map((artifact) => (
-            <li key={artifact.href}>
-              <Link
-                href={artifact.href}
-                className="border-border-strong text-text-muted hover:border-accent hover:text-accent inline-block rounded-full border px-3 py-1 text-sm transition-colors"
-              >
-                {artifact.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-6">
+          <TagList
+            items={role.artifacts.map((artifact) => ({
+              key: artifact.href,
+              node: (
+                <Link
+                  href={artifact.href}
+                  className="text-accent font-semibold underline decoration-1 underline-offset-2 hover:opacity-80"
+                >
+                  {artifact.label}
+                </Link>
+              ),
+            }))}
+          />
+        </div>
       ) : null}
     </article>
   );

@@ -14,17 +14,17 @@ import { dayMonthYear } from "@/lib/format";
  */
 export function MessageWall({ messages }: { messages: PublicMessage[] }) {
   if (messages.length === 0) {
-    return <p className="text-text-muted">{GUESTBOOK.emptyWall}</p>;
+    return <p className="text-mut">{GUESTBOOK.emptyWall}</p>;
   }
 
   return (
     <>
-      <p className="text-text-muted mb-8 text-sm">{GUESTBOOK.wallNote}</p>
-      <ul className="flex flex-col gap-8">
+      <p className="text-mut mb-2 text-sm">{GUESTBOOK.wallNote}</p>
+      <ul className="flex flex-col gap-5">
         {messages.map((message) => (
-          <li key={message.id} className="border-border border-t pt-8">
+          <li key={message.id} className="card p-6 sm:p-8">
             <p className="max-w-prose whitespace-pre-line">{message.body}</p>
-            <p className="text-text-muted mt-3 font-mono text-xs">
+            <p className="text-mut mt-4 font-mono text-xs tracking-[0.06em]">
               <time dateTime={message.createdAt.toISOString()}>
                 {dayMonthYear(message.createdAt)}
               </time>

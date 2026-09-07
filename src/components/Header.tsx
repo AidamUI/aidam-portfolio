@@ -5,17 +5,21 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { A11Y, SITE } from "@/content/site";
 import { STATIONS } from "@/content/stations";
+import { stageFromPathname } from "@/lib/stage";
+import { useScrollProgress } from "@/lib/use-scroll-progress";
+import { TrailMarker } from "./mountain/TrailMarker";
 import { ThemeToggle } from "./ThemeToggle";
 
 /**
- * The header: wordmark left, a flat nav on the right, theme toggle, and a
- * mobile menu below `sm`. Clean and minimal by design — no station codes, no
- * badges, no route colouring. The active page is marked two ways so colour is
- * never the only signal: `aria-current="page"` for assistive tech, and a
- * visible underline plus heavier weight for sighted readers.
+ * The header: wordmark, a pill nav, the trail marker (a miniature of the
+ * whole ascent, with a dot advancing as the current page is scrolled), and
+ * the day/night toggle. The active page is marked two ways so colour is never
+ * the only signal: `aria-current="page"` for assistive tech, and a filled
+ * pill plus heavier weight for sighted readers.
  */
 export function Header() {
   const pathname = usePathname();
+  const progress = useScrollProgress();
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -73,11 +77,11 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="border-border bg-bg/95 sticky top-0 z-40 border-b backdrop-blur-sm">
-      <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-4 sm:px-8">
+    <header className="border-line bg-card/95 sticky top-0 z-40 border-b backdrop-blur-sm">
+      <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-3.5 sm:px-8">
         <Link
           href="/"
-          className="text-lg font-bold tracking-tight"
+          className="font-display text-lg font-semibold tracking-tight"
           aria-current={isCurrent("/") ? "page" : undefined}
         >
           {SITE.wordmark}
@@ -92,10 +96,8 @@ export function Header() {
                   <Link
                     href={station.href}
                     aria-current={current ? "page" : undefined}
-                    className={`text-sm transition-colors ${
-                      current
-                        ? "text-text font-semibold"
-                        : "text-text-muted hover:text-text"
+                    className={`text-sm font-semibold transition-colors ${
+                      current ? "text-ink" : "text-mut hover:text-ink"
                     }`}
                   >
                     <span
@@ -117,7 +119,11 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-5">
+          <TrailMarker
+            stage={stageFromPathname(pathname)}
+            progress={progress}
+          />
           <ThemeToggle />
           <button
             ref={triggerRef}
@@ -125,7 +131,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls={menuId}
             onClick={() => setOpen((v) => !v)}
-            className="hover:bg-bg-subtle inline-flex h-9 w-9 items-center justify-center rounded-full sm:hidden"
+            className="hover:bg-pill-bg inline-flex h-9 w-9 items-center justify-center rounded-full sm:hidden"
           >
             <MenuGlyph open={open} />
             <span className="sr-only">
@@ -139,14 +145,14 @@ export function Header() {
         id={menuId}
         ref={panelRef}
         hidden={!open}
-        className="border-border bg-bg border-t sm:hidden"
+        className="border-line bg-card border-t sm:hidden"
       >
         <nav aria-label={A11Y.primaryNav}>
           <ul>
             {STATIONS.map((station) => {
               const current = isCurrent(station.href);
               return (
-                <li key={station.href} className="border-border border-b">
+                <li key={station.href} className="border-line border-b">
                   <Link
                     href={station.href}
                     aria-current={current ? "page" : undefined}
@@ -155,13 +161,13 @@ export function Header() {
                     <span
                       className={`block text-base ${
                         current
-                          ? "text-text font-semibold underline decoration-2 underline-offset-4"
-                          : "text-text"
+                          ? "text-ink font-semibold underline decoration-2 underline-offset-4"
+                          : "text-ink"
                       }`}
                     >
                       {station.name}
                     </span>
-                    <span className="text-text-muted mt-1 block text-sm">
+                    <span className="text-mut mt-1 block text-sm">
                       {station.blurb}
                     </span>
                   </Link>

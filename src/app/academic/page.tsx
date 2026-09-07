@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Hero } from "@/components/Hero";
+import { Scene } from "@/components/mountain/Scene";
 import { RoleEntry } from "@/components/RoleEntry";
-import { Section } from "@/components/Section";
+import { Section, Stack } from "@/components/Section";
 import {
   ACADEMIC,
   ACADEMIC_COPY,
@@ -14,6 +16,7 @@ import {
 } from "@/content/academic";
 import { TEACHING_LOAD, TEACHING_ROLES } from "@/content/roles";
 import { SITE } from "@/content/site";
+import { STAGE_EYEBROW } from "@/content/stage";
 import { stationForPath } from "@/content/stations";
 
 const station = stationForPath("/academic")!;
@@ -30,139 +33,151 @@ export const metadata: Metadata = {
  * A native <details> drives the "show all courses" toggle with no JavaScript
  * at all — keyboard operable, announced correctly, open by default for a
  * printer or a screen reader in browse mode. Every course renders in full;
- * this is the one legitimate use of an expandable section per the redesign
- * brief, since the full course record is genuinely long (84+ credits across
- * six terms) and would otherwise crowd the page above the rest of the record.
+ * this is the one legitimate use of an expandable section here, since the
+ * full course record is genuinely long (84+ credits across six terms) and
+ * would otherwise crowd the page above the rest of the record.
  */
 export default function AcademicPage() {
   return (
     <>
-      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
-        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
-          {station.name}
-        </h1>
-        <p className="text-text-muted mt-3 max-w-prose">{station.blurb}</p>
-      </div>
+      <Scene stage="academic" />
+      <Hero eyebrow={STAGE_EYEBROW.academic} title={station.name}>
+        <p className="text-mut mt-4 max-w-prose">{station.blurb}</p>
+      </Hero>
 
-      <Section heading={ACADEMIC.institution}>
-        <p className="max-w-prose">{ACADEMIC.faculty}</p>
-        <p className="text-text-muted max-w-prose">{ACADEMIC.programme}</p>
+      <Stack>
+        <Section heading={ACADEMIC.institution}>
+          <p className="max-w-prose font-semibold">{ACADEMIC.faculty}</p>
+          <p className="text-mut max-w-prose">{ACADEMIC.programme}</p>
 
-        <dl className="mt-10 flex flex-col gap-6">
-          <div>
-            <dt className="text-text-muted text-sm font-semibold">
-              {ACADEMIC_COPY.labelPeriod}
-            </dt>
-            <dd className="mt-1 text-lg font-medium">
-              {ACADEMIC.start.slice(0, 4)}–{ACADEMIC.expectedEndLabel.slice(-4)}
-            </dd>
+          <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-4">
+            <div className="flex flex-col gap-1.5">
+              <span className="text-mut text-sm">
+                {ACADEMIC_COPY.labelPeriod}
+              </span>
+              <span className="font-display text-lg font-semibold">
+                {ACADEMIC.start.slice(0, 4)}–
+                {ACADEMIC.expectedEndLabel.slice(-4)}
+              </span>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-mut text-sm">
+                {ACADEMIC_COPY.labelCgpa}
+              </span>
+              <span className="font-display text-lg font-semibold">
+                {ACADEMIC.cgpa}
+              </span>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-mut text-sm">
+                {ACADEMIC_COPY.labelCredits}
+              </span>
+              <span className="font-display text-lg font-semibold">
+                {ACADEMIC_COPY.creditsValue(
+                  CREDITS_COMPLETED,
+                  CREDITS_IN_PROGRESS,
+                )}
+              </span>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-mut text-sm">
+                {ACADEMIC_COPY.labelCurrentTerm}
+              </span>
+              <span className="font-display text-lg font-semibold">
+                {ACADEMIC_COPY.currentTermValue(
+                  ACADEMIC.currentTermLabel,
+                  ACADEMIC.currentTermCredits,
+                )}
+              </span>
+            </div>
           </div>
-          <div>
-            <dt className="text-text-muted text-sm font-semibold">
-              {ACADEMIC_COPY.labelCgpa}
-            </dt>
-            <dd className="mt-1 text-lg font-medium">{ACADEMIC.cgpa}</dd>
-          </div>
-          <div>
-            <dt className="text-text-muted text-sm font-semibold">
-              {ACADEMIC_COPY.labelCredits}
-            </dt>
-            <dd className="mt-1 text-lg font-medium">
-              {ACADEMIC_COPY.creditsValue(
-                CREDITS_COMPLETED,
-                CREDITS_IN_PROGRESS,
-              )}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-text-muted text-sm font-semibold">
-              {ACADEMIC_COPY.labelCurrentTerm}
-            </dt>
-            <dd className="mt-1 text-lg font-medium">
-              {ACADEMIC_COPY.currentTermValue(
-                ACADEMIC.currentTermLabel,
-                ACADEMIC.currentTermCredits,
-              )}
-            </dd>
-          </div>
-        </dl>
-      </Section>
+        </Section>
 
-      <Section heading={ACADEMIC_COPY.honoursHeading} subtle>
-        <div className="flex flex-col gap-8">
-          {HONOURS.map((honour) => (
-            <article key={honour.name}>
-              <h3 className="text-lg font-bold">{honour.name}</h3>
-              <p className="text-text-muted mt-1 font-mono text-sm">
-                {honour.period}
-              </p>
-              {honour.note ? (
-                <p className="text-text-muted mt-1 max-w-prose">
-                  {honour.note}
+        <Section heading={ACADEMIC_COPY.honoursHeading}>
+          <div className="flex flex-col gap-7">
+            {HONOURS.map((honour, i) => (
+              <article
+                key={honour.name}
+                className={i === 0 ? "" : "border-line border-t pt-7"}
+              >
+                <p className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
+                  {honour.period}
                 </p>
-              ) : null}
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      <Section
-        heading={ACADEMIC_COPY.coursesHeading}
-        blurb={`${ACADEMIC_COPY.coursesSummary(COURSE_COUNT, CREDITS_TOTAL)} ${ACADEMIC_COPY.coursesNote}`}
-      >
-        <details>
-          <summary className="border-border-strong inline-block cursor-pointer rounded-full border px-4 py-2 text-sm font-semibold">
-            {ACADEMIC_COPY.coursesToggle}
-          </summary>
-
-          <div className="mt-10 flex flex-col gap-10">
-            {TERMS.map((term) => (
-              <article key={term.label}>
-                <h3 className="text-lg font-bold">
-                  {term.label}
-                  {term.note ? (
-                    <span className="text-text-muted ml-2 text-sm font-normal">
-                      {term.note}
-                    </span>
-                  ) : null}
+                <h3 className="font-display mt-2 text-lg font-semibold">
+                  {honour.name}
                 </h3>
-                <ul className="mt-3 flex flex-col gap-2">
-                  {term.courses.map((course) => (
-                    <li
-                      key={course.name}
-                      className="flex justify-between gap-4"
-                    >
-                      <span>{course.name}</span>
-                      <span className="text-text-muted shrink-0 font-mono text-sm">
-                        {course.credits} {ACADEMIC_COPY.creditSuffix}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                {honour.note ? (
+                  <p className="text-mut mt-2 max-w-prose">{honour.note}</p>
+                ) : null}
               </article>
             ))}
           </div>
-        </details>
-      </Section>
+        </Section>
 
-      <Section heading={ACADEMIC_COPY.teachingHeading} subtle>
-        <div className="flex flex-col gap-10">
-          {TEACHING_ROLES.map((role) => (
-            <RoleEntry key={role.title} role={role} />
-          ))}
-        </div>
-        <p className="text-text-muted mt-10 max-w-prose text-sm">
-          {TEACHING_LOAD}
-        </p>
-      </Section>
+        <Section
+          heading={ACADEMIC_COPY.coursesHeading}
+          blurb={`${ACADEMIC_COPY.coursesSummary(COURSE_COUNT, CREDITS_TOTAL)} ${ACADEMIC_COPY.coursesNote}`}
+        >
+          <details>
+            <summary className="border-line-strong inline-block cursor-pointer rounded-full border px-4 py-2 text-sm font-semibold">
+              {ACADEMIC_COPY.coursesToggle}
+            </summary>
 
-      <Section heading={ACADEMIC_COPY.priorSchoolHeading}>
-        <p className="text-lg font-medium">{PRIOR_SCHOOL.name}</p>
-        <p className="text-text-muted">{PRIOR_SCHOOL.track}</p>
-        <p className="text-text-muted font-mono text-sm">
-          {PRIOR_SCHOOL.period}
-        </p>
-      </Section>
+            <div className="mt-8 flex flex-col gap-8">
+              {TERMS.map((term) => (
+                <article key={term.label}>
+                  <div className="border-accent flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b-2 pb-3">
+                    <h3 className="font-display font-semibold">
+                      {term.label}
+                      {term.note ? (
+                        <span className="text-mut ml-2 text-sm font-normal">
+                          {term.note}
+                        </span>
+                      ) : null}
+                    </h3>
+                    <span className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
+                      {term.courses.reduce((sum, c) => sum + c.credits, 0)}{" "}
+                      credits
+                    </span>
+                  </div>
+                  <ul className="flex flex-col">
+                    {term.courses.map((course) => (
+                      <li
+                        key={course.name}
+                        className="border-line flex justify-between gap-4 border-b py-3 last:border-b-0"
+                      >
+                        <span>{course.name}</span>
+                        <span className="text-mut shrink-0 font-mono text-sm tabular-nums">
+                          {course.credits} {ACADEMIC_COPY.creditSuffix}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </details>
+        </Section>
+
+        <Section heading={ACADEMIC_COPY.teachingHeading}>
+          <div className="flex flex-col gap-8">
+            {TEACHING_ROLES.map((role) => (
+              <RoleEntry key={role.title} role={role} />
+            ))}
+          </div>
+          <p className="text-mut mt-8 max-w-prose text-sm">{TEACHING_LOAD}</p>
+        </Section>
+
+        <Section heading={ACADEMIC_COPY.priorSchoolHeading}>
+          <p className="font-display text-lg font-semibold">
+            {PRIOR_SCHOOL.name}
+          </p>
+          <p className="text-mut">{PRIOR_SCHOOL.track}</p>
+          <p className="text-warm font-mono text-[11px] tracking-[0.1em] uppercase">
+            {PRIOR_SCHOOL.period}
+          </p>
+        </Section>
+      </Stack>
     </>
   );
 }

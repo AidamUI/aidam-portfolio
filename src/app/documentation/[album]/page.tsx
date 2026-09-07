@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Hero } from "@/components/Hero";
+import { Scene } from "@/components/mountain/Scene";
 import { PhotoGrid } from "@/components/PhotoGrid";
+import { Section, Stack } from "@/components/Section";
 import {
   ALBUMS,
   GALLERY_COPY,
   albumBySlug,
   albumDisplayItems,
 } from "@/content/gallery";
+import { STAGE_EYEBROW } from "@/content/stage";
 
 /**
  * Next 15 passes `params` as a Promise. Typing it as a plain object compiles
@@ -53,43 +57,48 @@ export default async function AlbumPage({ params }: Props) {
 
   return (
     <>
-      <div className="mx-auto max-w-3xl px-6 pt-16 pb-8 sm:px-8 sm:pt-24">
-        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
-          {album.name}
-        </h1>
-        <p className="text-text-muted mt-3 max-w-prose">{album.blurb}</p>
-      </div>
+      <Scene stage="docs" />
+      <Hero eyebrow={STAGE_EYEBROW.docs} title={album.name}>
+        <p className="text-mut mt-4 max-w-prose">{album.blurb}</p>
+      </Hero>
 
-      <div className="mx-auto max-w-3xl px-6 pb-24 sm:px-8">
-        {isPlaceholder ? (
-          <div className="border-accent mb-6 border-l-4 pl-6">
-            <p>{GALLERY_COPY.emptyAlbum}</p>
-            <p className="text-text-muted mt-1 max-w-prose text-sm">
-              {GALLERY_COPY.emptyAlbumDetail}
+      <Stack>
+        <Section>
+          {isPlaceholder ? (
+            <div className="border-warm mb-6 border-l-4 pl-6">
+              <p>{GALLERY_COPY.emptyAlbum}</p>
+              <p className="text-mut mt-1 max-w-prose text-sm">
+                {GALLERY_COPY.emptyAlbumDetail}
+              </p>
+            </div>
+          ) : null}
+
+          {isPlaceholder ? (
+            <p className="text-mut mb-4 text-sm font-semibold">
+              {GALLERY_COPY.previewLabel}
             </p>
+          ) : null}
+
+          <div className={isPlaceholder ? "opacity-60" : ""}>
+            <PhotoGrid items={items} />
           </div>
-        ) : null}
 
-        {isPlaceholder ? (
-          <p className="text-text-muted mb-4 text-sm font-semibold">
-            {GALLERY_COPY.previewLabel}
-          </p>
-        ) : null}
+          {isPlaceholder ? (
+            <p className="text-mut mt-6 max-w-prose text-xs">
+              {GALLERY_COPY.previewDetail}
+            </p>
+          ) : null}
+        </Section>
 
-        <div className={isPlaceholder ? "mb-10 opacity-60" : "mb-10"}>
-          <PhotoGrid items={items} />
-        </div>
-
-        {isPlaceholder ? (
-          <p className="text-text-muted mb-10 max-w-prose text-xs">
-            {GALLERY_COPY.previewDetail}
-          </p>
-        ) : null}
-
-        <Link href="/documentation" className="text-accent underline">
-          {GALLERY_COPY.allAlbums}
-        </Link>
-      </div>
+        <p>
+          <Link
+            href="/documentation"
+            className="text-accent font-semibold underline"
+          >
+            {GALLERY_COPY.allAlbums}
+          </Link>
+        </p>
+      </Stack>
     </>
   );
 }

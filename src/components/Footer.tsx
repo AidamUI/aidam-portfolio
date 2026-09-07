@@ -3,17 +3,15 @@ import { CV, EMAIL, FOOTER, SOCIALS } from "@/content/site";
 import { STATIONS } from "@/content/stations";
 import { buildDate } from "@/lib/format";
 
-/** Plain link lists — pages, then elsewhere, then the build date. */
+/** Three plain link columns: pages, elsewhere, and this build. */
 export function Footer() {
   return (
-    <footer className="border-border border-t">
-      <div className="mx-auto max-w-3xl px-6 py-16 sm:px-8 sm:py-24">
-        <div className="grid gap-12 sm:grid-cols-2">
-          <div>
-            <h2 className="text-text-muted mb-4 text-sm font-semibold tracking-wide uppercase">
-              {FOOTER.navHeading}
-            </h2>
-            <ul className="flex flex-col gap-3">
+    <footer className="bg-card border-line border-t">
+      <div className="mx-auto max-w-[1180px] px-6 py-13 sm:px-8 sm:py-15">
+        <div className="grid gap-8 sm:grid-cols-3">
+          <div className="flex flex-col gap-3">
+            <h2 className="eyebrow">{FOOTER.navHeading}</h2>
+            <ul className="flex flex-col items-start gap-2">
               {STATIONS.map((station) => (
                 <li key={station.href}>
                   <Link
@@ -27,11 +25,9 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h2 className="text-text-muted mb-4 text-sm font-semibold tracking-wide uppercase">
-              {FOOTER.elsewhereHeading}
-            </h2>
-            <ul className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
+            <h2 className="eyebrow">{FOOTER.elsewhereHeading}</h2>
+            <ul className="flex flex-col items-start gap-2">
               <li>
                 <a
                   href={EMAIL.href}
@@ -53,9 +49,7 @@ export function Footer() {
                     {social.label}
                   </a>
                   {social.note ? (
-                    <span className="text-text-muted ml-2 text-xs">
-                      {social.note}
-                    </span>
+                    <span className="text-mut ml-2 text-xs">{social.note}</span>
                   ) : null}
                 </li>
               ))}
@@ -72,24 +66,25 @@ export function Footer() {
               ) : null}
             </ul>
           </div>
-        </div>
 
-        <div className="border-border mt-16 border-t pt-8">
-          <p className="text-text-muted text-xs">
-            {FOOTER.builtWith}{" "}
-            <a
-              href={FOOTER.sourceHref}
-              rel="noopener noreferrer"
-              className="hover:text-accent underline transition-colors"
-            >
-              {FOOTER.sourceLabel}
-            </a>
-            .
-          </p>
-          <p className="text-text-muted mt-1 text-xs">
-            {FOOTER.updatedPrefix}{" "}
-            <time dateTime={buildDate.iso}>{buildDate.label}</time>.
-          </p>
+          <div className="flex flex-col gap-3">
+            <h2 className="eyebrow">This build</h2>
+            <p className="text-mut max-w-[34ch] text-sm">
+              {FOOTER.builtWith}{" "}
+              <a
+                href={FOOTER.sourceHref}
+                rel="noopener noreferrer"
+                className="hover:text-accent underline transition-colors"
+              >
+                {FOOTER.sourceLabel}
+              </a>
+              .
+            </p>
+            <p className="text-mut text-sm">
+              {FOOTER.updatedPrefix}{" "}
+              <time dateTime={buildDate.iso}>{buildDate.label}</time>.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

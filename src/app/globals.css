@@ -1,97 +1,479 @@
 @import "tailwindcss";
 
 /* ============================================================================
-   TOKENS — full front-end redesign. Light is the DEFAULT for every reader;
-   dark sits behind the toggle and is reached only by an explicit choice, never
-   by the OS preference alone.
+   TOKENS — the Rinjani redesign. One ascent, rendered as a set of illustrated
+   scenes (see components/mountain/), with a day (default) and night theme.
 
-   That last part is deliberate and carries forward a real lesson from the
-   previous design: `prefers-color-scheme: light` also matches a reader who
-   expressed NO preference (the `no-preference` keyword was dropped from Media
-   Queries Level 5 and matches in no shipping browser), so honouring the OS
-   silently overrides the intended default for the majority of readers,
-   headless test runners and screenshot tools included. Explicit-choice-only
-   is the one thing carried over from the old design system; everything about
-   how it looks is new.
+   Night is reached only by an explicit toggle, never by the OS preference
+   alone: `prefers-color-scheme: light` also matches a reader who expressed NO
+   preference (the `no-preference` keyword was dropped from Media Queries
+   Level 5 and matches in no shipping browser), so honouring the OS would
+   silently override the default for most readers. That rule carries forward
+   unchanged from the previous design.
 
-   Every pair below is contrast-checked against WCAG AA (4.5:1 text, 3:1 for
-   UI components and large text) before being used anywhere.
+   Every token is declared with `@property` so a theme toggle cross-fades the
+   whole illustration — sky, ridge, lake, card, ink — rather than snapping.
+   Browsers without `@property` support simply skip the transition; the
+   colours themselves are unaffected either way.
+
+   Every text pair below is contrast-checked against WCAG AA (4.5:1) before
+   being used for text. `--line` is a decorative divider only, never an
+   interactive control's edge — `--line-strong` (aliased to `--mut`, which
+   already clears 4.5:1) carries that job instead.
    ========================================================================== */
 
+@property --sky1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a9dcf2;
+}
+@property --sky2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eaf3ee;
+}
+@property --sun1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f9cb92;
+}
+@property --sun2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffe9cd;
+}
+@property --orb {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffe3ab;
+}
+@property --orb-glow {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgb(255 205 125 / 85%);
+}
+@property --ridge {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4e7b74;
+}
+@property --ridge-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5f9086;
+}
+@property --mid {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #6f9d76;
+}
+@property --mid-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #84b385;
+}
+@property --near {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3f6f4f;
+}
+@property --near-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #54885d;
+}
+@property --tree {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #33604b;
+}
+@property --tree-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #40745a;
+}
+@property --gold {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d8b96a;
+}
+@property --gold-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ecd38d;
+}
+@property --trail {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c98b62;
+}
+@property --trail-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e2ae87;
+}
+@property --wood {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a9714a;
+}
+@property --wood-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c48e61;
+}
+@property --lake {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4fb3ae;
+}
+@property --lake-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #6ecfc4;
+}
+@property --cone {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3c4a4a;
+}
+@property --cone-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4a5a58;
+}
+@property --sand {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #cbb794;
+}
+@property --sand-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ded0b0;
+}
+@property --tent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d9714f;
+}
+@property --tent-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eb8a63;
+}
+@property --cloud {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgb(255 255 255 / 90%);
+}
+@property --mist {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgb(255 255 255 / 66%);
+}
+@property --fig-ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #26382f;
+}
+@property --fig-accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d4783f;
+}
+@property --ground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #efeae1;
+}
+@property --card {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fdfbf6;
+}
+@property --ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #22302b;
+}
+@property --body {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3d4a44;
+}
+@property --mut {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5d6d66;
+}
+@property --line {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgb(34 48 43 / 10%);
+}
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2f6b52;
+}
+@property --on-accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fdfbf6;
+}
+@property --warm {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #806a4d;
+}
+@property --pill-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgb(47 107 82 / 10%);
+}
+@property --pill-ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2f6b52;
+}
+@property --night {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 :root {
-  --bg: #ffffff;
-  --bg-subtle: #f7f7f8;
-  --text: #16181d;
-  --text-muted: #5b6270;
+  --sky1: #a9dcf2;
+  --sky2: #eaf3ee;
+  --sun1: #f9cb92;
+  --sun2: #ffe9cd;
+  --orb: #ffe3ab;
+  --orb-glow: rgb(255 205 125 / 85%);
+  --ridge: #4e7b74;
+  --ridge-2: #5f9086;
+  --mid: #6f9d76;
+  --mid-2: #84b385;
+  --near: #3f6f4f;
+  --near-2: #54885d;
+  --tree: #33604b;
+  --tree-2: #40745a;
+  --gold: #d8b96a;
+  --gold-2: #ecd38d;
+  --trail: #c98b62;
+  --trail-2: #e2ae87;
+  --wood: #a9714a;
+  --wood-2: #c48e61;
+  --lake: #4fb3ae;
+  --lake-2: #6ecfc4;
+  --cone: #3c4a4a;
+  --cone-2: #4a5a58;
+  --sand: #cbb794;
+  --sand-2: #ded0b0;
+  --tent: #d9714f;
+  --tent-2: #eb8a63;
+  --cloud: rgb(255 255 255 / 90%);
+  --mist: rgb(255 255 255 / 66%);
+  --fig-ink: #26382f;
+  --fig-accent: #d4783f;
 
-  /* Decorative dividers only — a plain content separator, never an
-     interactive control's edge. WCAG 1.4.11 does not govern this pair. */
-  --border: #e4e6ea;
-  /* The edge of anything clickable: buttons, inputs, cards. 6.1:1 on --bg. */
-  --border-strong: #5b6270;
+  --ground: #efeae1;
+  --card: #fdfbf6;
+  --ink: #22302b;
+  --body: #3d4a44;
+  --mut: #5d6d66;
+  --line: rgb(34 48 43 / 10%);
+  --line-strong: var(--mut);
+  --shadow-card: 0 20px 44px -22px rgb(20 40 32 / 45%);
 
-  --accent: #2f5ce0;
-  --accent-subtle: #eaf0fe;
-  /* Text colour placed on a solid --accent fill (a primary button). */
-  --on-accent: #ffffff;
+  --accent: #2f6b52;
+  --on-accent: #fdfbf6;
+  /* Darkened from the mountain palette's #a08560 — the original only clears
+     3.37:1 on --card, which fails AA for the 11–12.5px labels it is used on. */
+  --warm: #806a4d;
+  --pill-bg: rgb(47 107 82 / 10%);
+  --pill-ink: #2f6b52;
 
+  --night: 0;
   --focus: var(--accent);
   color-scheme: light;
+
+  transition:
+    --sky1 0.9s ease,
+    --sky2 0.9s ease,
+    --sun1 0.9s ease,
+    --sun2 0.9s ease,
+    --orb 0.9s ease,
+    --orb-glow 0.9s ease,
+    --ridge 0.9s ease,
+    --ridge-2 0.9s ease,
+    --mid 0.9s ease,
+    --mid-2 0.9s ease,
+    --near 0.9s ease,
+    --near-2 0.9s ease,
+    --tree 0.9s ease,
+    --tree-2 0.9s ease,
+    --gold 0.9s ease,
+    --gold-2 0.9s ease,
+    --trail 0.9s ease,
+    --trail-2 0.9s ease,
+    --wood 0.9s ease,
+    --wood-2 0.9s ease,
+    --lake 0.9s ease,
+    --lake-2 0.9s ease,
+    --cone 0.9s ease,
+    --cone-2 0.9s ease,
+    --sand 0.9s ease,
+    --sand-2 0.9s ease,
+    --tent 0.9s ease,
+    --tent-2 0.9s ease,
+    --cloud 0.9s ease,
+    --mist 0.9s ease,
+    --ground 0.9s ease,
+    --card 0.9s ease,
+    --ink 0.9s ease,
+    --body 0.9s ease,
+    --mut 0.9s ease,
+    --line 0.9s ease,
+    --accent 0.9s ease,
+    --on-accent 0.9s ease,
+    --warm 0.9s ease,
+    --pill-bg 0.9s ease,
+    --pill-ink 0.9s ease,
+    --night 0.9s ease;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #14161a;
-    --bg-subtle: #1b1e24;
-    --text: #f2f3f5;
-    --text-muted: #9aa1ac;
-    --border: #2b2f37;
-    --border-strong: #9aa1ac;
-    --accent: #6c93ff;
-    --accent-subtle: #1e2a4a;
-    /* Dark text on the lighter dark-mode accent — white would fail AA here. */
-    --on-accent: #14161a;
+    --sky1: #182246;
+    --sky2: #3b3260;
+    --sun1: #1b2450;
+    --sun2: #4a3a63;
+    --orb: #f2ecd8;
+    --orb-glow: rgb(222 220 255 / 40%);
+    --ridge: #1c2942;
+    --ridge-2: #222e48;
+    --mid: #213650;
+    --mid-2: #2b445e;
+    --near: #152736;
+    --near-2: #1d3346;
+    --tree: #112432;
+    --tree-2: #16303f;
+    --gold: #5f5a3f;
+    --gold-2: #736c4b;
+    --trail: #6b5142;
+    --trail-2: #836351;
+    --wood: #4a3830;
+    --wood-2: #5c4636;
+    --lake: #1f6f77;
+    --lake-2: #2c8d90;
+    --cone: #10151f;
+    --cone-2: #171e2a;
+    --sand: #4a4438;
+    --sand-2: #5b5445;
+    --tent: #6d3b2c;
+    --tent-2: #86503a;
+    --cloud: rgb(190 200 230 / 28%);
+    --mist: rgb(196 210 240 / 24%);
+    --fig-ink: #0d1720;
+    --fig-accent: #e8974a;
+
+    --ground: #0b141b;
+    --card: #111d26;
+    --ink: #f2f6f2;
+    --body: #e2e9e4;
+    --mut: #9fb2ad;
+    --line: rgb(234 240 236 / 14%);
+    --shadow-card: 0 22px 48px -20px rgb(0 0 0 / 60%);
+
+    --accent: #8fd3b0;
+    --on-accent: #111d26;
+    --warm: #c9a06a;
+    --pill-bg: rgb(122 197 160 / 16%);
+    --pill-ink: #8fd3b0;
+
+    --night: 1;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #14161a;
-  --bg-subtle: #1b1e24;
-  --text: #f2f3f5;
-  --text-muted: #9aa1ac;
-  --border: #2b2f37;
-  --border-strong: #9aa1ac;
-  --accent: #6c93ff;
-  --accent-subtle: #1e2a4a;
-  --on-accent: #14161a;
+  --sky1: #182246;
+  --sky2: #3b3260;
+  --sun1: #1b2450;
+  --sun2: #4a3a63;
+  --orb: #f2ecd8;
+  --orb-glow: rgb(222 220 255 / 40%);
+  --ridge: #1c2942;
+  --ridge-2: #222e48;
+  --mid: #213650;
+  --mid-2: #2b445e;
+  --near: #152736;
+  --near-2: #1d3346;
+  --tree: #112432;
+  --tree-2: #16303f;
+  --gold: #5f5a3f;
+  --gold-2: #736c4b;
+  --trail: #6b5142;
+  --trail-2: #836351;
+  --wood: #4a3830;
+  --wood-2: #5c4636;
+  --lake: #1f6f77;
+  --lake-2: #2c8d90;
+  --cone: #10151f;
+  --cone-2: #171e2a;
+  --sand: #4a4438;
+  --sand-2: #5b5445;
+  --tent: #6d3b2c;
+  --tent-2: #86503a;
+  --cloud: rgb(190 200 230 / 28%);
+  --mist: rgb(196 210 240 / 24%);
+  --fig-ink: #0d1720;
+  --fig-accent: #e8974a;
+
+  --ground: #0b141b;
+  --card: #111d26;
+  --ink: #f2f6f2;
+  --body: #e2e9e4;
+  --mut: #9fb2ad;
+  --line: rgb(234 240 236 / 14%);
+  --shadow-card: 0 22px 48px -20px rgb(0 0 0 / 60%);
+
+  --accent: #8fd3b0;
+  --on-accent: #111d26;
+  --warm: #c9a06a;
+  --pill-bg: rgb(122 197 160 / 16%);
+  --pill-ink: #8fd3b0;
+
+  --night: 1;
   color-scheme: dark;
 }
 
 /* ============================================================================
-   THEME — exposes the tokens to Tailwind utilities. `inline` keeps utilities
-   pointed at the live custom properties, so the toggle repaints without a
-   class swap anywhere else in the tree.
+   THEME — exposes the tokens to Tailwind utilities.
    ========================================================================== */
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-bg-subtle: var(--bg-subtle);
-  --color-text: var(--text);
-  --color-text-muted: var(--text-muted);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
+  --color-ground: var(--ground);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-mut: var(--mut);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-accent: var(--accent);
-  --color-accent-subtle: var(--accent-subtle);
   --color-on-accent: var(--on-accent);
+  --color-warm: var(--warm);
+  --color-pill-bg: var(--pill-bg);
+  --color-pill-ink: var(--pill-ink);
 
   --font-sans: var(--font-lato), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), var(--font-sans);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /* ============================================================================
-   BASE — generous, comfortable reading. Body copy sits at 17px/1.75, per the
-   redesign brief; headings use the heavier Lato weights the family ships with
-   rather than a second typeface.
+   BASE
    ========================================================================== */
 
 @layer base {
@@ -100,8 +482,8 @@
   }
 
   body {
-    background-color: var(--bg);
-    color: var(--text);
+    background-color: var(--ground);
+    color: var(--body);
     font-family: var(--font-sans);
     font-size: 17px;
     line-height: 1.75;
@@ -110,8 +492,8 @@
   }
 
   ::selection {
-    background: var(--accent-subtle);
-    color: var(--text);
+    background: var(--pill-bg);
+    color: var(--ink);
   }
 
   :focus-visible {
@@ -124,8 +506,11 @@
   h2,
   h3,
   h4 {
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-weight: 600;
     line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--ink);
     text-wrap: balance;
   }
 
@@ -140,8 +525,33 @@
 }
 
 /* ============================================================================
+   COMPONENTS — the two building blocks nearly everything on the site is made
+   of: a raised card on the ground colour, and the small-caps mono label used
+   for eyebrows, statuses and dates.
+   ========================================================================== */
+
+@layer components {
+  .card {
+    background: var(--card);
+    border-radius: 22px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+}
+
+/* ============================================================================
    MOTION — subtle and quick, never load-bearing for meaning. Respects
-   prefers-reduced-motion throughout.
+   prefers-reduced-motion throughout, including the illustration's own drift
+   and twinkle keyframes (see components/mountain/Scene.tsx).
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -155,13 +565,52 @@
   }
 }
 
-/* ============================================================================
-   THEME-AWARE LABELS
+@keyframes rj-drift {
+  0% {
+    transform: translateX(-3%);
+  }
+  100% {
+    transform: translateX(4%);
+  }
+}
 
-   The switch labels itself without JavaScript by resolving the active theme
-   in CSS. `display: none` also drops the inactive label out of the
-   accessibility tree, so the button's accessible name is always the action
-   it will actually perform.
+@keyframes rj-drift-slow {
+  0% {
+    transform: translateX(2%);
+  }
+  100% {
+    transform: translateX(-3%);
+  }
+}
+
+@keyframes rj-twinkle {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rj-steam {
+  0% {
+    transform: translateY(6px) scaleX(0.9);
+    opacity: 0.35;
+  }
+  55% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(-16px) scaleX(1.15);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   THEME-AWARE LABELS — the switch labels itself without JavaScript by
+   resolving the active theme in CSS. `display: none` also drops the inactive
+   label out of the accessibility tree, so the button's accessible name is
+   always the action it will actually perform.
    ========================================================================== */
 
 .when-light {

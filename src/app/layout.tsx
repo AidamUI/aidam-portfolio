@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { SkipLink } from "@/components/SkipLink";
 import { SITE } from "@/content/site";
-import { lato } from "@/lib/fonts";
+import { lato, outfit } from "@/lib/fonts";
 import { BOOT_SCRIPT, THEME_CHROME } from "@/lib/theme";
 import "./globals.css";
 
@@ -44,14 +44,18 @@ export default function RootLayout({
   return (
     // suppressHydrationWarning: the boot script sets data-theme on <html>
     // before React hydrates, which is the whole point of running it there.
-    <html lang="en" suppressHydrationWarning className={lato.variable}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${lato.variable} ${outfit.variable}`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
         <noscript>
           <style>{`[data-theme-toggle]{display:none}`}</style>
         </noscript>
       </head>
-      <body className="bg-bg text-text flex min-h-dvh flex-col">
+      <body className="bg-ground text-body flex min-h-dvh flex-col">
         <SkipLink />
         <Header />
         <main id="main" tabIndex={-1} className="flex-1">
@@ -62,5 +66,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-// test
