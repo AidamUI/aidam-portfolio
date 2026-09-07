@@ -4,8 +4,7 @@ import type { Artifact, Role } from "./types";
  * Organisational experience. Source: content.md §6.
  *
  * AIESEC's four roles and BEM's two render as one entry each with stages on
- * them, because a progression reads better than four near-identical rows and
- * is honest about it being one relationship over two years.
+ * them: each is one relationship over two years, not four separate ones.
  *
  * The outreach figure is 100+ companies, per LinkedIn — the CV's "200+" is
  * wrong (prd.md §10).

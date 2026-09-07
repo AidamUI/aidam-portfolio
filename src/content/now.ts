@@ -3,9 +3,9 @@ import { PROFILE } from "./profile";
 /**
  * The "currently" block on the home page. Source: content.md §3.
  *
- * This is the block that keeps the site feeling alive, so it carries its own
- * date rather than the build date — a rebuild for an unrelated reason must not
- * make stale news look fresh. Update `updated` whenever you edit `items`.
+ * Carries its own date rather than the build date, so a rebuild for an
+ * unrelated reason doesn't make stale news look fresh. Update `updated`
+ * whenever you edit `items`.
  *
  * The course list is the official one from the transcript. Earlier drafts
  * guessed at "Embedded Systems" and "Computer Graphics"; neither is on the

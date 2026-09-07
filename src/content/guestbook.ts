@@ -1,13 +1,9 @@
 /**
  * Guestbook copy. Source: content.md §11.
  *
- * Fully anonymous: no name field, no login, nothing tracked back to a sender.
- * Every message reaches Aidam; he approves what becomes public. The
- * confirmation says exactly that rather than faking a "Posted!" — the honesty
- * is the point, and a visitor who is told the truth is more likely to write
- * something worth reading.
- *
- * The behaviour these strings describe lands in M6.
+ * Fully anonymous: no name field, no login, nothing tracked back to a
+ * sender. Every message reaches Aidam; he approves what becomes public
+ * before it's posted. Lands in M6.
  */
 
 export const GUESTBOOK = {

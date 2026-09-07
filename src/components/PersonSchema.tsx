@@ -4,10 +4,9 @@ import { PROFESSIONAL_ROLES } from "@/content/roles";
 import { SITE, SOCIALS } from "@/content/site";
 
 /**
- * JSON-LD `Person`, per tech-plan.md §5. This is what tells a search engine
- * that "Aidam Kaila", "Muhammad Kaila Aidam Riyan" and this site are the same
- * entity, which is the whole point of the exercise — the old site was
- * invisible for his own name.
+ * JSON-LD `Person`, per tech-plan.md §5. Tells a search engine that "Aidam
+ * Kaila", "Muhammad Kaila Aidam Riyan" and this site are the same entity —
+ * the old site had no such markup and was invisible for his own name.
  *
  * Built from the content modules rather than written out, so a job change edits
  * one file and the structured data follows.

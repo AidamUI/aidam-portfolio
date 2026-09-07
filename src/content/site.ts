@@ -26,10 +26,9 @@ export const SITE = {
 } as const;
 
 /**
- * Email is published, but lightly obfuscated: the visible text is split across
- * elements so the rendered HTML holds no contiguous address for a naive
- * regex scraper. The `mailto:` href is necessarily whole — that is the honest
- * limit of "light" without breaking the no-JavaScript requirement.
+ * Lightly obfuscated: the visible text is split across elements so the
+ * rendered HTML holds no contiguous address for a naive scraper. The
+ * `mailto:` href itself is necessarily whole (no JS obfuscation).
  */
 export const EMAIL = {
   user: "aidamkaila",
@@ -60,9 +59,8 @@ export const SOCIALS: SocialLink[] = [
  * The instruction was to link the CV as-is with no redaction pass. The PDF,
  * however, carries live repository links for both competition entries, a full
  * implementation breakdown of one of them, the business model of the other,
- * and a phone number that prd.md §5.7 and §6 keep off the site. Serving it
- * defeats the confidentiality rule at the one place it matters most, so the
- * link is off and the file is out of `public/` until judging concludes.
+ * and a phone number that prd.md §5.7 and §6 keep off the site. So the link
+ * is off and the file is out of `public/` until judging concludes.
  *
  * The specifics are deliberately not written out here: this repository is
  * public, so a comment naming those URLs would publish exactly what the rule
